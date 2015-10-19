@@ -127,7 +127,8 @@
 \def\loc{\mathrm{LOC}}
 
 \def\SNR{\mathrm{SNR}}
-\def\CRB{\mathrm{CRB}}
+\def\crb{\mathrm{CRB}}
+\def\fim{\mathrm{FIM}}
 
 \def\auc{\mathrm{AUC}}
 
@@ -202,6 +203,7 @@ Typical station aperture  is 2 km. Therefore assuming that the noise has the sam
 \end{remark}
 
 
+%=======================================================
  \section{Introduction}
 %=======================================================
 %=======================================================
@@ -222,24 +224,76 @@ All signals are real and sampled at the sampling frequency  $F_{s}=20$ Hz. After
  f_{k}=kF_{s}/N
  \end{eqnarray*}
 We let $K=N/2$.
-For $K$ great enough, $X_{1}$, $\ldots$, $X_{K}$ is a sequence of  $M$-ary independent circulary gaussian random vectors with zero-mean and respective covariance:
+For $K$ great enough, $X_{1}$, $\ldots$, $X_{K}$ is a sequence of  $M$-ary independent circularly gaussian random vectors with zero-mean and respective covariance:
 \begin{eqnarray}
 \label{eq:spectralmatrixpuredelay}
-\Gamma_{k}(\alpha)&=&D_{k}(\theta)D_{k}^{H}(\theta)+\sigma^{2}I_{M}
+\Gamma_{k}(\alpha)&=&d_{k}(\theta)d_{k}^{H}(\theta)+\sigma^{2}I_{M}
 %\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
 \end{eqnarray}
-where $D_{k}(\theta)$ is an $M$-ary vector whose the $m$-th entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$.
+where $d_{k}(\theta)$ is an $M$-ary vector whose the $m$-th entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$.
 
 Under LOC, the expression \eqref{eq:spectralmatrixpuredelay} can be rewritten:
 \begin{eqnarray}
 \label{eq:spectralmatrixLOC}
-\Gamma_{k}(\alpha)&=&D_{k}(\theta)\, C\,D_{k}^{H}(\theta)+\sigma^{2}I_{M}
+\Gamma_{k}(\alpha)&=&D_{k}(\theta)\, C_{k}\,D_{k}^{H}(\theta)+\sigma^{2}I_{M}
 %\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
 \end{eqnarray}
-where $D_{k}(\theta)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$. $C$ is a matrix taking into account the LOC. Typically in the absence of LOC, $C$ is a rank 1 matrix that writes $C=\mathds{1}\mathds{1}^{T}$ and \eqref{eq:spectralmatrixLOC} leads back to \eqref{eq:spectralmatrixpuredelay}. In the following we assume that 
+where $D_{k}(\theta)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$. $C_{k}$ is a matrix taking into account the LOC. Typically in the absence of LOC, $C_{k}$ is a rank 1 matrix that writes $C_{k}=\mathds{1}\mathds{1}^{T}$ and \eqref{eq:spectralmatrixLOC} leads back to \eqref{eq:spectralmatrixpuredelay}. In the following we assume that 
 \begin{eqnarray*}
- C_{kl} &=&
+ C_{k,\ell\ell'} (\beta)&=&e^{-\beta \frac{d_{\ell,\ell'}}{\lambda_{k}}}=e^{-\beta \frac{d_{\ell,\ell'}f_{k}}{c}}
 \end{eqnarray*}
+where $\lambda=c/f$ is the wavelength, $d_{\ell,\ell'}$ the distance between 2 locations $\ell$ and $\ell'$ in the 3D space, and $\beta$ a positive constant. For $\beta=0$, $C(\beta)=\mathds{1}\mathds{1}^{T}$ leading to a perfect coherence. If $\beta\approx+\infty$, $C(\beta)=I_{M}$ and there is full absence of coherence between any 2 locations.
+
+
+%=======================================================
+ \section{Cramer-Rao}
+%=======================================================
+%=======================================================
+We use the following result:
+\begin{itemize}
+\item
+ $X_{1}$, $\ldots$, $X_{K}$ is a sequence of  $M$-ary independent circularly gaussian random $M$-ary vectors with zero-mean and respective covariance:
+\begin{eqnarray*}
+\Gamma_{k}&=&D_{k}(\theta)C_{k}(\beta)D_{k}^{H}(\theta)+\sigma^{2}I_{M}
+%\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
+\end{eqnarray*}
+\item
+the parameter of interest is $\mu=\{\theta_{1},\theta_{2},\theta_{3},\sigma^{2}\}$. Here we consider that $\beta$ is known.
+\end{itemize}
+
+In this case the Fisher information matrix  associated to the parameter $\theta=\{\theta_{1},\theta_{2},\theta_{3}\}$ writes:
+\begin{eqnarray}
+ \label{eq:FIM}
+\fim_{\ell,\ell'}(\theta)&=&\frac{1}{\sigma^{2}}\sum_{k=1}^{K}\trace{\Gamma_{k}^{-1}\times\partial_{\ell}\Gamma_{k}\times\Gamma_{k}^{-1}\times\partial_{\ell'}\Gamma_{k}}
+\end{eqnarray}
+where $\ell,\ell'\in\{1,2,3\}$ and where $\partial_{\ell}\Gamma_{k}$ is the partial derivative w.r.t. $\theta_{\ell}$. It is clear that the CRB terms relative to the correlation of $\theta$ and $\sigma^{2}$ are 0. We let:
+\begin{eqnarray*}
+ d_{k,\ell}(\theta)&=&
+  \begin{bmatrix}
+  -2j\pi f_{k} r_{1,\ell}\,e^{-2j\pi f_{k}r_{1}^{T}\theta}
+  \\
+  \vdots
+  \\
+  -2j\pi f_{k} r_{M,\ell}\,e^{-2j\pi f_{k}r_{M}^{T}\theta}
+  \end{bmatrix}
+\end{eqnarray*}
+Then 
+\begin{eqnarray*}
+\partial_{\ell}\Gamma_{k}&=&
+   \diag{d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)+
+   D_{k}(\theta)C_{k}(\beta) \diag{d_{k,\ell}(\theta)}^{H}
+   \\
+   &=&2\, \mathcal{R}\left(
+   \diag{d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)\right)
+\end{eqnarray*}
+It is worth to notice that, if $\beta\approx +\infty$, $C_{k}=I_{M}$ and $\partial_{\ell}\Gamma_{k}=0$ which is normal because in this case $\Gamma_{k}$ does not depend on $\theta$. Using \eqref{eq:FIM} we derived the CRB as
+\begin{eqnarray}
+ \label{eq:CRB}
+\crb&=& \fim^{-1}
+\end{eqnarray}
+
+
+The CRB w.r.t. the azimuth, elevation and velocity is derived from \eqref{eq:CRB} using the Jacobian of the one-to-one mapping between the slowness and the vector $(a,e,c)$ where $a$, $e$ and $c$ denote respectively the azimut, the elevation and the velocity.
 
 
 %=======================================================
