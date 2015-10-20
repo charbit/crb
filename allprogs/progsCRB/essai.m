@@ -10,9 +10,13 @@ aec.e_deg      = 45;
 aec.c_mps      = 340;
 Fs_Hz          = 20;
 SNR_dB         = -25;
-% around 100 seconds in relationship
-% with the max. of delay which is
-% aec.c_mps * 3000m = 10 sec.
+% T_sec is directly in relationship
+% with the max. of delay through the station, 
+% which is equal to aec.c_mps * 3000m => 10 sec.
+% 10 times this time could be a good choice. 
+% But for computation it is almost 
+% equivalent to take 10 times less and adjust the
+% SNR by the ratio.
 T_sec          = 100;
 T_cal          = 10;
 % Then we correct by sqrt(T_cal/T_sec)
@@ -42,7 +46,7 @@ alpha_coh     = 0.05;
 Llistfactor   = 3;
 listfactor    = [500, 1200, 5000];linspace(500,2000,Llistfactor);
 
-choix = 5;
+choix = 3;
 switch choix
     case 5
         M               = 3;
