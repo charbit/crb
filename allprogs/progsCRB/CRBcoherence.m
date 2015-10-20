@@ -1,4 +1,4 @@
-function CRB = CRBcoherence(xsensor, sigma2noise, C, aec, K, Fs_Hz)
+function CRB = CRBcoherence(xsensor, sigma2noise, C, aec, fK_Hz)
 
 M    = size(xsensor,1);
 
@@ -14,10 +14,9 @@ slowness_spm(2) = sina*cose/c;
 slowness_spm(3) = sine/c;
 delay_s         = xsensor * slowness_spm;
 
-fK       = (1:K)'*Fs_Hz/2/K;
 IM       = eye(M);
-DK       = exp(-2j*pi*fK*delay_s');
-
+DK       = exp(-2j*pi*fK_Hz*delay_s');
+K        = length(fK_Hz);
 FIM_ik   = zeros(K,3,3);
 
 for ik=1:K
@@ -25,8 +24,8 @@ for ik=1:K
     diagD_ik    = diag(D_ik);
     C_ik        = squeeze(C(ik,:,:));
     Gamma_ik    = diagD_ik*C_ik*diagD_ik'+sigma2noise*IM;
-    rep3D_ik = repmat(D_ik,1,3);
-    d_ik = (-2j*pi*fK(ik)*xsensor) .* rep3D_ik;
+    rep3D_ik    = repmat(D_ik,1,3);
+    d_ik        = (-2j*pi*fK_Hz(ik)*xsensor) .* rep3D_ik;
 %     PiAortho = IM-D_ik*D_ik'/M;
 %     totot = 2*real(d_ik'*PiAortho*d_ik)*real(D_ik'*(Gamma_ik\D_ik))/sigma2noise;
     for ell=1:3
@@ -46,8 +45,8 @@ for ik=1:K
     end
 end
 % FIM_ik       = real(FIM_ik);
-FIM.slowness = squeeze(sum(FIM_ik,1));
-CRB.slowness = pinv(FIM.slowness);
+FIM.slowness   = squeeze(sum(FIM_ik,1)/M);
+CRB.slowness   = pinv(FIM.slowness);
 
 % slowness_spm(1) = cosa*cose/c;
 % slowness_spm(2) = sina*cose/c;
@@ -55,7 +54,10 @@ CRB.slowness = pinv(FIM.slowness);
 
 Jacobaec_k = ([...
     -sina*cose/c -cosa*sine/c -cosa*cose/c/c; ...
-    cosa*cose/c -sina*sine/c sina*cose/c/c;...
-    0 cose/c sine/c/c]);
+     cosa*cose/c -sina*sine/c -sina*cose/c/c;...
+    0 cose/c -sine/c/c]);
 FIM.aec = Jacobaec_k*FIM.slowness*Jacobaec_k';
 CRB.aec = pinv(FIM.aec);
+
+
+

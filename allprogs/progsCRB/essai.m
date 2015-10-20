@@ -1,36 +1,71 @@
 clear
 allcolors = ['g.';'m.';'r.';'k.';'b.';'rx';'yx';'mx';'rx';'kx';'c.';'k.';'r.';'c.';'m.';'g.';'b.';'k.';'r.';'c.';'m.';'g.';'k.'];
 
-listaz = linspace(0,360,20)';
+listaz = linspace(0,360,30)';
 Laz = length(listaz);
 stdaz = zeros(Laz,1);
 stdel = zeros(Laz,1);
 
-aec.e_deg     = 45;
-aec.c_mps     = 300;
-Fs_Hz         = 20;
-sigma2noise   = 1;
-K             = 200;
-M             = 8;
+aec.e_deg      = 45;
+aec.c_mps      = 340;
+Fs_Hz          = 20;
+SNR_dB         = -25;
+% around 100 seconds in relationship
+% with the max. of delay which is
+% aec.c_mps * 3000m = 10 sec.
+T_sec          = 100;
+T_cal          = 10;
+% Then we correct by sqrt(T_cal/T_sec)
+RHO            = sqrt(T_cal/T_sec);
+N              = fix(T_cal*Fs_Hz); 
+numfig         = 1;
+%==================================
+% Rk: to use Whittle's formula 
+% the frequencies must be those of the DFT for 
+% N signal samples. Except 0 and N/2 if N/2 is 
+% integer, because the DFT is real. If the signal 
+% is real, the DFT has hermitian symmetry, therefore
+% we have to take only the half part of the 
+% frequency domain
+% If we use a filter bank, we have to decimate and
+% perform the DFT in each band. For example
+% if we have a band between 0.1Hz and 0.8Hz, i.e. 
+% a bandwidth of 0.7 Hz, we have to re-sample the
+% 20 Hz signals at 1.4Hz. Instead of N=2000 points
+% we have now N=140 points.
+% 
+K             = fix(N/2)-1;
+frequency_Hz  = (1:K)'*Fs_Hz/N;
+sigma2noise   = 10^(-SNR_dB/10);
 
-alpha_coh     = 0.08;
-choix = 3;
+alpha_coh     = 0.05;
+Llistfactor   = 3;
+listfactor    = [500, 1200, 5000];linspace(500,2000,Llistfactor);
+
+choix = 5;
 switch choix
+    case 5
+        M               = 3;
+        xsensor0        = zeros(M,3);        
+        xsensor0(:,2)   = [-1;0;1];
     case 4
+        M               = 8;
         xsensor0(:,1:2) = randn(M,2)/3;
         xsensor0(:,3)   = zeros(M,1);        
     case 1
-        aux           = exp(2j*pi*(0:M-1)'/M);
-        xsensor0(:,1) = real(aux);
-        xsensor0(:,2) = imag(aux);
-        xsensor0(:,3) = 0*ones(M,1);
+        M               = 8;
+        aux             = exp(2j*pi*(0:M-1)'/M);
+        xsensor0(:,1)   = real(aux);
+        xsensor0(:,2)   = imag(aux);
+        xsensor0(:,3)   = 0*ones(M,1);
     case 2
-        Mon2 = M/2;
-        aux1 = exp(2j*pi*(0:Mon2-1)'/Mon2);
-        aux2 = exp(2j*pi*(0:Mon2-1)'/Mon2+1j*pi/4)/2;
-        xsensor0(:,1) = real([aux1;aux2]);
-        xsensor0(:,2) = imag([aux1;aux2]);
-        xsensor0(:,3) = 0*ones(M,1);
+        M               = 8;
+        Mon2            = M/2;
+        aux1            = exp(2j*pi*(0:Mon2-1)'/Mon2);
+        aux2            = exp(2j*pi*(0:Mon2-1)'/Mon2+1j*pi/4)/2;
+        xsensor0(:,1)   = real([aux1;aux2]);
+        xsensor0(:,2)   = imag([aux1;aux2]);
+        xsensor0(:,3)   = 0*ones(M,1);
     case 3
         xsensor0 = [ ...
             -0.05580864939648136, 0.1876414387122062,   0; ...
@@ -56,11 +91,9 @@ end
 %             0 -1 ; ...
 %             -1  0 ];
 %     case 3
-Llistfactor = 3;
-listfactor = linspace(300,5000,Llistfactor);
 
 for ifactor=1:Llistfactor
-    factor = listfactor(ifactor);
+    factor    = listfactor(ifactor);
     xsensor   = factor * xsensor0;
     % end
     sensordistance = zeros(M,M);
@@ -69,45 +102,57 @@ for ifactor=1:Llistfactor
             sensordistance(im1,im2)=norm(xsensor(im1,:)-xsensor(im2,:));
         end
     end
-    fK    = (1:K)'*Fs_Hz/2/K;
     C     = zeros(K,M,M);
     for ik=1:K
-        lambda_k = aec.c_mps/fK(ik);
+        lambda_k = aec.c_mps/frequency_Hz(ik);
         for im1=1:M
             for im2=1:M
                 C(ik,im1,im2)=exp(-alpha_coh*(sensordistance(im1,im2)/lambda_k) );
             end
         end
     end
-    
     for iaz=1:Laz
         aec.a_deg = listaz(iaz);
         
-        CRB = CRBcoherence(xsensor, sigma2noise, C, aec, K, Fs_Hz);
+        CRB = CRBcoherence(xsensor, sigma2noise, C, aec, frequency_Hz);
         
         stdaz(iaz) = sqrt(CRB.aec(1,1))*180/pi;
         stdel(iaz) = sqrt(CRB.aec(2,2))*180/pi;
     end
     
-    figure(1)
-    subplot(121)
+    figure(numfig)
+    subplot(131)
     if not(ifactor==1)
         hold on
     end
-    x = stdaz .* exp(1j*pi*listaz/180);
+    x = RHO * stdaz .* exp(1j*pi*listaz/180);
     plot(x,'.-','color',allcolors(ifactor))
     hold off
+    Mmax = 15;%max(abs(x));
+    set(gca,'xlim',Mmax*[-1,1])
+    set(gca,'ylim',Mmax*[-1,1])
+    axis('square')
+
     drawnow
     %==
-    subplot(122)
+    subplot(132)
     if not(ifactor==1)
         hold on
     end
-    x = stdel .* exp(1j*pi*listaz/180);
+    x = RHO * stdel .* exp(1j*pi*listaz/180);
     plot(x,'.-','color',allcolors(ifactor))
     hold off
+    Mmax = 15;
+    set(gca,'xlim',Mmax*[-1,1])
+    set(gca,'ylim',Mmax*[-1,1])
+    axis('square')
     drawnow
 end
+subplot(133)
+plot(xsensor0(:,1),xsensor0(:,2),'o')
+set(gca,'xlim',2*[-1,1])
+set(gca,'ylim',2*[-1,1])
+axis('square')
 % CRB.slowness
 % CRB.aec
 % sqrt(CRB.aec(1,1))*180/pi
