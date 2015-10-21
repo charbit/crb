@@ -4,8 +4,8 @@ allcolors = ['b.';'r.';'m.';'c.';'g.';'k.';'rx';'yx';'mx';'rx';'kx';...
     'c.';'k.';'r.';'c.';'m.';'g.';'b.';'k.';'r.';'c.';'m.';'g.';'k.'];
 
 
-addpath /dvlscratch/SHI/users/charbit/ProjectIMS2015b/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
-
+% addpath /dvlscratch/SHI/users/charbit/ProjectIMS2015b/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
+addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
 directorydatafromIDC  = '../AAdataI37/';
 
 %==========================================================================
@@ -22,7 +22,7 @@ Ts_sec                 = 1/Fs_Hz;
 %=====================
 for indexofSTA1 = 1%:nbfiles-1
     
-    for indexofSTA2 = 2:nbfiles%indexofSTA1+1:2%nbfiles
+    for indexofSTA2 = 3%:nbfiles%indexofSTA1+1:2%nbfiles
         
         filename1_ii = filenames(indexofSTA1).name;
         cdload1 = sprintf('sig1 = load(''%s%s'');',directorydatafromIDC,filename1_ii);
@@ -81,7 +81,7 @@ for indexofSTA1 = 1%:nbfiles-1
         signal1_centered=signal1-ones(size(signal1,1),1)*mean(signal1);
         signal2_centered=signal2-ones(size(signal2,1),1)*mean(signal2);
         
-        taustationary_sec = 200 ;
+        taustationary_sec = 400 ;
         ratioDFT2SCP = 5;
         Tfft_sec  = taustationary_sec/ratioDFT2SCP;
         Lfft      = fix(Tfft_sec*Fs_Hz);
@@ -96,6 +96,7 @@ for indexofSTA1 = 1%:nbfiles-1
         pcolor(time_sec.SD/60/60, frqsFFT_Hz(1:400),allMSC(1:400,:))
         shading flat
         set(gca,'yscale','log')
+        colorbar
     end
 end
 

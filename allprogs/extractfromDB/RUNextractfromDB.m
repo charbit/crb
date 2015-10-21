@@ -2,13 +2,12 @@
 clear
 
 % addpath   ../ZZtoolbox/
-addpath      00pierrick/
-% addpath ../00gabrielson/
 
+addpath('/Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/00pierrick/');
 %========== matlab format files are saved into the following directory
 savedirnamefull      ='../AAdataI37/';
 %=== temporary files
-temporary_gparse_dir = '00pierrick/tempfiles/';
+temporary_gparse_dir = 'tempfiles/';
 if not(exist(temporary_gparse_dir,'dir'))
     rmdir(temporary_gparse_dir,'s')
      mkdir(temporary_gparse_dir)
