@@ -118,7 +118,7 @@ for ifactor=1:Llistfactor
     for iaz=1:Laz
         aec.a_deg = listaz(iaz);
         
-        CRB = CRBcoherence(xsensor, sigma2noise, C, aec, frequency_Hz);
+        CRB = evalCRBwithLOC(xsensor, sigma2noise, C, aec, frequency_Hz);
         
         stdaz(iaz) = sqrt(CRB.aec(1,1))*180/pi;
         stdel(iaz) = sqrt(CRB.aec(2,2))*180/pi;

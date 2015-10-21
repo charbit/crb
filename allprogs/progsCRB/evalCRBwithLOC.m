@@ -1,4 +1,4 @@
-function CRB = CRBcoherence(xsensor, sigma2noise, C, aec, fK_Hz)
+function CRB = evalCRBwithLOC(xsensor, sigma2noise, C, aec, fK_Hz)
 
 M    = size(xsensor,1);
 
