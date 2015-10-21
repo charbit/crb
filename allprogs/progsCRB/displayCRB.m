@@ -7,10 +7,10 @@ stdaz = zeros(Laz,1);
 stdel = zeros(Laz,1);
 stdvel = zeros(Laz,1);
 
-aec.e_deg      = 45;
+aec.e_deg      = 20;
 aec.c_mps      = 340;
 Fs_Hz          = 20;
-SNR_dB         = -5;
+SNR_dB         = -15;
 % T_sec is directly in relationship
 % with the max. of delay through the station, 
 % which is equal to aec.c_mps * 3000m => 10 sec.
@@ -18,8 +18,8 @@ SNR_dB         = -5;
 % But for computation it is almost 
 % equivalent to take 10 times less and adjust the
 % SNR by the ratio.
-T_sec          = 100;
-T_cal          = 100;
+T_sec          = 10;
+T_cal          = 10;
 % Then we correct by sqrt(T_cal/T_sec)
 RHO            = sqrt(T_cal/T_sec);
 N              = fix(T_cal*Fs_Hz); 
@@ -43,27 +43,27 @@ K             = fix(N/2)-1;
 frequency_Hz  = (1:K)'*Fs_Hz/N;
 sigma2noise   = 10^(-SNR_dB/10);
 
-alpha_coh     = 0;%0.05;
+alpha_coh     = 0.09;
 Llistfactor   = 3;
-listfactor    = 1000;%[500, 1200, 5000];linspace(500,2000,Llistfactor);
+listfactor    = [200, 1000, 4000];%linspace(500,2000,Llistfactor);
 Llistfactor   = length(listfactor);
 
-choix = 3;
+choix = 5;
 switch choix
     case 5
-        M               = 3;
+        M               = 8;
         xsensor0        = zeros(M,3);        
-        xsensor0(:,2)   = [-1;0;1];
+        xsensor0(:,1)   = (-M+1:2:M-1)'/M;
     case 4
         M               = 8;
         xsensor0(:,1:2) = randn(M,2)/3;
         xsensor0(:,3)   = zeros(M,1);        
     case 1
-        M               = 8;
+        M               = 4;
         aux             = exp(2j*pi*(0:M-1)'/M);
         xsensor0(:,1)   = real(aux);
         xsensor0(:,2)   = imag(aux);
-        xsensor0(:,3)   = 0*ones(M,1);
+        xsensor0(:,3)   = 1*ones(M,1);
     case 2
         M               = 8;
         Mon2            = M/2;
@@ -81,7 +81,7 @@ switch choix
             -0.02746139890923584, 0.009729556081326833, 0; ...
             0.922171492415503,   0.7102575939423894,   0; ...
             0.1851429797456091, -1.068861232371144,    0; ...
-            -1.246393169863814,   0.3766728140087006,   0];
+            -1.246393169863814,   0.3766728140087006,   0]; 
 end
     M = size(xsensor0,1);
 %     case 1
@@ -122,9 +122,8 @@ for ifactor=1:Llistfactor
         
         CRB = evalCRBwithLOC(xsensor, sigma2noise, C, aec, frequency_Hz);
         
-        stdaz(iaz)  = sqrt(CRB.aec(1,1))*180/pi;
-        stdel(iaz)  = sqrt(CRB.aec(2,2))*180/pi;
-        stdvel(iaz) = sqrt(CRB.av(2,2));
+        stdaz(iaz)  = sqrt(CRB.av(1,1))*180/pi;
+        stdvel(iaz)  = sqrt(CRB.av(2,2));
     end
     
     figure(numfig)
@@ -135,7 +134,7 @@ for ifactor=1:Llistfactor
     x = RHO * stdaz .* exp(1j*pi*listaz/180);
     plot(x,'.-','color',allcolors(ifactor))
     hold off
-    Mmax = 15;%max(abs(x));
+    Mmax = 5;%max(abs(x));
     set(gca,'xlim',Mmax*[-1,1])
     set(gca,'ylim',Mmax*[-1,1])
     axis('square')
@@ -149,7 +148,7 @@ for ifactor=1:Llistfactor
     x = RHO * stdvel .* exp(1j*pi*listaz/180);
     plot(x,'.-','color',allcolors(ifactor))
     hold off
-    Mmax = 15;
+    Mmax = 30;
     set(gca,'xlim',Mmax*[-1,1])
     set(gca,'ylim',Mmax*[-1,1])
     axis('square')

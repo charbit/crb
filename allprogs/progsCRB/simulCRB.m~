@@ -1,19 +1,12 @@
 clear
 % this program simulates signals with oure cohreence
-% only pure delays. Then by sub-optimal method which consists 
-% of a time alignment followed by pseudo-inverse the sensor 
-% location matrix, we estimate the variance of the azimuth
-%======
-% We also provides the Cramer-Rao bound which is in
-% good agreement with the estimated value.
+% only pure delays. Then by 
 %
-% We mainly consider 'flat/flat station' station 
-% In this case we consider horizontal velocity
 %
 %
 %
 aec.a_deg = 10;
-aec.e_deg = 30;
+aec.e_deg = 10;
 aec.c_mps = 340;
 
 cosa  = cos(aec.a_deg*pi/180);
@@ -44,7 +37,7 @@ switch choix
         aux             = exp(2j*pi*(0:M-1)'/M);
         xsensor0(:,1)   = real(aux);
         xsensor0(:,2)   = imag(aux);
-        xsensor0(:,3)   = 0;
+        xsensor0(:,3)   = 01*ones(M,1);
     case 2
         M               = 8;
         Mon2            = M/2;
@@ -52,7 +45,7 @@ switch choix
         aux2            = exp(2j*pi*(0:Mon2-1)'/Mon2+1j*pi/4)/2;
         xsensor0(:,1)   = real([aux1;aux2]);
         xsensor0(:,2)   = imag([aux1;aux2]);
-        xsensor0(:,3)   = 0;
+        xsensor0(:,3)   = 0*ones(M,1);
     case 3
         xsensor0 = [ ...
             -0.05580864939648136, 0.1876414387122062,   0; ...
@@ -64,16 +57,18 @@ switch choix
             0.1851429797456091, -1.068861232371144,    0; ...
             -1.246393169863814,   0.3766728140087006,   0];
 end
-M               = size(xsensor0,1);
-factor          = 10;
+M = size(xsensor0,1);
+
+factor          = 1000;
 xsensor         = factor * xsensor0;
 delay_s         = xsensor * slowness_spm;
+
 Fs_Hz           = 20;
-SNR_dB          = -5;
+SNR_dB          = 0;
 T_sec           = 100;
 N               = fix(T_sec*Fs_Hz);
-K               = fix(N/2);
-sigmanoise      = 10^(-SNR_dB/20);
+K = fix(N/2);
+sigmanoise     = 10^(-SNR_dB/20);
 
 st0             = randn(N,1);
 stdelayed       = zeros(N,M);
@@ -84,11 +79,10 @@ end
 
 C = zeros(K,M,M);
 for ik=1:K, 
-    C(ik,:,:) = ones(M,1)*ones(1,M);
+    C(ik,:,:)=ones(M,1)*ones(1,M);
 end
 CRB = evalCRBwithLOC(xsensor, sigmanoise^2, C , aec, Fs_Hz*(1:K)'/N);
 
-%===== simulation =====
 Lruns           = 300;
 azimuthhat_deg  = zeros(Lruns,1);
 velocityhat_mps = zeros(Lruns,1);

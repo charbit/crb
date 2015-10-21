@@ -40,12 +40,12 @@ for ik=1:K
             dGamma_ik_ellp = dGamma_ik_ellpplus+dGamma_ik_ellpmoins;
             auxFIM  = Gamma_ik\dGamma_ik_ell;
             auxFIMp = Gamma_ik\dGamma_ik_ellp';
-            FIM_ik(ik,ell,ellp) = 0.5*real(trace(auxFIM * auxFIMp));
+            FIM_ik(ik,ell,ellp) = 2*real(trace(auxFIM * auxFIMp));
         end
     end
 end
 % factor 2 because we only add on K=N/2 frequencies dots
-FIMslowness    = squeeze(sum(FIM_ik,1));
+FIMslowness    = 2*squeeze(sum(FIM_ik,1)/M);
 CRB.slowness   = pinv(FIMslowness);
 
 % slowness_spm(1) = cosa*cose/c;
@@ -56,7 +56,7 @@ Jacobaec_k = ([...
     -sina*cose/c -cosa*sine/c -cosa*cose/c/c; ...
      cosa*cose/c -sina*sine/c -sina*cose/c/c;...
     0 cose/c -sine/c/c]);
-CRB.aec =  (Jacobaec_k\CRB.slowness)/Jacobaec_k';
+CRB.aec = Jacobaec_k * CRB.slowness *Jacobaec_k';
 
 % as v=c/cos(e)
 % slowness_spm(1) = cosa/v;
@@ -64,11 +64,11 @@ CRB.aec =  (Jacobaec_k\CRB.slowness)/Jacobaec_k';
 % slowness_spm(3) = tane/v;
 
 v = c/cose;
-Jacobav_k = ([...
+Jacobav_k = inv([...
     -sina/v -cosa/v/v 0; ...
      cosa/v -sina/v/v 0;...
      0 -sine/cose/v/v 1/cose/cose/v ...
      ]);
  
-CRBaux = (Jacobav_k \ CRB.slowness) / Jacobav_k';
+CRBaux = Jacobav_k * CRB.slowness *Jacobav_k';
 CRB.av = CRBaux(1:2,1:2);
