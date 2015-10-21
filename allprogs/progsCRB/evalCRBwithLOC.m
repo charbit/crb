@@ -56,8 +56,17 @@ Jacobaec_k = ([...
     -sina*cose/c -cosa*sine/c -cosa*cose/c/c; ...
      cosa*cose/c -sina*sine/c -sina*cose/c/c;...
     0 cose/c -sine/c/c]);
-FIM.aec = Jacobaec_k*FIM.slowness*Jacobaec_k';
+FIM.aec = Jacobaec_k'*FIM.slowness*Jacobaec_k;
 CRB.aec = pinv(FIM.aec);
 
+% as v=c/cos(e)
+% slowness_spm(1) = cosa/v;
+% slowness_spm(2) = sina/v;
+% slowness_spm(3) = sine/c;
 
-
+v = c/cose;
+Jacobav_k = ([...
+    -sina/v -cosa/v/v; ...
+     cosa/v sina/v/v]);
+FIM.av = Jacobav_k * FIM.slowness * Jacobav_k';
+CRB.av = pinv(FIM.av);
