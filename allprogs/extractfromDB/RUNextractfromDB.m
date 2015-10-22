@@ -1,9 +1,11 @@
 %=============== settings.m ======================================
 clear
-
-% addpath   ../ZZtoolbox/
-
-addpath('/Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/00pierrick/');
+switch computer
+    case 'GLNXA64'
+        addpath /dvlscratch/SHI/users/charbit/ProjectIMS2015b/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/00pierrick/
+otherwise
+    addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/00pierrick/
+end
 %========== matlab format files are saved into the following directory
 savedirnamefull      ='../AAdataI37/';
 %=== temporary files
@@ -32,10 +34,10 @@ yearend     =  '2014';
 monthend    =  '08';
 HMSend      = '23:50:10';
 
-for ihc=0
+for ihc=1:9
 %     stations    = sprintf(' (''I37H%i'',''I37C%i'') ',ihc,ihc);
     stations    = sprintf(' (''I37H%i'') ',ihc);
-    for daystart_num    =  28 %1:2:25
+    for daystart_num    =  26 %1:2:25
         if daystart_num<10
             daystart    = ['0' num2str(daystart_num)];
             if daystart_num==9

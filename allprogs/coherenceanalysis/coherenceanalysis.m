@@ -2,10 +2,12 @@
 clear
 allcolors = ['b.';'r.';'m.';'c.';'g.';'k.';'rx';'yx';'mx';'rx';'kx';...
     'c.';'k.';'r.';'c.';'m.';'g.';'b.';'k.';'r.';'c.';'m.';'g.';'k.'];
-
-
-% addpath /dvlscratch/SHI/users/charbit/ProjectIMS2015b/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
-addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
+switch computer
+    case 'GLNXA64'
+        addpath /dvlscratch/SHI/users/charbit/ProjectIMS2015b/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
+otherwise
+    addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
+end
 directorydatafromIDC  = '../AAdataI37/';
 
 %==========================================================================
@@ -14,7 +16,7 @@ directorydatafromIDC  = '../AAdataI37/';
 % meaning station number 1, year 2015, days 239 and 240
 % these data have been extracted from IDC testbed
 %==========================================================================
-filenames              = dir(sprintf('%ssta*.mat',directorydatafromIDC));
+filenames              = dir(sprintf('%ssta*240.mat',directorydatafromIDC));
 nbfiles                = length(filenames);
 Fs_Hz                  = 20;%records{ir}.Fs_Hz;
 Ts_sec                 = 1/Fs_Hz;
@@ -89,13 +91,13 @@ for indexofSTA1 = 1:nbfiles-1
         if and(st1<st2,et1<et2)
             ids1 = fix((st2-st1)*Fs_Hz)+1;
             ide2 = fix((et2-et1)*Fs_Hz)+1;
-            signal1 = signal2(ids1:end);
+            signal1 = signal1(ids1:end);
             signal2 = signal2(1:end-ide2+1);
         end
         signal1_centered=signal1-ones(size(signal1,1),1)*mean(signal1);
         signal2_centered=signal2-ones(size(signal2,1),1)*mean(signal2);
         
-        taustationary_sec = 2000 ;
+        taustationary_sec = 500 ;
         ratioDFT2SCP = 5;
         Tfft_sec     = taustationary_sec/ratioDFT2SCP;
         Lfft         = fix(Tfft_sec*Fs_Hz);
@@ -108,25 +110,52 @@ for indexofSTA1 = 1:nbfiles-1
 end
 allMSCsort = allMSC(indsortdistance);
 %%
-bandwidth_Hz = [0.02 3];
-id1 = find(frqsFFT_Hz<bandwidth_Hz(1),1,'last');
-id2 = find(frqsFFT_Hz<bandwidth_Hz(2),1,'last');
+bandwidth_Hz = [0.02 0.07];
+id1 = find(frqsFFT_Hz<=bandwidth_Hz(1),1,'last');
+id2 = find(frqsFFT_Hz<=bandwidth_Hz(2),1,'last');
 
-listfreq=(id1:id2);
-Lf = length(listfreq);
+listindfreq=(id1:id2);
+Lf = length(listindfreq);
 slope = zeros(Lf,2);
 allMSC10 = zeros(combi,1);
 for ifreq=1:Lf
-    freq_ii = listfreq(ifreq);
+    freq_ii = listindfreq(ifreq);
     for ip=1:combi
-        allMSC10(ip) = (mean(allMSCsort{ip}(freq_ii,:)));
+        allMSC10(ip) = (mean(allMSCsort{ip}(freq_ii,allMSCsort{ip}(freq_ii,:)>0.2)));
     end
-    alphareg = [ones(combi,1) sortdistances]\allMSC10;
-    slope(ifreq,:) = alphareg ;%.* frqsFFT_Hz(freq_ii)  ;
+ 
+%   plot(sortdistances,allMSC10,'x')
+%   title(sprintf('freq = %5.2f',frqsFFT_Hz(freq_ii)))
+%   pause
+    logallMSC = log(allMSC10);
+    HH        = [ones(length(sortdistances),1) sortdistances]; %
+    alphareg  = HH \ logallMSC;
+    slope(ifreq,:) = alphareg;%  ;
+    figure(2)
+    subplot(211)
+    plot(sortdistances, [HH*alphareg logallMSC],'.-')
+    hold on
+    subplot(212)
+    plot(sortdistances, abs(logallMSC-HH*alphareg) ./ abs(logallMSC))
+    hold on
 end
+figure(2)
+    subplot(211)
+hold off
+    subplot(212)
+hold off
 figure(1)
-plot(frqsFFT_Hz(listfreq),(slope(:,1)),'.-')
+% subplot(211)
+plot(frqsFFT_Hz(listindfreq)',-slope(:,2)','.-');% .* frqsFFT_Hz(listindfreq)
+
+[ones(Lf,1) frqsFFT_Hz(listindfreq)']\slope(:,2)
 grid on
+% subplot(212)
+% semilogx(frqsFFT_Hz(listindfreq)',slope(:,2)' ./ frqsFFT_Hz,'.-')
+% grid on
+% subplot(313)
+% semilogx(frqsFFT_Hz(listindfreq)',slope(:,3)','.-')
+% grid on
 %         figure(indexofSTA2)
 %         pcolor(time_sec.SD/60/60, frqsFFT_Hz(1:400),allMSC(1:400,:))
 %         shading flat
