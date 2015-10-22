@@ -18,12 +18,27 @@ filenames              = dir(sprintf('%ssta*.mat',directorydatafromIDC));
 nbfiles                = length(filenames);
 Fs_Hz                  = 20;%records{ir}.Fs_Hz;
 Ts_sec                 = 1/Fs_Hz;
+xsensors               = extractstationlocations(37,31);
+Msensors               = size(xsensors.coordinates,1);
 
+cp = 0;
+combi = Msensors*(Msensors-1)/2;
+distances = zeros(combi,1);
+for i1=1:Msensors-1
+    for i2=i1+1:Msensors
+        cp=cp+1;
+        distances(cp) = norm(xsensors.coordinates(i1,:)-...
+            xsensors.coordinates(i2,:));
+    end
+end
+[sortdistances, indsortdistance] = sort(distances);
+allMSC = cell(combi,1);
+cp=0;
 %=====================
-for indexofSTA1 = 1%:nbfiles-1
+for indexofSTA1 = 1:nbfiles-1
     
-    for indexofSTA2 = 3%:nbfiles%indexofSTA1+1:2%nbfiles
-        
+    for indexofSTA2 = indexofSTA1+1:nbfiles
+        cp = cp+1;
         filename1_ii = filenames(indexofSTA1).name;
         cdload1 = sprintf('sig1 = load(''%s%s'');',directorydatafromIDC,filename1_ii);
         eval(cdload1)
@@ -49,8 +64,7 @@ for indexofSTA1 = 1%:nbfiles-1
                 LL2_max=length(sig2.records{ir}.data);
             end
         end
-        signal2 = [sig2.records{ir2save}.data];
-        
+        signal2 = [sig2.records{ir2save}.data];        
         st1 = sig1.records{ir1save}.stime;
         st2 = sig2.records{ir2save}.stime;
         et1 = sig1.records{ir1save}.etime;
@@ -81,22 +95,41 @@ for indexofSTA1 = 1%:nbfiles-1
         signal1_centered=signal1-ones(size(signal1,1),1)*mean(signal1);
         signal2_centered=signal2-ones(size(signal2,1),1)*mean(signal2);
         
-        taustationary_sec = 400 ;
+        taustationary_sec = 2000 ;
         ratioDFT2SCP = 5;
-        Tfft_sec  = taustationary_sec/ratioDFT2SCP;
-        Lfft      = fix(Tfft_sec*Fs_Hz);
-        
-        GREF = ones(Lfft,1);
-        
+        Tfft_sec     = taustationary_sec/ratioDFT2SCP;
+        Lfft         = fix(Tfft_sec*Fs_Hz);
+        GREF         = ones(Lfft,1);
         [allSDs, time_sec, frqsFFT_Hz] = ...
             estimSDs(signal1_centered,signal2_centered,GREF,0.5, ...
             ratioDFT2SCP, 0, Fs_Hz, 'hann');
-        allMSC = [allSDs.MSC];
-        figure(indexofSTA2)
-        pcolor(time_sec.SD/60/60, frqsFFT_Hz(1:400),allMSC(1:400,:))
-        shading flat
-        set(gca,'yscale','log')
-        colorbar
+        allMSC{cp} = [allSDs.MSC];
     end
 end
+allMSCsort = allMSC(indsortdistance);
+%%
+bandwidth_Hz = [0.02 3];
+id1 = find(frqsFFT_Hz<bandwidth_Hz(1),1,'last');
+id2 = find(frqsFFT_Hz<bandwidth_Hz(2),1,'last');
+
+listfreq=(id1:id2);
+Lf = length(listfreq);
+slope = zeros(Lf,2);
+allMSC10 = zeros(combi,1);
+for ifreq=1:Lf
+    freq_ii = listfreq(ifreq);
+    for ip=1:combi
+        allMSC10(ip) = (mean(allMSCsort{ip}(freq_ii,:)));
+    end
+    alphareg = [ones(combi,1) sortdistances]\allMSC10;
+    slope(ifreq,:) = alphareg ;%.* frqsFFT_Hz(freq_ii)  ;
+end
+figure(1)
+plot(frqsFFT_Hz(listfreq),(slope(:,1)),'.-')
+grid on
+%         figure(indexofSTA2)
+%         pcolor(time_sec.SD/60/60, frqsFFT_Hz(1:400),allMSC(1:400,:))
+%         shading flat
+%         set(gca,'yscale','log')
+%         colorbar
 
