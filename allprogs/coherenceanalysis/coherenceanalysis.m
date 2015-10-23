@@ -8,159 +8,107 @@ switch computer
 otherwise
     addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
 end
-directorydatafromIDC  = '../AAdataI37/';
-load('../sensorlocation/I37.mat');
 
-%==========================================================================
-% the data are in a file with the name built as:
-%                  sta1_Y2015_D239.mat
-% meaning station number 1, year 2015, days 239 and 240
-% these data have been extracted from IDC testbed
-%==========================================================================
-filenames              = dir(sprintf('%ssta*240.mat',directorydatafromIDC));
+stationnumber         = 37;
+directorydatafromIDC  = sprintf('../AAdataI%i/',stationnumber);
+
+filenames              = dir(sprintf('%s*.mat',directorydatafromIDC));
 nbfiles                = length(filenames);
-Fs_Hz                  = 20;%records{ir}.Fs_Hz;
+Fs_Hz                  = 20;
 Ts_sec                 = 1/Fs_Hz;
 
-Msensors               = size(xsensors_m.coordinates,1);
+ifile = 3;
+filename1_ii = filenames(ifile).name;
+cdload = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
+eval(cdload)
 
+xsensors_m = observations.xsensors_m.coordinates;
+Msensors   = size(xsensors_m,1);
 cp = 0;
 combi = Msensors*(Msensors-1)/2;
 distances = zeros(combi,1);
 for i1=1:Msensors-1
     for i2=i1+1:Msensors
         cp=cp+1;
-        distances(cp) = norm(xsensors_m.coordinates(i1,:)-...
-            xsensors_m.coordinates(i2,:));
+        distances(cp) = norm(xsensors_m(i1,:)-xsensors_m(i2,:));
     end
 end
 [sortdistances, indsortdistance] = sort(distances);
+% orientations = zeros(combi,1);
+% for i1=1:Msensors-1
+%     for i2=i1+1:Msensors
+%         cp=cp+1;
+%         orientations(cp) = atan((xsensors_m(i1,2)-xsensors_m(i2,2)) / >>>
+%         (xsensors_m(i1,2)-xsensors_m(i2,2));
+%     end
+% end
+% [sortdistances, indsortdistance] = sort(distances);
 
 signals = cell(Msensors,1);
 stime = zeros(Msensors,1);
 etime = zeros(Msensors,1);
 
-for im=1:Msensors
-    filename1_ii = filenames(im).name;
-    cdload = sprintf('sig = load(''%s%s'');',directorydatafromIDC,filename1_ii);
-    eval(cdload)
-    Lrecords   = length(sig.records);
-    LL_max=0;
-    for ir =1:Lrecords
-        if length(sig.records{ir}.data)>LL_max
-            irsave = ir;
-            LL_max=length(sig.records{ir}.data);
-        end
-    end
-    signals{im} = [sig.records{irsave}.data];
-    stime(im) = sig.records{irsave}.stime;
-    etime(im) = sig.records{irsave}.etime;
-end
-stimeMAX = max(stime);
-etimeMIN = min(etime);
-signalsproc = cell(Msensors,1);
 
-for im=1:Msensors
-    Lim = length(signals{im});
-    if stime(im)<=stimeMAX, ds = fix((stimeMAX-stime(im))*Fs_Hz)+1; end
-    if etime(im)>=etimeMIN, de = fix((etime(im)-etimeMIN)*Fs_Hz); end
-    signalsproc{im} = signals{im}(ds:Lim-de);
-end
-LSIG =size([signalsproc{:}],1);
+LSIG = size(observations.data,1);
 SIG = zeros(LSIG,Msensors);
 for im=1:Msensors
-    SIG(:,im) = [signalsproc{im}];
+    SIG(:,im) = observations.data(:,im);
 end
-clear signalsproc
-clear signals
 
 allMSC = cell(combi,1);
 
+bandwidthFilter_Hz  = [0.02 0.2];
+[forward,  reverse] = butter(2,2*bandwidthFilter_Hz/Fs_Hz);
+for im = 1:Msensors
+    SIG(:,im)       = filtfilt(forward,reverse,SIG(:,im));
+end
 cp=0;
 %=====================
 for im1 = 1:Msensors-1
     for im2 = im1+1:Msensors
         cp = cp+1;
-%         filename1_ii = filenames(indexofSTA1).name;
-%         cdload1 = sprintf('sig1 = load(''%s%s'');',directorydatafromIDC,filename1_ii);
-%         eval(cdload1)
-%         Lrecords1   = length(sig1.records);
-%         LL1_max=0;
-%         for ir =1:Lrecords1
-%             if length(sig1.records{ir}.data)>LL1_max
-%                 ir1save = ir;
-%                 LL1_max=length(sig1.records{ir}.data);
-%             end
-%         end
-%         signal1 = [sig1.records{ir1save}.data];
-% 
-%         filename2_ii = filenames(indexofSTA2).name;
-%         cdload2 = sprintf('sig2 = load(''%s%s'');',directorydatafromIDC,filename2_ii);
-%         eval(cdload2)
-%         Lrecords2   = length(sig2.records);
-%         LL2_max=0;
-%         for ir =1:Lrecords2
-%             if length(sig2.records{ir}.data)>LL2_max
-%                 ir2save = ir;
-%                 LL2_max=length(sig2.records{ir}.data);
-%             end
-%         end
-%         signal2 = [sig2.records{ir2save}.data];        
-%         st1 = sig1.records{ir1save}.stime;
-%         st2 = sig2.records{ir2save}.stime;
-%         et1 = sig1.records{ir1save}.etime;
-%         et2 = sig2.records{ir2save}.etime;
-%         
-%         if and(st1>=st2,et1>=et2)
-%             ids2 = fix((st1-st2)*Fs_Hz)+1;
-%             ide1 = fix((et1-et2)*Fs_Hz)+1;
-%             signal1 = signal1(1:end-ide1+1);
-%             signal2 = signal2(ids2:end);
-%         end
-%         if and(st1>=st2,et1<et2)
-%             ids2 = fix((st1-st2)*Fs_Hz)+1;
-%             ide2 = fix((et2-et1)*Fs_Hz)+1;
-%             signal2 = signal2(ids2:end-ide2+1);
-%         end
-%         if and(st1<st2,et1>=et2)
-%             ids1 = fix((st2-st1)*Fs_Hz)+1;
-%             ide1 = fix((et1-et2)*Fs_Hz)+1;
-%             signal1 = signal1(ids1:end-ide1+1);
-%         end
-%         if and(st1<st2,et1<et2)
-%             ids1 = fix((st2-st1)*Fs_Hz)+1;
-%             ide2 = fix((et2-et1)*Fs_Hz)+1;
-%             signal1 = signal1(ids1:end);
-%             signal2 = signal2(1:end-ide2+1);
-%         end
         signal1_centered=SIG(:,im1)-ones(LSIG,1)*mean(SIG(:,im1));
         signal2_centered=SIG(:,im2)-ones(LSIG,1)*mean(SIG(:,im2));
-        
         taustationary_sec = 500 ;
         ratioDFT2SCP = 5;
         Tfft_sec     = taustationary_sec/ratioDFT2SCP;
         Lfft         = fix(Tfft_sec*Fs_Hz);
         GREF         = ones(Lfft,1);
         [allSDs, time_sec, frqsFFT_Hz] = ...
-            estimSDs(signal1_centered,signal2_centered,GREF,0.5, ...
+            estimSCP(signal1_centered,signal2_centered,GREF,0.5, ...
             ratioDFT2SCP, 0, Fs_Hz, 'hann');
         allMSC{cp} = [allSDs.MSC];
     end
 end
 allMSCsort = allMSC(indsortdistance);
 %%
-bandwidth_Hz = [0.02 0.12];
+addfig = 20;
+
+bandwidth_Hz = [0.02 0.11];
+
 id1 = find(frqsFFT_Hz<=bandwidth_Hz(1),1,'last');
 id2 = find(frqsFFT_Hz<=bandwidth_Hz(2),1,'last');
 
 listindfreq=(id1:id2);
+frqsselected = frqsFFT_Hz(id1:id2);
+
+
+figure(1+addfig)
+
+for ip=1:combi
+    subplot(7,7,ip)
+    pcolor(time_sec.SD/3600,frqsselected, allMSCsort{ip}(id1:id2,:))
+    shading flat
+end
+
+
 Lf = length(listindfreq);
 slope = zeros(Lf,2);
 allMSC10 = zeros(combi,1);
 for ifreq=1:Lf
     freq_ii = listindfreq(ifreq);
     for ip=1:combi
-        allMSC10(ip) = (mean(allMSCsort{ip}(freq_ii,allMSCsort{ip}(freq_ii,:)>0.2)));
+        allMSC10(ip) = (mean(allMSCsort{ip}(freq_ii,allMSCsort{ip}(freq_ii,:)>0.)));
     end
  
 %   plot(sortdistances,allMSC10,'x')
@@ -170,7 +118,7 @@ for ifreq=1:Lf
     HH        = [ones(length(sortdistances),1) sortdistances]; %
     alphareg  = HH \ logallMSC;
     slope(ifreq,:) = alphareg;%  ;
-    figure(2)
+    figure(2+addfig)
     subplot(211)
     plot(sortdistances, [HH*alphareg logallMSC],'.-')
     hold on
@@ -178,12 +126,12 @@ for ifreq=1:Lf
     plot(sortdistances, abs(logallMSC-HH*alphareg) ./ abs(logallMSC))
     hold on
 end
-figure(2)
+figure(2+addfig)
     subplot(211)
 hold off
     subplot(212)
 hold off
-figure(1)
+figure(3+addfig)
 % subplot(211)
 plot(frqsFFT_Hz(listindfreq)',-slope(:,2)','.-');% .* frqsFFT_Hz(listindfreq)
 

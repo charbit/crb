@@ -31,6 +31,7 @@ disp('***************************************************************')
 disp('***************** convert to Matlab format ********************')
 %====================== Convert to Matlab
 filewfdisc      = sprintf('%sgparse.wfdisc',temporary_gparse_dir);
-filenamesavemat = convertCSStomatlab(filewfdisc,savedirnamefull);
-%====================== end ============================
 
+[filenamesavemat, records{ihc+1}, samprate] = ...
+    convertCSStomatlab(filewfdisc,savedirnamefull);
+%====================== end ============================
