@@ -1,44 +1,52 @@
-function xsensors = extractstationlocations(numselect,zone)
+function xsensors_m = extractstationlocations()
 data=importdata('Export (3).xls');
 [nbraw,nbcol] = size(data);
 stations = data(2:nbraw,1);
-xsensors.name        = cell(nbraw-1,1);
-xsensors.coordinates = zeros(nbraw-1,3);
-cp=0;
-for ir = 1:nbraw-1
-    if str2double(stations{ir}(2:3))==numselect
-        cp=cp+1;
-        lat  = str2double(data{ir+1,4});
-        lon  = str2double(data{ir+1,5});
-        elev = str2double(data{ir+1,6});
-        hemisphere = 'N';
-        [x,y] = ll2utm (lat,lon, zone, hemisphere);
-        xsensors.coordinates(cp,1:2) = [x,y];
-        xsensors.coordinates(cp,3) = elev*1000;
-        xsensors.name{cp} = stations{ir};
+for numselect=0:37
+    zone = 31;
+    hemisphere = 'N';
+    xsensors_m.name        = cell(nbraw-1,1);
+    xsensors_m.coordinates = zeros(nbraw-1,3);
+    cp=0;
+    for ir = 1:nbraw-1
+        if str2double(stations{ir}(2:3))==numselect
+            cp=cp+1;
+            lat  = str2double(data{ir+1,4});
+            lon  = str2double(data{ir+1,5});
+            elev = str2double(data{ir+1,6});
+            [x,y] = ll2utm (lat,lon, zone, hemisphere);
+            xsensors_m.coordinates(cp,1:2) = [x,y];
+            xsensors_m.coordinates(cp,3) = elev*1000;
+            xsensors_m.name{cp} = stations{ir};
+        end
+    end
+    if not(cp==0)
+        xsensors_m.coordinates = xsensors_m.coordinates(1:cp,:);
+        xsensors_m.coordinates = xsensors_m.coordinates-ones(cp,1)*xsensors_m.coordinates(1,:);
+        xsensors_m.name = xsensors_m.name(1:cp);
+        eval(sprintf('save %s xsensors_m',xsensors_m.name{1}(1:3)))
     end
 end
-xsensors.coordinates = xsensors.coordinates(1:cp,:);
-xsensors.coordinates = xsensors.coordinates-ones(cp,1)*xsensors.coordinates(1,:);
-xsensors.name = xsensors.name(1:cp);
 
+
+%============================================================
 function [x,y] = ll2utm (lat,lon, zone, hemisphere)
 %============================================================
-% LL2UTM		           
-%        Conversion (latitude,longitude) 
+% LL2UTM
+%        Conversion (latitude,longitude)
 %          en coordonnees UTM planaires
 % SYNOPSIS
 %	[x,y] = ll2utm(lat, lon, zone, hemisphere)
 %	lat : latitude en degré
 %   lon : longitude en degré
 %   zone: numero de zone (France en zone 30,31 et 32)
-%   (voir par exemple http://www.dmap.co.uk/utmworld.htm) 
+%   (voir par exemple http://www.dmap.co.uk/utmworld.htm)
 %   hemisphere: 'N' pour Nord et 'S' pour Sud
 %	x,y : coordonnees planaires en UTM
 %   UTM : Universal Transverse Mercator
 %=============================================================
 RADIUS = 6378137;            % rayon de la terre a l'equateur
-FLAT = 1 / 298.257223563;    % applatissement WGS-84 
+FLAT = 1 / 298.257223563;    % applatissement WGS-84
 M0 = 0;                      % en UTM la latitude a l'origine est toujours nulle
 K_0 = 0.9996;                % Facteur d'echelle du meridien central (Central Meridian)
 LARGEUR_ZONE=6;              % intervalle de 6 degres E/O, chacun de 3 degres d'E/O
@@ -48,12 +56,12 @@ DEG2RADS = pi/180;
 %=============================================================
 % qqs verifications
 if (max(abs(lat)) > 90)
-  error('la latitude ne doit pas exceder 90 degre');
-  return;
+    error('la latitude ne doit pas exceder 90 degre');
+    return;
 end
 if ((zone < 1) | (zone > 60))
-  error ('les numeros de zones utm vont uniquement entre 1 a 60');
-  return;
+    error ('les numeros de zones utm vont uniquement entre 1 a 60');
+    return;
 end
 %=====================================
 % qq valeurs intermediaires

@@ -10,7 +10,7 @@ stdvel = zeros(Laz,1);
 aec.e_deg      = 20;
 aec.c_mps      = 340;
 Fs_Hz          = 20;
-SNR_dB         = -15;
+SNR_dB         = -10;
 % T_sec is directly in relationship
 % with the max. of delay through the station, 
 % which is equal to aec.c_mps * 3000m => 10 sec.
@@ -43,7 +43,7 @@ K             = fix(N/2)-1;
 frequency_Hz  = (1:K)'*Fs_Hz/N;
 sigma2noise   = 10^(-SNR_dB/10);
 
-alpha_coh     = 0.002;
+alpha_coh     = 0.01;
 Llistfactor   = 3;
 listfactor    = [200, 1000, 2000];%linspace(500,2000,Llistfactor);
 Llistfactor   = length(listfactor);
@@ -126,7 +126,7 @@ for ifactor=1:Llistfactor
         lambda_k = aec.c_mps/frequency_Hz(ik);
         for im1=1:M
             for im2=1:M
-                C(ik,im1,im2)=exp(-alpha_coh*(sensordistance(im1,im2)) );
+                C(ik,im1,im2)=exp(-alpha_coh*(sensordistance(im1,im2)/lambda_k)^2 );
             end
         end
     end

@@ -9,6 +9,7 @@ otherwise
     addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
 end
 directorydatafromIDC  = '../AAdataI37/';
+load('../sensorlocation/I37.mat');
 
 %==========================================================================
 % the data are in a file with the name built as:
@@ -20,8 +21,8 @@ filenames              = dir(sprintf('%ssta*240.mat',directorydatafromIDC));
 nbfiles                = length(filenames);
 Fs_Hz                  = 20;%records{ir}.Fs_Hz;
 Ts_sec                 = 1/Fs_Hz;
-xsensors               = extractstationlocations(37,31);
-Msensors               = size(xsensors.coordinates,1);
+
+Msensors               = size(xsensors_m.coordinates,1);
 
 cp = 0;
 combi = Msensors*(Msensors-1)/2;
@@ -29,73 +30,111 @@ distances = zeros(combi,1);
 for i1=1:Msensors-1
     for i2=i1+1:Msensors
         cp=cp+1;
-        distances(cp) = norm(xsensors.coordinates(i1,:)-...
-            xsensors.coordinates(i2,:));
+        distances(cp) = norm(xsensors_m.coordinates(i1,:)-...
+            xsensors_m.coordinates(i2,:));
     end
 end
 [sortdistances, indsortdistance] = sort(distances);
+
+signals = cell(Msensors,1);
+stime = zeros(Msensors,1);
+etime = zeros(Msensors,1);
+
+for im=1:Msensors
+    filename1_ii = filenames(im).name;
+    cdload = sprintf('sig = load(''%s%s'');',directorydatafromIDC,filename1_ii);
+    eval(cdload)
+    Lrecords   = length(sig.records);
+    LL_max=0;
+    for ir =1:Lrecords
+        if length(sig.records{ir}.data)>LL_max
+            irsave = ir;
+            LL_max=length(sig.records{ir}.data);
+        end
+    end
+    signals{im} = [sig.records{irsave}.data];
+    stime(im) = sig.records{irsave}.stime;
+    etime(im) = sig.records{irsave}.etime;
+end
+stimeMAX = max(stime);
+etimeMIN = min(etime);
+signalsproc = cell(Msensors,1);
+
+for im=1:Msensors
+    Lim = length(signals{im});
+    if stime(im)<=stimeMAX, ds = fix((stimeMAX-stime(im))*Fs_Hz)+1; end
+    if etime(im)>=etimeMIN, de = fix((etime(im)-etimeMIN)*Fs_Hz); end
+    signalsproc{im} = signals{im}(ds:Lim-de);
+end
+LSIG =size([signalsproc{:}],1);
+SIG = zeros(LSIG,Msensors);
+for im=1:Msensors
+    SIG(:,im) = [signalsproc{im}];
+end
+clear signalsproc
+clear signals
+
 allMSC = cell(combi,1);
+
 cp=0;
 %=====================
-for indexofSTA1 = 1:nbfiles-1
-    
-    for indexofSTA2 = indexofSTA1+1:nbfiles
+for im1 = 1:Msensors-1
+    for im2 = im1+1:Msensors
         cp = cp+1;
-        filename1_ii = filenames(indexofSTA1).name;
-        cdload1 = sprintf('sig1 = load(''%s%s'');',directorydatafromIDC,filename1_ii);
-        eval(cdload1)
-        Lrecords1   = length(sig1.records);
-        LL1_max=0;
-        for ir =1:Lrecords1
-            if length(sig1.records{ir}.data)>LL1_max
-                ir1save = ir;
-                LL1_max=length(sig1.records{ir}.data);
-            end
-        end
-        signal1 = [sig1.records{ir1save}.data];
-        
-        
-        filename2_ii = filenames(indexofSTA2).name;
-        cdload2 = sprintf('sig2 = load(''%s%s'');',directorydatafromIDC,filename2_ii);
-        eval(cdload2)
-        Lrecords2   = length(sig2.records);
-        LL2_max=0;
-        for ir =1:Lrecords2
-            if length(sig2.records{ir}.data)>LL2_max
-                ir2save = ir;
-                LL2_max=length(sig2.records{ir}.data);
-            end
-        end
-        signal2 = [sig2.records{ir2save}.data];        
-        st1 = sig1.records{ir1save}.stime;
-        st2 = sig2.records{ir2save}.stime;
-        et1 = sig1.records{ir1save}.etime;
-        et2 = sig2.records{ir2save}.etime;
-        
-        if and(st1>=st2,et1>=et2)
-            ids2 = fix((st1-st2)*Fs_Hz)+1;
-            ide1 = fix((et1-et2)*Fs_Hz)+1;
-            signal1 = signal1(1:end-ide1+1);
-            signal2 = signal2(ids2:end);
-        end
-        if and(st1>=st2,et1<et2)
-            ids2 = fix((st1-st2)*Fs_Hz)+1;
-            ide2 = fix((et2-et1)*Fs_Hz)+1;
-            signal2 = signal2(ids2:end-ide2+1);
-        end
-        if and(st1<st2,et1>=et2)
-            ids1 = fix((st2-st1)*Fs_Hz)+1;
-            ide1 = fix((et1-et2)*Fs_Hz)+1;
-            signal1 = signal1(ids1:end-ide1+1);
-        end
-        if and(st1<st2,et1<et2)
-            ids1 = fix((st2-st1)*Fs_Hz)+1;
-            ide2 = fix((et2-et1)*Fs_Hz)+1;
-            signal1 = signal1(ids1:end);
-            signal2 = signal2(1:end-ide2+1);
-        end
-        signal1_centered=signal1-ones(size(signal1,1),1)*mean(signal1);
-        signal2_centered=signal2-ones(size(signal2,1),1)*mean(signal2);
+%         filename1_ii = filenames(indexofSTA1).name;
+%         cdload1 = sprintf('sig1 = load(''%s%s'');',directorydatafromIDC,filename1_ii);
+%         eval(cdload1)
+%         Lrecords1   = length(sig1.records);
+%         LL1_max=0;
+%         for ir =1:Lrecords1
+%             if length(sig1.records{ir}.data)>LL1_max
+%                 ir1save = ir;
+%                 LL1_max=length(sig1.records{ir}.data);
+%             end
+%         end
+%         signal1 = [sig1.records{ir1save}.data];
+% 
+%         filename2_ii = filenames(indexofSTA2).name;
+%         cdload2 = sprintf('sig2 = load(''%s%s'');',directorydatafromIDC,filename2_ii);
+%         eval(cdload2)
+%         Lrecords2   = length(sig2.records);
+%         LL2_max=0;
+%         for ir =1:Lrecords2
+%             if length(sig2.records{ir}.data)>LL2_max
+%                 ir2save = ir;
+%                 LL2_max=length(sig2.records{ir}.data);
+%             end
+%         end
+%         signal2 = [sig2.records{ir2save}.data];        
+%         st1 = sig1.records{ir1save}.stime;
+%         st2 = sig2.records{ir2save}.stime;
+%         et1 = sig1.records{ir1save}.etime;
+%         et2 = sig2.records{ir2save}.etime;
+%         
+%         if and(st1>=st2,et1>=et2)
+%             ids2 = fix((st1-st2)*Fs_Hz)+1;
+%             ide1 = fix((et1-et2)*Fs_Hz)+1;
+%             signal1 = signal1(1:end-ide1+1);
+%             signal2 = signal2(ids2:end);
+%         end
+%         if and(st1>=st2,et1<et2)
+%             ids2 = fix((st1-st2)*Fs_Hz)+1;
+%             ide2 = fix((et2-et1)*Fs_Hz)+1;
+%             signal2 = signal2(ids2:end-ide2+1);
+%         end
+%         if and(st1<st2,et1>=et2)
+%             ids1 = fix((st2-st1)*Fs_Hz)+1;
+%             ide1 = fix((et1-et2)*Fs_Hz)+1;
+%             signal1 = signal1(ids1:end-ide1+1);
+%         end
+%         if and(st1<st2,et1<et2)
+%             ids1 = fix((st2-st1)*Fs_Hz)+1;
+%             ide2 = fix((et2-et1)*Fs_Hz)+1;
+%             signal1 = signal1(ids1:end);
+%             signal2 = signal2(1:end-ide2+1);
+%         end
+        signal1_centered=SIG(:,im1)-ones(LSIG,1)*mean(SIG(:,im1));
+        signal2_centered=SIG(:,im2)-ones(LSIG,1)*mean(SIG(:,im2));
         
         taustationary_sec = 500 ;
         ratioDFT2SCP = 5;
@@ -110,7 +149,7 @@ for indexofSTA1 = 1:nbfiles-1
 end
 allMSCsort = allMSC(indsortdistance);
 %%
-bandwidth_Hz = [0.02 0.07];
+bandwidth_Hz = [0.02 0.12];
 id1 = find(frqsFFT_Hz<=bandwidth_Hz(1),1,'last');
 id2 = find(frqsFFT_Hz<=bandwidth_Hz(2),1,'last');
 
