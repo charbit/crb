@@ -50,7 +50,7 @@ for indhc=1:Msensors
     elementtype = xsensors_m.name{indhc}(4);
     ihc = str2double(xsensors_m.name{indhc}(5));
     stations    = sprintf(' (''I%i%s%i'') ',stationnumber,elementtype, ihc);
-    for daystart_num    = 5 %1:2:25
+    for daystart_num    = 6 %1:2:25
         if daystart_num<10
             daystart    = ['0' num2str(daystart_num)];
             if daystart_num==9
