@@ -190,21 +190,29 @@
 %=======================================================
 
 
-In this study we are interested by the best station design in term of parameter accuracy. In short, in presence of only pure coherent acoustic waves, it is clear that the best design is to locate sensors at far as possible. For which reason could we take into account an upper bound on the aperture ? Regarding the size of the station and the distance of the source, the only parameter which can induce a limitation on the previous design is the possible loss of coherence on distant pairs of sensors.
+In this study we are interested by the station design in term of parameter accuracy. In short, in presence of only pure coherent acoustic waves, it is clear that the best design is to locate sensors at far as possible. For which reason could we take into account an upper bound on the aperture ? Regarding the size of the station and the distance of the source, the only parameter which can induce a limitation on the previous design is the possible loss of coherence on distant pairs of sensors, in presence of coherent signal. By definition, two signals arriving on a two different locations are said non-coherent signals, or simply noises, if they are uncorrelated.
 
-Therefore to determine a good design, it is necessary to take into account the trade-off between the distance and the loss of coherence. A very naive model consists to take:
+Therefore to determine a good design, it is necessary to take into account the trade-off between the distance and the possible loss of coherence. A very naive model consists to take:
 \begin{eqnarray*}
  \loc(f) &=& e^{-\alpha \frac{d}{\lambda}}%e^{-\alpha df/c}
 \end{eqnarray*}
 where $\lambda$ denotes the wavelength and $d$ the distance between 2 sensors. If $\alpha=0$ there is no loss of coherence. This very simple model has to be validated but here we assume that it is.
 
 \begin{remark}[on the noise]
-Typical station aperture  is 2 km. Therefore assuming that the noise has the same level on each sensor is unrealistic. However the noise level is not directly related to the inter-distances between sensors. It follows that, for the station design understanding, we can consider that the noise levels are identical on all sensors. 
+Typical station aperture  is 2 km. Noise is mainly due to the wind.
+\begin{itemize}
+\item
+Therefore we assume that the noises are spatially uncorrelated regarding the sensor inter-distances.
+\item
+On the other hand, we assume that the noise levels are identical on all sensors. Although that is not realistic, it is worth to notice that the noise level is not directly related to the inter-distances between sensors. It follows that, for the station design understanding, we can consider there is no loss of generalities to assume that.
+\end{itemize}
 \end{remark}
 
-
+\begin{remark}[on the coherent source]
+To be able to study the LOC, we need a permanent source. The microbarom plays this role in the following.
+\end{remark}
 %=======================================================
- \section{Introduction}
+ \section{LOC model}
 %=======================================================
 %=======================================================
 
@@ -213,10 +221,20 @@ We consider a station with $M$ sensors. There is only one acoustic source farawa
 \begin{eqnarray*}
 x(t) & = & \underbrace{s(t;\theta)}_{\text{acoustic signal}}+ \underbrace{w(t)}_{\text{noise}}
 \end{eqnarray*}
-where $\theta$ denotes the 3D slowness vector. Under assumption of pure delay, and therefore in full coherence, we can write for the $m$-th sensor located in $r_{m}$:
-\begin{eqnarray*}
+where $\theta$ denotes the 3D slowness vector. Under assumption of pure delay we can write for the $m$-th sensor located in $r_{m}$:
+\begin{eqnarray}
+\label{eq:mthentryofst}
 s_{m}(t;\theta)&=&s(t-r_{m}^{T}\theta)
+\end{eqnarray}
+It follows  that, under the assumption  that $s(t)$ is stationary random process with spectral density $\gamma_{s}(f)$, the spectral matrix of the $M$-ary process $s(t)$, whose the $m$-th entry is \eqref{eq:mthentryofst}, writes:
+\begin{eqnarray*}
+\Gamma_{s}(f)&=&\gamma_{s}(f)d(f)d^{H}(f)
 \end{eqnarray*}
+where $d(f)$ is a $M$-ary vector whose the $m$-entry writes $e^{-2j\pi fr_{m}^{T}\theta}$. Clearly the matrix $\Gamma_{s}(f)$ is of rank 1, and that is the definition of the coherence. Loss of coherence (LOC) means that $\Gamma_{s}(f)$ is of rank greater than 1.
+
+
+\subsubsection{Discrete domain}
+
 All signals are real and sampled at the sampling frequency  $F_{s}=20$ Hz. After sampling we obtain $x_{n}=x(n/F_{s})$. For $k=0$ to $(N-1)$ we consider the $M$-ary discrete Fourier transform:
  \begin{eqnarray*}
  X_{k}&=&\frac{1}{\sqrt{N}}\sum_{n=0}^{N-1}x_{n}\,e^{-2j\pi n f_{k}}
@@ -227,46 +245,58 @@ We let $K=N/2$.
 For $K$ great enough, $X_{1}$, $\ldots$, $X_{K}$ is a sequence of  $M$-ary independent circularly gaussian random vectors with zero-mean and respective covariance:
 \begin{eqnarray}
 \label{eq:spectralmatrixpuredelay}
-\Gamma_{k}(\alpha)&=&d_{k}(\theta)d_{k}^{H}(\theta)+\sigma^{2}I_{M}
+\Gamma_{k}(\alpha)&=&\gamma_{k}d_{k}(\theta)d_{k}^{H}(\theta)+\sigma^{2}I_{M}
 %\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
 \end{eqnarray}
-where $d_{k}(\theta)$ is an $M$-ary vector whose the $m$-th entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$.
+where $d_{k}(\theta)$ is an $M$-ary vector whose the $m$-th entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$ and where $\gamma_{k}=\gamma_{s}(f_{k})$.
 
-Under LOC, the expression \eqref{eq:spectralmatrixpuredelay} can be rewritten:
+The expression \eqref{eq:spectralmatrixpuredelay} can be rewritten:
 \begin{eqnarray}
 \label{eq:spectralmatrixLOC}
-\Gamma_{k}(\alpha)&=&D_{k}(\theta)\, C_{k}\,D_{k}^{H}(\theta)+\sigma^{2}I_{M}
+\Gamma_{k}(\alpha)&=&\gamma_{k}D_{k}(\theta)\, C_{k}\,D_{k}^{H}(\theta)+\sigma^{2}I_{M}
 %\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
 \end{eqnarray}
-where $D_{k}(\theta)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$. $C_{k}$ is a matrix taking into account the LOC. Typically in the absence of LOC, $C_{k}$ is a rank 1 matrix that writes $C_{k}=\mathds{1}\mathds{1}^{T}$ and \eqref{eq:spectralmatrixLOC} leads back to \eqref{eq:spectralmatrixpuredelay}. In the following we assume that 
+where $D_{k}(\theta)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$ and where $C_{k}=\mathds{1}\mathds{1}^{T}$ which is a rank 1 matrix.
+
+
+Under LOC, $C_{k}$ is no more a rank 1 projector.  In the following to take into account the LOC we consider that 
 \begin{eqnarray*}
  C_{k,\ell\ell'} (\beta)&=&e^{-\beta \frac{d_{\ell,\ell'}}{\lambda_{k}}}=e^{-\beta \frac{d_{\ell,\ell'}f_{k}}{c}}
 \end{eqnarray*}
-where $\lambda=c/f$ is the wavelength, $d_{\ell,\ell'}$ the distance between 2 locations $\ell$ and $\ell'$ in the 3D space, and $\beta$ a positive constant. For $\beta=0$, $C(\beta)=\mathds{1}\mathds{1}^{T}$ leading to a perfect coherence. If $\beta\approx+\infty$, $C(\beta)=I_{M}$ and there is full absence of coherence between any 2 locations.
+where $\lambda_{k}=c/f_{k}$ is the wavelength, $d_{\ell,\ell'}$ the distance between 2 locations $\ell$ and $\ell'$ in the 3D space, and $\beta$ a positive constant. For $\beta=0$, $C(\beta)=\mathds{1}\mathds{1}^{T}$ leading to a perfect coherence. If $\beta\approx+\infty$, $C(\beta)=I_{M}$ and there is no coherence between any 2 locations.
 
+Summarizing   we can write that:
+\begin{eqnarray*}
+ (X_{1},\ldots,X_{K}) &\sim&\prod_{k=1}^{K}\mathcal{N}_{c}(x_{k};0_{M},\Gamma_{k}(\alpha))
+\end{eqnarray*}
+and the likelihood writes:
+\begin{eqnarray}
+ \mathcal{L}(\alpha)&=&
+ \sum_{k=1}^{K}\log\det\Gamma_{k}(\alpha)+\trace{\Gamma_{k}^{-1}(\alpha)X_{k}X_{k}^{T}}
+\end{eqnarray}
+where the parameter $\alpha$ consists of
+\begin{eqnarray}
+\alpha&=&
+\{
+\gamma_{1},\ldots,\gamma_{K},\theta_{1},\theta_{2},\theta_{3},\beta,\sigma^{2}
+\}
+\in \mathds{R}^{+K}\times  \mathds{R}^{3}\times \mathds{R}^{+}\times \mathds{R}^{+}
+\end{eqnarray}
+Its size is $K+5$.
 
+\begin{remark}
+To avoid intractable computation, we assume in the following that $\gamma_{1},\ldots,\gamma_{K},\beta$ are known, leading to an uncertainty on only $\theta_{1}$, $\theta_{2}$, $\theta_{3}$ and $\sigma^{2}$. Now the unknown parameter has dimension 4.
+\end{remark}
 %=======================================================
  \section{Cramer-Rao}
 %=======================================================
 %=======================================================
-We use the following result:
-\begin{itemize}
-\item
- $X_{1}$, $\ldots$, $X_{K}$ is a sequence of  $M$-ary independent circularly gaussian random $M$-ary vectors with zero-mean and respective covariance:
-\begin{eqnarray*}
-\Gamma_{k}&=&D_{k}(\theta)C_{k}(\beta)D_{k}^{H}(\theta)+\sigma^{2}I_{M}
-%\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
-\end{eqnarray*}
-\item
-the parameter of interest is $\mu=\{\theta_{1},\theta_{2},\theta_{3},\sigma^{2}\}$. Here we consider that $\beta$ is known.
-\end{itemize}
-
-In this case the Fisher information matrix  associated to the parameter $\theta=\{\theta_{1},\theta_{2},\theta_{3}\}$ writes:
+The $(\ell,\ell')$ entry of the Fisher information matrix  associated to the parameter $\alpha$ writes:
 \begin{eqnarray}
  \label{eq:FIM}
-\fim_{\ell,\ell'}(\theta)&=&\frac{1}{\sigma^{2}}\sum_{k=1}^{K}\trace{\Gamma_{k}^{-1}\times\partial_{\ell}\Gamma_{k}\times\Gamma_{k}^{-1}\times\partial_{\ell'}\Gamma_{k}}
+\fim_{\ell,\ell'}(\alpha)&=&\sum_{k=1}^{K}\trace{\Gamma_{k}^{-1}\times\partial_{\ell}\Gamma_{k}\times\Gamma_{k}^{-1}\times\partial_{\ell'}\Gamma_{k}}
 \end{eqnarray}
-where $\ell,\ell'\in\{1,2,3\}$ and where $\partial_{\ell}\Gamma_{k}$ is the partial derivative w.r.t. $\theta_{\ell}$. It is clear that the CRB terms relative to the correlation of $\theta$ and $\sigma^{2}$ are 0. We let:
+where $\ell,\ell'\in\{1,2,3,4\}$ and where $\partial_{\ell}\Gamma_{k}$ is the partial derivative w.r.t. $\theta_{1}$, $\theta_{2}$, $\theta_{3}$ and $\sigma^{2}$.  It is clear that the CRB terms relative to the correlation of $\theta$ and $\sigma^{2}$ are 0. We let:
 \begin{eqnarray*}
  d_{k,\ell}(\theta)&=&
   \begin{bmatrix}
@@ -277,15 +307,21 @@ where $\ell,\ell'\in\{1,2,3\}$ and where $\partial_{\ell}\Gamma_{k}$ is the part
   -2j\pi f_{k} r_{M,\ell}\,e^{-2j\pi f_{k}r_{M}^{T}\theta}
   \end{bmatrix}
 \end{eqnarray*}
-Then 
+Then for $\ell=1,2,3$:
 \begin{eqnarray*}
-\partial_{\ell}\Gamma_{k}&=&
+\partial_{\ell}\Gamma_{k}&=&\gamma_{k}
    \diag{d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)+
    D_{k}(\theta)C_{k}(\beta) \diag{d_{k,\ell}(\theta)}^{H}
    \\
    &=&2\, \mathcal{R}\left(
    \diag{d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)\right)
 \end{eqnarray*}
+and
+\begin{eqnarray*}
+\partial_{4}\Gamma_{k}&=&I_{M}
+\end{eqnarray*}
+
+
 It is worth to notice that, if $\beta\approx +\infty$, $C_{k}=I_{M}$ and $\partial_{\ell}\Gamma_{k}=0$ which is normal because in this case $\Gamma_{k}$ does not depend on $\theta$. Using \eqref{eq:FIM} we derived the CRB as
 \begin{eqnarray}
  \label{eq:CRB}
