@@ -96,21 +96,7 @@ switch choix
   -6.833279994535260   1.702617467129603  -0.059000000000000];
 
 end
-    M = size(xsensor0,1);
-%     case 1
-%         nb_capteurs  = 3;
-%         th0          = 0;%pi*rand;
-%         P0           = [cos(th0+2*pi*(0:nb_capteurs-1)'/nb_capteurs) ...
-%                         sin(th0+2*pi*(0:nb_capteurs-1)'/nb_capteurs)];
-%         position_capteurs(:,1:2) = lambda * P0 /sin(pi/nb_capteurs)/4;
-%         %P0'*P0/(nb_capteurs/2)
-%     case 2
-%         position_capteurs = (lambda/2) * [ ...
-%             0  1 ; ...
-%             0 -1 ; ...
-%             -1  0 ];
-%     case 3
-
+M = size(xsensor0,1);
 for ifactor=1:Llistfactor
     factor    = listfactor(ifactor);
     xsensor   = factor * xsensor0;
