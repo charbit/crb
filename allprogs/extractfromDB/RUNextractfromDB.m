@@ -62,6 +62,7 @@ for indhc=1:Msensors
             daystart    = num2str(daystart_num);
             dayend      = num2str(daystart_num+1);
         end
+        dayend = daystart;
         %=== clean temporary files
         commandclean = sprintf('!rm %s/*.*',temporary_gparse_dir);
         eval(commandclean)
