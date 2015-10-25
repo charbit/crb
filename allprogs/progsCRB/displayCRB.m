@@ -10,7 +10,7 @@ stdvel = zeros(Laz,1);
 aec.e_deg      = 20;
 aec.c_mps      = 340;
 Fs_Hz          = 20;
-SNR_dB         = -10;
+SNR_dB         = -15;
 % T_sec is directly in relationship
 % with the max. of delay through the station, 
 % which is equal to aec.c_mps * 3000m => 10 sec.
@@ -43,13 +43,13 @@ K             = fix(N/2)-1;
 frequency_Hz  = (1:K)'*Fs_Hz/N;
 sigma2noise   = 10^(-SNR_dB/10);
 
-alpha_coh     = 0.01;
+alpha_coh     = 0.008;
 Llistfactor   = 3;
 listfactor    = [200, 1000, 2000];%linspace(500,2000,Llistfactor);
 Llistfactor   = length(listfactor);
 
-choix = 6;
-switch choix
+choice = 6;
+switch choice
     case 5
         M               = 8;
         xsensor0        = zeros(M,3);        
@@ -59,7 +59,7 @@ switch choix
         xsensor0(:,1:2) = randn(M,2)/3;
         xsensor0(:,3)   = zeros(M,1);        
     case 1
-        M               = 4;
+        M               = 3;
         aux             = exp(2j*pi*(0:M-1)'/M);
         xsensor0(:,1)   = real(aux);
         xsensor0(:,2)   = imag(aux);
@@ -95,6 +95,10 @@ switch choix
   -6.480990306646564  -5.857643549628555  -0.017000000000000; ...
   -6.833279994535260   1.702617467129603  -0.059000000000000];
 
+% gX = xsensor0';
+% newX = anyarray2isotrop(gX);
+% xsensor0 = newX';
+% 
 end
 M = size(xsensor0,1);
 for ifactor=1:Llistfactor
@@ -133,7 +137,7 @@ for ifactor=1:Llistfactor
     x = RHO * stdaz .* exp(1j*pi*listaz/180);
     plot(x,'.-','color',allcolors(ifactor))
     hold off
-    Mmax = 5;%max(abs(x));
+    Mmax = 4;%max(abs(x));
     set(gca,'xlim',Mmax*[-1,1])
     set(gca,'ylim',Mmax*[-1,1])
     axis('square')
@@ -147,7 +151,7 @@ for ifactor=1:Llistfactor
     x = RHO * stdvel .* exp(1j*pi*listaz/180);
     plot(x,'.-','color',allcolors(ifactor))
     hold off
-    Mmax = 30;
+    Mmax = 25;
     set(gca,'xlim',Mmax*[-1,1])
     set(gca,'ylim',Mmax*[-1,1])
     axis('square')

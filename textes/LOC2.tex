@@ -7,7 +7,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage{pdfpages}
-%============================================
+%====================================
  \textheight 22cm
 % \doublespace
   \oddsidemargin -0.5cm
@@ -20,7 +20,7 @@
 \newcommand{\figsstit}[2]{
 \begin{figure}[hbtp]
 \centerline{
-    \hbox{ \epsfig{figure={#1}, scale=#2} }
+    \hbox{ \includegraphics[scale=#2]{#1} }
 }
 \end{figure}}
 %============================================
@@ -38,15 +38,6 @@
 \end{center}
 
 \end{figure}}
-
-%%============================================
-%\newcommand{\figsstit}[2]{
-%\begin{figure}[hbtp]
-%\centerline{
-%    \hbox{ \includegraphics{figure={#1}, scale=#2} }
-%}
-%\end{figure}}
-%
 
 %==================================================
 \newcommand\algo[1]%
@@ -194,9 +185,9 @@ In this study we are interested by the station design in term of parameter accur
 
 Therefore to determine a good design, it is necessary to take into account the trade-off between the distance and the possible loss of coherence. A very naive model consists to take:
 \begin{eqnarray*}
- \loc(f) &=& e^{-\alpha \frac{d}{\lambda}}%e^{-\alpha df/c}
+ \loc(f) &=& e^{-\beta \frac{d}{\lambda}}%e^{-\alpha df/c}
 \end{eqnarray*}
-where $\lambda$ denotes the wavelength and $d$ the distance between 2 sensors. If $\alpha=0$ there is no loss of coherence. This very simple model has to be validated but here we assume that it is.
+where $\lambda$ denotes the wavelength and $d$ the distance between 2 sensors. If $\beta=0$ there is no loss of coherence. This very simple model has to be validated but here we assume that it is.
 
 \begin{remark}[on the noise]
 Typical station aperture  is 2 km. Noise is mainly due to the wind.
@@ -211,6 +202,28 @@ On the other hand, we assume that the noise levels are identical on all sensors.
 \begin{remark}[on the coherent source]
 To be able to study the LOC, we need a permanent source. The microbarom plays this role in the following.
 \end{remark}
+
+\begin{remark}[on the isotropy]
+In the absence of LOC, the station is isotrope iff 
+\begin{eqnarray}
+ \label{eq:isotropy-condition}
+XX^{T}&\propto&I_{d}
+\end{eqnarray}
+where $X$ is $d\times M$ matrix whose the $m$-th colomun if the coordinates of the $m$-th sensor (in any  system of coordinates). 
+
+It follows that  given an arbitrary array with $M$ sensors in $\mathds{R}^{d}$ it is always possible to complete with $d$ locations in such a way the new array is isotrope, i.e. verifies \eqref{eq:isotropy-condition}, see annex.
+
+\end{remark}
+
+\begin{remark}[on the geometry]
+In the absence of LOC, we will see below that the best performances are associated with inter-distances as large as possible. In this case the maximization of the minimal distance leads to locate the sensors on a circle. But in this case the distribution of the distances is not uniform. It follows that in presence of LOC, several sensors are concern with the same LOC. It seems (it is not a proof) that a rule could be to locate the sensors in such a way that the distances are more uniform (see figure \ref{fig:uniforinterdistances}).
+
+\figscale{../figures/uniforinterdistances.pdf}{Sensor locations with inter distances}{fig:uniforinterdistances}{0.9}
+
+\end{remark}
+
+
+\newpage\clearpage
 %=======================================================
  \section{LOC model}
 %=======================================================
@@ -285,7 +298,7 @@ where the parameter $\alpha$ consists of
 Its size is $K+5$.
 
 \begin{remark}
-To avoid intractable computation, we assume in the following that $\gamma_{1},\ldots,\gamma_{K},\beta$ are known, leading to an uncertainty on only $\theta_{1}$, $\theta_{2}$, $\theta_{3}$ and $\sigma^{2}$. Now the unknown parameter has dimension 4.
+To avoid intractable computation, we assume in the following that $\beta$ is known, leading to an uncertainty on only $\theta_{1}$, $\theta_{2}$, $\theta_{3}$, $\sigma^{2}$, $\gamma_{1}$, $\ldots$, $\gamma_{K}$. Now the unknown parameter has dimension $K+4$.
 \end{remark}
 %=======================================================
  \section{Cramer-Rao}
@@ -316,25 +329,48 @@ Then for $\ell=1,2,3$:
    &=&2\, \mathcal{R}\left(
    \diag{d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)\right)
 \end{eqnarray*}
-and
+It is worth to notice that, if $\beta\approx +\infty$, $C_{k}=I_{M}$ and $\partial_{\ell}\Gamma_{k}=0$ which is normal because in this case $\Gamma_{k}$ does not depend on $\theta$. For the derivation w.r.t. $\sigma^{2}$ we have:
 \begin{eqnarray*}
 \partial_{4}\Gamma_{k}&=&I_{M}
 \end{eqnarray*}
-
-
-It is worth to notice that, if $\beta\approx +\infty$, $C_{k}=I_{M}$ and $\partial_{\ell}\Gamma_{k}=0$ which is normal because in this case $\Gamma_{k}$ does not depend on $\theta$. Using \eqref{eq:FIM} we derived the CRB as
-\begin{eqnarray}
- \label{eq:CRB}
-\crb&=& \fim^{-1}
-\end{eqnarray}
-
-
-The CRB w.r.t. the azimuth, elevation and velocity is derived from \eqref{eq:CRB} using the Jacobian of the one-to-one mapping between the slowness and the vector $(a,e,c)$ where $a$, $e$ and $c$ denote respectively the azimut, the elevation and the velocity.
+A direct consequence is that the FIM is of this shape:
+\begin{eqnarray*}
+ \fim&=&\begin{bmatrix}
+ F_{123}&0_{3,1}&0_{3,K}
+ \\
+ 0_{1,3}&f_{\sigma^{2}}&?
+ \\
+ 0_{K,3}&?&F_{\gamma,K,K}
+ \end{bmatrix}
+\end{eqnarray*}
+Because the CRB on the estimation of $\theta$ is given by the $3\times 3$ matrix of the inverse of $\fim$ and because the correlations with other parameter estimates are 0, we are only concern with $ F_{123}$ by taking $ F_{123}^{-1}$ . Then the CRB w.r.t. the azimuth, elevation and velocity can be derived using the Jacobian of the one-to-one mapping between the slowness and the vector $(a,e,c)$ where $a$, $e$ and $c$ denote respectively the azimut, the elevation and the velocity. The same calculation can be used to derive the CRB w.r.t. the azimuth and the trace velocity.
 
 
 %=======================================================
 %=======================================================
-
-
+\appendix
+\chapter{Transform an array in isotrope array}
+We consider an arbitrary  array whose locations are given by:
+\begin{eqnarray*}
+X&=&\begin{bmatrix}
+x_{1,1}&\ldots&x_{1,M}
+\\
+x_{2,1}&\ldots&x_{2,M}
+\\
+x_{3,1}&\ldots&x_{3,M}
+\end{bmatrix}
+\end{eqnarray*}
+It follows that
+\begin{eqnarray*}
+ XX^{T}&=&
+ \sum_{i=1}^{d}\mu_{i}\xi_{i}\xi^{T}_{i}
+\end{eqnarray*}
+where $0\leq \mu_{i}\leq \alpha_{0}$. The new array writes
+\begin{eqnarray*}
+Y &=& \begin{bmatrix}
+X&\sqrt{(\alpha_{0}-\mu_{1})}\xi_{1}&\sqrt{(\alpha_{0}-\mu_{2})}\xi_{2}&\sqrt{(\alpha_{0}-\mu_{3})}\xi_{3}
+\end{bmatrix}
+\end{eqnarray*}
+It is easy to verify that $YY^{T}=\alpha_{0}I_{d}$.
 \end{document}
 

@@ -34,12 +34,12 @@ for ik=1:K
         dGamma_ik_ellplus = diagell *C_ik*diagD_ik';
         dGamma_ik_ellmoins = diagD_ik*C_ik* diagell';
         dGamma_ik_ell = dGamma_ik_ellplus+dGamma_ik_ellmoins;
+        auxFIM        = Gamma_ik\dGamma_ik_ell;
         for ellp=1:3
             diagellp = diag(d_ik(:,ellp));
             dGamma_ik_ellpplus = diagellp *C_ik*diagD_ik';
             dGamma_ik_ellpmoins = diagD_ik*C_ik* diagellp';
             dGamma_ik_ellp = dGamma_ik_ellpplus+dGamma_ik_ellpmoins;
-            auxFIM  = Gamma_ik\dGamma_ik_ell;
             auxFIMp = Gamma_ik\dGamma_ik_ellp';
             FIM_ik(ik,ell,ellp) = 0.5*real(trace(auxFIM * auxFIMp));
         end
