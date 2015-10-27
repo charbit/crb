@@ -441,7 +441,7 @@ the covariance matrix $\Sigma_{\theta}$ is in s$^2$/m$^2$. It follows that $f^2 
 \end{remark}
 
 
-Using \eqref{eq:jacobianaec2theta}, we can derive an expression in term of azimuth $a$, elevation $e$ and velocity $c$. We have:
+Using \eqref{eq:jacobianaec2theta}, we can derive an expression in term of azimuth $a$, elevation $e$, velocity $c$. We have:
 \begin{eqnarray*}
 \Sigma_{\theta}=J\,\Sigma_{\aec}\,J^{T}
 \end{eqnarray*}
