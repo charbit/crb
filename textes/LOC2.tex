@@ -273,10 +273,16 @@ where $D_{k}(\theta)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal en
 
 
 Under LOC, $C_{k}$ is no more a rank 1 projector.  In the following to take into account the LOC we consider that 
-\begin{eqnarray*}
- C_{k,\ell\ell'} (\beta)&=&e^{-\beta \frac{d_{\ell,\ell'}}{\lambda_{k}}}=e^{-\beta \frac{d_{\ell,\ell'}f_{k}}{c}}
-\end{eqnarray*}
-where $\lambda_{k}=c/f_{k}$ is the wavelength, $d_{\ell,\ell'}$ the distance between 2 locations $\ell$ and $\ell'$ in the 3D space, and $\beta$ a positive constant. For $\beta=0$, $C(\beta)=\mathds{1}\mathds{1}^{T}$ leading to a perfect coherence. If $\beta\approx+\infty$, $C(\beta)=I_{M}$ and there is no coherence between any 2 locations.
+\begin{eqnarray}
+ \label{eq:CkwithGauss}
+ C_{k,\ell\ell'} (\beta)&=&e^{-2\pi^2f_k^2(r_{\ell}-r_{\ell'})^TS(r_{\ell}-r_{\ell'})}
+\end{eqnarray}
+where $S$ is a $3\times 3$ covariance matrix. For simplicity we assume that $S\propto I_3$ then
+\begin{eqnarray}
+ \label{eq:CkwithGauss-2}
+ C_{k,\ell\ell'} (\beta)&=&e^{-\beta f_k^2 d_{\ell,\ell'}^2}
+\end{eqnarray}
+$d_{\ell,\ell'}$ the distance between 2 locations $\ell$ and $\ell'$ in the 3D space, and $\beta$ a positive constant. For $\beta=0$, $C(\beta)=\mathds{1}\mathds{1}^{T}$ leading to a perfect coherence. If $\beta\approx+\infty$, $C(\beta)=I_{M}$ and there is no coherence between any 2 locations.
 
 Summarizing   we can write that:
 \begin{eqnarray*}
@@ -301,7 +307,21 @@ Its size is $K+5$.
 To avoid intractable computation, we assume in the following that $\beta$ is known, leading to an uncertainty on only $\theta_{1}$, $\theta_{2}$, $\theta_{3}$, $\sigma^{2}$, $\gamma_{1}$, $\ldots$, $\gamma_{K}$. Now the unknown parameter has dimension $K+4$.
 \end{remark}
 %=======================================================
- \section{Cramer-Rao}
+ \section{Validation}
+%=======================================================
+%=======================================================
+Taking the log of \eqref{eq:CkwithGauss-2} we get:
+\begin{eqnarray}
+ \label{eq:logCkwithcauchy}
+ \log C_{k,\ell\ell'} (\beta)&=& -\beta f_k^2 d_{\ell,\ell'}^2
+\end{eqnarray}
+meaning that the the log of MSC is proportional to the frequency, and proportional to the distance. 
+
+For the proportionality to the frequency, it is not obvious to test it because we don't dispose of a coherent signal in a large frequency bandwidth of interest. 
+
+
+%=======================================================
+ \section{Cramer-Rao bound (CRB)}
 %=======================================================
 %=======================================================
 The $(\ell,\ell')$ entry of the Fisher information matrix  associated to the parameter $\alpha$ writes:
@@ -373,7 +393,17 @@ X&\sqrt{(\alpha_{0}-\mu_{1})}\xi_{1}&\sqrt{(\alpha_{0}-\mu_{2})}\xi_{2}&\sqrt{(\
 \end{eqnarray*}
 It is easy to verify that $YY^{T}=\alpha_{0}I_{d}$.
 
-
+%=======================================================
+%=======================================================
+\chapter{Coherence}
+The LOC is modeled by the random slowness:
+\begin{eqnarray*}
+\Theta &=& \theta_0+\epsilon
+\end{eqnarray*}
+where $\theta_0$ is a 3D deterministic vector and $\epsilon$ a 3D random vector with zero-mean and distribution probability density denoted $p_{\epsilon}$. The spectral matrix of the $M$-ary random vectors associated to the $M$ location $r_{m}$ writes:
+\begin{eqnarray*}
+S(f) &=& \int_{\mathds{R}^3}
+\end{eqnarray*}
 %=======================================================
 %=======================================================
 \chapter{Estimation of parameters}

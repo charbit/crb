@@ -56,7 +56,10 @@ freqrange_Hz           = [0.08 0.12];
 
 [forward,  reverse]    = butter(Norderfilter,2*freqrange_Hz/Fs_Hz);
 
-filename1_ii = filenames(1).name;
+
+selectednumfile = 3;
+
+filename1_ii = filenames(selectednumfile).name;
 cdload = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
 eval(cdload)
 

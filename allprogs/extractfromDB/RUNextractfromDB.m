@@ -46,23 +46,24 @@ HMSend      = '23:50:10';
 records     = cell(10,1);
 
 ihclist =  xsensors_m.name;
-for indhc=1:Msensors
-    elementtype = xsensors_m.name{indhc}(4);
-    ihc = str2double(xsensors_m.name{indhc}(5));
-    stations    = sprintf(' (''I%i%s%i'') ',stationnumber,elementtype, ihc);
-    for daystart_num    = 6 %1:2:25
-        if daystart_num<10
-            daystart    = ['0' num2str(daystart_num)];
-            if daystart_num==9
-                dayend  = '10';
-            else
-                dayend  = ['0' num2str(daystart_num+1)];
-            end
+for daystart_num    = 13:14 %1:2:25
+    if daystart_num<10
+        daystart    = ['0' num2str(daystart_num)];
+        if daystart_num==9
+            dayend  = '10';
         else
-            daystart    = num2str(daystart_num);
-            dayend      = num2str(daystart_num+1);
+            dayend  = ['0' num2str(daystart_num+1)];
         end
-        dayend = daystart;
+    else
+        daystart    = num2str(daystart_num);
+        dayend      = num2str(daystart_num+1);
+    end
+    dayend = daystart;
+    for indhc=1:Msensors
+        elementtype = xsensors_m.name{indhc}(4);
+        ihc = str2double(xsensors_m.name{indhc}(5));
+        stations    = sprintf(' (''I%i%s%i'') ',stationnumber,elementtype, ihc);
+        
         %=== clean temporary files
         commandclean = sprintf('!rm %s/*.*',temporary_gparse_dir);
         eval(commandclean)
@@ -115,52 +116,53 @@ for indhc=1:Msensors
             display('***** .wfdisc does not exist');
         end
     end
-end
-%======================================================
-% to clean etime, stime
-%
-%======================================================
-
-signals = cell(Msensors,1);
-stime   = zeros(Msensors,1);
-etime   = zeros(Msensors,1);
-
-for im=1:Msensors
-%     filename1_ii = filenames(im).name;
-%     cdload = sprintf('sig = load(''%s%s'');',directorydatafromIDC,filename1_ii);
-%     eval(cdload)
-    Lrecords   = length(records{im});
-    LL_max=0;
-    for ir =1:Lrecords
-        if length(records{im}{ir}.data)>LL_max
-            irsave = ir;
-            LL_max=length(records{im}{ir}.data);
+    %======================================================
+    % to clean etime, stime
+    %
+    %======================================================
+    
+    signals = cell(Msensors,1);
+    stime   = zeros(Msensors,1);
+    etime   = zeros(Msensors,1);
+    
+    for im=1:Msensors
+        %     filename1_ii = filenames(im).name;
+        %     cdload = sprintf('sig = load(''%s%s'');',directorydatafromIDC,filename1_ii);
+        %     eval(cdload)
+        Lrecords   = length(records{im});
+        LL_max=0;
+        for ir =1:Lrecords
+            if length(records{im}{ir}.data)>LL_max
+                irsave = ir;
+                LL_max=length(records{im}{ir}.data);
+            end
         end
+        signals{im} = [records{im}{irsave}.data];
+        stime(im) = records{im}{irsave}.stime;
+        etime(im) = records{im}{irsave}.etime;
     end
-    signals{im} = [records{im}{irsave}.data];
-    stime(im) = records{im}{irsave}.stime;
-    etime(im) = records{im}{irsave}.etime;
+    stimeMAX = max(stime);
+    etimeMIN = min(etime);
+    signalsproc = cell(Msensors,1);
+    
+    for im=1:Msensors
+        Lim = length(signals{im});
+        if stime(im)<=stimeMAX, ds = fix((stimeMAX-stime(im))*Fs_Hz)+1; end
+        if etime(im)>=etimeMIN, de = fix((etime(im)-etimeMIN)*Fs_Hz); end
+        signalsproc{im} = signals{im}(ds:Lim-de);
+    end
+    
+    N = size([signalsproc{:}],1);
+    observations.data = zeros(N,Msensors);
+    for im=1:Msensors
+        observations.station = stationnumber;
+        observations.data(:,im) = [signalsproc{im}];
+        observations.xsensors_m = xsensors_m;
+    end
+    cdesave = sprintf('save %s%s%s%s.mat observations',directorydatafromIDC,yearstart,monthstart,daystart);
+    cdesave
+    eval(cdesave)
 end
-stimeMAX = max(stime);
-etimeMIN = min(etime);
-signalsproc = cell(Msensors,1);
 
-for im=1:Msensors
-    Lim = length(signals{im});
-    if stime(im)<=stimeMAX, ds = fix((stimeMAX-stime(im))*Fs_Hz)+1; end
-    if etime(im)>=etimeMIN, de = fix((etime(im)-etimeMIN)*Fs_Hz); end
-    signalsproc{im} = signals{im}(ds:Lim-de);
-end
-
-N = size([signalsproc{:}],1);
-observations.data = zeros(N,Msensors);
-for im=1:Msensors
-    observations.station = stationnumber;
-    observations.data(:,im) = [signalsproc{im}];
-    observations.xsensors_m = xsensors_m;
-end
-cdesave = sprintf('save %s%s%s%s.mat observations',directorydatafromIDC,yearstart,monthstart,daystart);
-cdesave
-eval(cdesave)
 %=================================================================
 
