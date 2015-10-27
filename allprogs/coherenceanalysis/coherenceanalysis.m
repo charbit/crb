@@ -17,7 +17,7 @@ nbfiles                = length(filenames);
 Fs_Hz                  = 20;
 Ts_sec                 = 1/Fs_Hz;
 
-ifile = 3;
+ifile = 1;
 filename1_ii = filenames(ifile).name;
 cdload = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
 eval(cdload)

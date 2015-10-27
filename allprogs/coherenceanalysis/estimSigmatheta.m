@@ -1,5 +1,5 @@
 function [Sigma2_theta_s2pm2, logSkcp_pred, logresidue] = ...
-    estimSigmatheta(Skcp, xsensor_m, fqnormrange, Fs_Hz, dimSlowness)
+    estimSigmatheta(Skcp, xsensor_m, fqnormrange, Fs_Hz, dimSlowness,mu)
 %======================================================
 % Estimation of Sigma_theta in the gaussian model of
 % loss of coherence:
@@ -46,18 +46,21 @@ end
 N           = length(fqnormrange);
 regressors  = zeros(combi2by2*N,combidim);
 logSkcp     = log(reshape(Skcp,combi2by2*N,1));
-
+fqnormrange2 = fqnormrange .* fqnormrange;
+Fs2_Hz2      = Fs_Hz * Fs_Hz;
+pi2          = pi*pi;
 cq=0;
-for i1=1:dimSlowness
-    for i2=i1:dimSlowness
+for j1=1:dimSlowness
+    for j2=j1:dimSlowness
         cq   = cq+1;
-        ps   = -4*pi*pi*difference_coord_cp(:,i1) .* ...
-            difference_coord_cp(:,i2);
-        aux  = ps*(fqnormrange .* fqnormrange)*Fs_Hz*Fs_Hz;
+        ps   = -2*pi2*difference_coord_cp(:,j1) .* ...
+            difference_coord_cp(:,j2);
+        aux  = ps*fqnormrange2*Fs2_Hz2;
         regressors(:,cq) = reshape(aux,N*combi2by2,1);
     end
 end
-delta_theta_spm    = regressors\logSkcp;
+RR = inv(regressors'*regressors)+mu*eye(combidim);
+delta_theta_spm    = RR*regressors'*logSkcp;
 delta_theta_spm_sq = zeros(dimSlowness);
 cq=0;
 for i1=1:dimSlowness

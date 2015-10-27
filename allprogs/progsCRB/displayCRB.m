@@ -1,7 +1,7 @@
 clear
 allcolors = ['g.';'m.';'r.';'k.';'b.';'rx';'yx';'mx';'rx';'kx';'c.';'k.';'r.';'c.';'m.';'g.';'b.';'k.';'r.';'c.';'m.';'g.';'k.'];
 
-listaz = linspace(0,360,30)';
+listaz = linspace(0,360,50)';
 Laz = length(listaz);
 stdaz = zeros(Laz,1);
 stdel = zeros(Laz,1);
@@ -43,12 +43,12 @@ K             = fix(N/2)-1;
 frequency_Hz  = (1:K)'*Fs_Hz/N;
 sigma2noise   = 10^(-SNR_dB/10);
 
-alpha_coh     = 0.008;
+alpha_coh     = 0;%0.008;
 Llistfactor   = 3;
-listfactor    = [200, 1000, 2000];%linspace(500,2000,Llistfactor);
+listfactor    = 1000;%[200, 1000, 2000];%linspace(500,2000,Llistfactor);
 Llistfactor   = length(listfactor);
 
-choice = 6;
+choice = 5;
 switch choice
     case 5
         M               = 8;
@@ -95,11 +95,13 @@ switch choice
   -6.480990306646564  -5.857643549628555  -0.017000000000000; ...
   -6.833279994535260   1.702617467129603  -0.059000000000000];
 
-% gX = xsensor0';
-% newX = anyarray2isotrop(gX);
-% xsensor0 = newX';
 % 
 end
+
+gX       = xsensor0';
+newX     = transform2isotrop(gX);
+xsensor0 = newX';
+
 M = size(xsensor0,1);
 for ifactor=1:Llistfactor
     factor    = listfactor(ifactor);
@@ -159,8 +161,8 @@ for ifactor=1:Llistfactor
 end
 subplot(133)
 plot(xsensor0(:,1),xsensor0(:,2),'o')
-set(gca,'xlim',2*[-1,1])
-set(gca,'ylim',2*[-1,1])
+% set(gca,'xlim',5*[-1,1])
+% set(gca,'ylim',5*[-1,1])
 axis('square')
 % CRB.slowness
 % CRB.aec

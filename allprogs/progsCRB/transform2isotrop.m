@@ -1,4 +1,4 @@
-function newX = anyarray2isotrop(gX)
+function newX = transform2isotrop(gX)
 % to transform in isotrope array
 [d,M]   = size(gX);
 XXT     = gX*gX';

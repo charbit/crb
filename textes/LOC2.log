@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.7.25)  25 OCT 2015 18:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.7.25)  26 OCT 2015 22:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -420,7 +420,7 @@ LaTeX Font Info:    Try loading font information for U+dsrom on input line 214.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 )
-<../figures/uniforinterdistances.pdf, id=18, 455.7025pt x 284.06125pt>
+<../figures/uniforinterdistances.pdf, id=22, 455.7025pt x 284.06125pt>
 File: ../figures/uniforinterdistances.pdf Graphic file (type pdf)
 
 <use ../figures/uniforinterdistances.pdf>
@@ -435,23 +435,32 @@ figures/uniforinterdistances.pdf>]
 
 ] [4] [5]
 Appendix A.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 375.
 [6
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 375.
+Appendix B.
+
+Overfull \hbox (106.74536pt too wide) in alignment at lines 382--394
+ [][][] []
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 398.
+[7
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 398.
  (./LOC2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 375.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 375.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 398.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 398.
 Package rerunfilecheck Info: File `LOC2.out' has not changed.
-(rerunfilecheck)             Checksum: F35AF9B41E4F68BD2BE9A5BA65861869;165.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 375.
+(rerunfilecheck)             Checksum: C5576B26B0B5E53650E1CCFA6BE66038;225.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 398.
  ) 
 Here is how much of TeX's memory you used:
- 7508 strings out of 493089
- 106945 string characters out of 6134842
+ 7511 strings out of 493089
+ 106973 string characters out of 6134842
  205144 words of memory out of 5000000
- 10847 multiletter control sequences out of 15000+600000
+ 10848 multiletter control sequences out of 15000+600000
  16876 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  32i,13n,30p,679b,420s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -474,10 +483,10 @@ e/2015/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/
 exmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2015/tex
 mf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2015/texmf
 -dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on LOC2.pdf (6 pages, 260411 bytes).
+Output written on LOC2.pdf (7 pages, 262419 bytes).
 PDF statistics:
- 151 PDF objects out of 1000 (max. 8388607)
- 120 compressed objects within 2 object streams
- 24 named destinations out of 1000 (max. 500000)
- 30 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 162 PDF objects out of 1000 (max. 8388607)
+ 130 compressed objects within 2 object streams
+ 26 named destinations out of 1000 (max. 500000)
+ 38 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -372,5 +372,28 @@ X&\sqrt{(\alpha_{0}-\mu_{1})}\xi_{1}&\sqrt{(\alpha_{0}-\mu_{2})}\xi_{2}&\sqrt{(\
 \end{bmatrix}
 \end{eqnarray*}
 It is easy to verify that $YY^{T}=\alpha_{0}I_{d}$.
+
+
+%=======================================================
+%=======================================================
+\chapter{Estimation of parameters}
+
+we have 
+\begin{eqnarray*}
+ \log C_{k,m,m'} &=&-2\pi^{2} f_{k}^{2}(r_{m}-r_{m'})^{T}\Gamma(r_{m}-r_{m'})
+ \\
+ &=&
+-2\pi^{2} f_{k}^{2}(r_{m,1}-r_{m',1})^{2}\Gamma_{11}
+-2\pi^{2} f_{k}^{2}(r_{m,2}-r_{m',2})^{2}\Gamma_{22}
+-4\pi^{2} f_{k}^{2}(r_{m,1}-r_{m',1})(r_{m,2}-r_{m',2})\Gamma_{12}
+\\
+&=&
+\mu_{1}(k,m,m')\Gamma_{11}
++\mu_{2}(k,m,m')\Gamma_{22}
++2\mu_{3}(k,m,m')\Gamma_{12}
+\end{eqnarray*}
+Enumerating $k=1:K$, $m=1:M$, $m'=1:M$ with $m'>m$ leads to $KM(M-1)/2$ equations with 3 unknowns.
+
+
 \end{document}
 
