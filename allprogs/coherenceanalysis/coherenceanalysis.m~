@@ -10,7 +10,7 @@ otherwise
 end
 
 stationnumber         = 37;
-directorydatafromIDC  = sprintf('../AAdataI%i/',stationnumber);
+directorydatafromIDC  = sprintf('../../../../AAdataI%i/',stationnumber);
 
 filenames              = dir(sprintf('%s*.mat',directorydatafromIDC));
 nbfiles                = length(filenames);

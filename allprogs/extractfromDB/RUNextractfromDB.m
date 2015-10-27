@@ -10,10 +10,10 @@ switch computer
         addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/00pierrick/
 end
 %========== matlab format files are saved into the following directory
-stationnumber         = 37;
-directorydatafromIDC  = sprintf('../AAdataI%i/',stationnumber);
+stationnumber         = 55;
+directorydatafromIDC  = sprintf('../../../../AAdataI%i/',stationnumber);
 %=== sensor locations
-cdeloadX = sprintf('load(''../sensorlocation/I%i.mat'');',stationnumber);
+cdeloadX = sprintf('load(''../../../../sensorlocation/I%i.mat'');',stationnumber);
 eval(cdeloadX)
 Msensors               = size(xsensors_m.coordinates,1);
 %====================================================================

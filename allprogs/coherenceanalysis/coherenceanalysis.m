@@ -9,8 +9,8 @@ otherwise
     addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
 end
 
-stationnumber         = 37;
-directorydatafromIDC  = sprintf('../../../AAdataI%i/',stationnumber);
+stationnumber         = 27;
+directorydatafromIDC  = sprintf('../../../../AAdataI%i/',stationnumber);
 
 filenames              = dir(sprintf('%s*.mat',directorydatafromIDC));
 nbfiles                = length(filenames);
