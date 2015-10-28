@@ -1,6 +1,7 @@
 %====================== estimationwithFB.m =============================
 clear
 allcolors = ['b.';'r.';'m.';'c.';'g.';'k.';'rx';'yx';'mx';'rx';'kx';...
+    'c.';'k.';'r.';'c.';'m.';'g.';'b.';'k.';'r.';'c.';'m.';'g.';'k.';...
     'c.';'k.';'r.';'c.';'m.';'g.';'b.';'k.';'r.';'c.';'m.';'g.';'k.'];
 switch computer
     case 'GLNXA64'
@@ -17,7 +18,7 @@ nbfiles                = length(filenames);
 Fs_Hz                  = 20;
 Ts_sec                 = 1/Fs_Hz;
 
-for ifile = 1:nbfiles
+for ifile = 6:nbfiles
     filename1_ii = filenames(ifile).name;
     cdload = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
     eval(cdload)
@@ -56,27 +57,41 @@ for ifile = 1:nbfiles
     for im=1:Msensors
         SIG(:,im) = observations.data(:,im);
     end
-    
-    allMSC = cell(combi,1);
-    
-    bandwidthFilter_Hz  = [0.02 0.2];
+    bandwidthFilter_Hz  = [0.05 1];
     [forward,  reverse] = butter(2,2*bandwidthFilter_Hz/Fs_Hz);
-    % for im = 1:Msensors
-    %     SIG(:,im)       = filtfilt(forward,reverse,SIG(:,im));
-    % end
-    bandwidthMSC_Hz   = [0.06 0.16];
+    for im = 1:Msensors
+        SIG(:,im)       = filter(forward,reverse,SIG(:,im));
+    end
+    SIGcentered = SIG - ones(LSIG,1)*mean(SIG,1);
+% s1=SIGcentered(115000+(-10000:10000),1);
+% s2=SIGcentered(115000+(-10000:10000),2);
+% subplot(212)
+% mscohere(s1,s2,[],[],[],20)
+% set(gca,'xlim',[0 0.4])
+% subplot(211)
+% plot((0:20000)/Fs_Hz,[s1 s2])
+% 
+% 
+% return
+%
+%
+%     bandwidthMSC_Hz   = [0.05 0.2];
     taustationary_sec = 500 ;
     ratioDFT2SCP      = 5;
+    allMSC = cell(combi,1);
+
+    %=====================
+    %=====================
+    %=====================
     
-    %=====================
-    %=====================
-    %=====================
+    
+    
     cp=0;
     for im1 = 1:Msensors-1
         for im2 = im1+1:Msensors
             cp = cp+1;
-            signal1_centered=SIG(:,im1)-ones(LSIG,1)*mean(SIG(:,im1));
-            signal2_centered=SIG(:,im2)-ones(LSIG,1)*mean(SIG(:,im2));
+            signal1_centered=SIGcentered(:,im1);
+            signal2_centered=SIGcentered(:,im2);
             Tfft_sec     = taustationary_sec/ratioDFT2SCP;
             Lfft         = fix(Tfft_sec*Fs_Hz);
             GREF         = ones(Lfft,1);
@@ -87,13 +102,62 @@ for ifile = 1:nbfiles
         end
     end
     allMSCsort = allMSC(indsortdistance);
-    
+    %%
+    bandwidthMSC_Hz   = [0.05 0.15];
+
     id1 = find(frqsFFT_Hz<=bandwidthMSC_Hz(1),1,'last');
     id2 = find(frqsFFT_Hz<=bandwidthMSC_Hz(2),1,'last');
     
     listindfreq  = (id1:id2);
     frqsselected = frqsFFT_Hz(id1:id2);
     Lf           = length(listindfreq);
+
+    
+    
+    figure(ifile)
+    subplot(211)
+    plot((0:LSIG-1)/Fs_Hz/3600, SIG(:,[sortdistances(1,2:3)])/max(max(SIG)))
+    set(gca, 'ylim',[-1.5 1.5])
+    
+    LSCP = length(time_sec.SD);
+    logaux = NaN(combi,LSCP,Lf);
+    timeselect_samples = cell(Lf,1);
+    llll=linspace(0.9,1.1,Lf);
+    for ifq=1:Lf
+        aux = NaN(combi,LSCP);
+        indselect = find(and(...
+            allMSCsort{1}(listindfreq(ifq),:)>0.8,...
+            allMSCsort{2}(listindfreq(ifq),:)>0));
+        timeselect_samples{ifq} = time_sec.SD(indselect)*Fs_Hz;
+        for ip=1:combi
+            aux(ip,indselect) = allMSCsort{ip}(listindfreq(ifq),indselect);
+        end
+        logaux(:,:,ifq) = log(aux);
+        meanlogaux =  nanmean(logaux(:,:,ifq),2);
+        stdlogaux =  nanstd(logaux(:,:,ifq),[],2);
+        
+        figure(ifile)
+        subplot(211)
+        hold on
+        plot(timeselect_samples{ifq}/Fs_Hz/3600,llll(ifq)*ones(length(indselect),1),'.')
+        hold off
+        
+        figure(ifile)
+        subplot(212)
+
+        plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+           meanlogaux,'.-','color',allcolors(ifq,1))
+         hold on
+%         plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+%            meanlogaux+stdlogaux,'--','color',allcolors(ifq,1))
+%         plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+%            meanlogaux-+stdlogaux,'--','color',allcolors(ifq,1))
+    end
+    hold off
+        grid on
+    set(gca,'ylim',[-3 0])
+    set(gca,'xlim',[0 2e4])
+%    set(gca,'xlim',[0 sortdistances(25,1)* sortdistances(25,1)*frqsFFT_Hz(listindfreq(ifq))^2])
     
     %%
     % addfig = 20;
@@ -142,31 +206,10 @@ for ifile = 1:nbfiles
     % end
     % % set(gca,'ylim',[log(0.3) log(0.8)])
     % hold off
-    %%
-    figure(ifile)
-    clf
-    LSCP = length(time_sec.SD);
-    logaux = NaN(combi,LSCP,Lf);
-    for ifq=1:Lf
-        aux = NaN(combi,LSCP);
-        indselect = find(allMSCsort{1}(listindfreq(ifq),:)>0.8);
-        length(indselect)
-        for ip=1:combi
-            aux(ip,indselect) = allMSCsort{ip}(listindfreq(ifq),indselect);
-        end
-        logaux(:,:,ifq) = log(aux);
-        plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
-            nanmean(logaux(:,:,ifq),2),'.-','color',allcolors(ifq,1))
-        hold on
-    end
-    hold off
-    
-    set(gca,'ylim',[-3 0])
-   set(gca,'xlim',[0 sortdistances(25,1)* sortdistances(25,1)*frqsFFT_Hz(listindfreq(ifq))^2])
-    
+
     %  imagesc(sortdistances .^2,frqsFFT_Hz(listindfreq) .^2,squeeze((nanmean(logaux,2))))
     
-    %%
+    %%1
     % figure(2+addfig)
     %     subplot(211)
     % hold off
@@ -195,17 +238,16 @@ end
 
 
 
-%%
-for ifile=1:nbfiles
-    figure(ifile)
-    xlabel('distances - [m]')
-    ylabel('log MSC')
-    grid on
-    hfig=20;
-    vfig=13;
-    set(gcf,'units','centimeters');
-    set(gcf,'paperunits','centimeters');
-    set(gcf,'PaperType','a4');
-%     set(gcf,'position',[8 10 hfig vfig]);
-    set(gcf,'paperposition',[0 0 hfig vfig]);
-end
+% %%
+% for ifile=1:nbfiles
+%     figure(ifile)
+%     xlabel('distances - [m]')
+%     ylabel('log MSC')
+%     hfig=20;
+%     vfig=13;
+%     set(gcf,'units','centimeters');
+%     set(gcf,'paperunits','centimeters');
+%     set(gcf,'PaperType','a4');
+% %     set(gcf,'position',[8 10 hfig vfig]);
+%     set(gcf,'paperposition',[0 0 hfig vfig]);
+% end
