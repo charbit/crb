@@ -166,11 +166,12 @@ txt=sprintf('T = %4.1f H, Fs = %i Hz\nAnalysis freq. range = [%4.2f %4.2f] Hz',.
     T_sec/3600, Fs_Hz, freqrange_Hz(1), freqrange_Hz(2));
 title(txt)
 
+grid on
 hfig=20;
 vfig=13;
 set(gcf,'units','centimeters');
 set(gcf,'paperunits','centimeters');
 set(gcf,'PaperType','a4');
-% set(gcf,'position',[8 10 hfig vfig]);
+set(gcf,'position',[8 10 hfig vfig]);
 set(gcf,'paperposition',[0 0 hfig vfig]);
 % print -depsc /Users/charbit/maurice/etudes/InfrasonCEA/contrat2012/livrable2013/slides/analyseCoherIS31

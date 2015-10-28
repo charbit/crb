@@ -26,14 +26,16 @@ xsensors_m = observations.xsensors_m.coordinates;
 Msensors   = size(xsensors_m,1);
 cp = 0;
 combi = Msensors*(Msensors-1)/2;
-distances = zeros(combi,1);
+distances = zeros(combi,3);
 for i1=1:Msensors-1
     for i2=i1+1:Msensors
         cp=cp+1;
-        distances(cp) = norm(xsensors_m(i1,:)-xsensors_m(i2,:));
+        distances(cp,:) = [...
+            norm(xsensors_m(i1,:)-xsensors_m(i2,:)) ...
+            i1,i2];
     end
 end
-[sortdistances, indsortdistance] = sort(distances);
+[sortdistances, indsortdistance] = sort(distances,1);
 % orientations = zeros(combi,1);
 % for i1=1:Msensors-1
 %     for i2=i1+1:Msensors
@@ -146,18 +148,19 @@ LSCP = length(time_sec.SD);
 logaux = NaN(combi,LSCP,Lf);
 for ifq=1:Lf
     aux = NaN(combi,LSCP);
+    indselect = find(allMSCsort{1}(listindfreq(ifq),:)>0.7);
     for ip=1:combi
-        aux(ip,:) = allMSCsort{ip}(listindfreq(ifq),:);
+        aux(ip,indselect) = allMSCsort{ip}(listindfreq(ifq),indselect);
     end
     logaux(:,:,ifq) = log(aux);
-        plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances .^2, ...
+        plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
             nanmean(logaux(:,:,ifq),2),'.-','color',allcolors(ifq,1))
 hold on
 end
 hold off
 
-% set(gca,'ylim',[log(0.3) log(0.8)])
- set(gca,'xlim',[0 sortdistances(25)* sortdistances(25)*frqsFFT_Hz(listindfreq(ifq))^2])
+set(gca,'ylim',[-3 0])
+%  set(gca,'xlim',[0 sortdistances(25,1)* sortdistances(25,1)*frqsFFT_Hz(listindfreq(ifq))^2])
  
 %  imagesc(sortdistances .^2,frqsFFT_Hz(listindfreq) .^2,squeeze((nanmean(logaux,2))))
  
