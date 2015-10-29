@@ -1,6 +1,12 @@
 %=============== settings.m ======================================
 clear
+% ================  IMPORTANT ====================================
+% the different records form the sensors can not be aligned
+% Here we cut tehm to the longest commun part and omit the rest.
 %
+%
+%=================================================================
+
 Fs_Hz = 20;
 
 switch computer
@@ -10,7 +16,7 @@ switch computer
         addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/00pierrick/
 end
 %========== matlab format files are saved into the following directory
-stationnumber         = 55;
+stationnumber         = 37;
 directorydatafromIDC  = sprintf('../../../../AAdataI%i/',stationnumber);
 %=== sensor locations
 cdeloadX = sprintf('load(''../../../../sensorlocation/I%i.mat'');',stationnumber);
@@ -46,7 +52,7 @@ HMSend      = '23:50:10';
 records     = cell(10,1);
 
 ihclist =  xsensors_m.name;
-for daystart_num    = 13:14 %1:2:25
+for daystart_num    = 16:30% %1:2:25
     if daystart_num<10
         daystart    = ['0' num2str(daystart_num)];
         if daystart_num==9
@@ -118,7 +124,7 @@ for daystart_num    = 13:14 %1:2:25
     end
     %======================================================
     % to clean etime, stime
-    %
+    % ================  IMPORTANT =========================
     %======================================================
     
     signals = cell(Msensors,1);

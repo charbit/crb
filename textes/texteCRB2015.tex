@@ -184,7 +184,32 @@
 %=======================================================
 
 
-In this study we are interested by the station design in term of parameter accuracy. In short, in presence of only pure coherent acoustic waves, it is clear that the best design is to locate sensors at far as possible. For which reason could we take into account an upper bound on the aperture ? Regarding the size of the station and the distance of the source, the only effect which can induce a bound on the station aperture, in presence of a coherent acoustic signal, is that the  loss of coherence increases when the distance between sensors increases.
+In this study we are interested by the station design in term of parameter accuracy, and more particularly of the azimuth. In short, in presence of only pure coherent acoustic waves, it is clear that the best design is to locate sensors at far as possible. For which reason could we take into account an upper bound on the aperture ? 
+
+Regarding the size of the station and the distance of the source, a possible phenomena, which could induce a limitation on the station aperture in presence of a coherent acoustic signal, is that the loss of coherence (LOC) which usually increases when the distance between sensors increases.
+
+For conducting this study the 3 points following program has been considered:
+\begin{itemize}
+ \item
+choosing an index to evaluate the accuracy of the station. A commonly used index is the Cramer-Rao bound (CRB). Typically that depends on the geometry of the station, the level of noise and the LOC features. A summary of the CRB could be the area/volume of the confidence ellipsoid.
+
+ \item
+choosing features to characterize a geometry. We have retained (i) the isotropy and (ii) the uniform distribution of the inter-distances. The isotropy is easy to check and also it is simple to correct if necessary by adding 2 sensors (resp. 3) for 2D station (resp. 3D station).
+
+We can not answer to the good effect or not of the inter-distance uniformity because that depends on the LOC model. Therefore we have to validate a such model.
+
+\item
+validating a LOC model.
+
+The used LOC feature is the magnitude square coherence (MSC). This index has the interesting property to be between 0 and 1, and equal to 1 iff the two signals are spatially coherent.
+
+	The approach to determine the LOC model is based on the observation analysis. It is conducted as it follows: we consider the station I37 which consists of 10 sensors with 45 uniformly disibuted inter-distances. We base the analysis on the presence of a quasi-permanent coherent acoustical signal, saying the microbarom, in a frequency bandwidth large enough between 0.05 to 3 Hz. 
+
+For a given frequency, we select the portions of signals where the MSC is greater than 0.8 on the three nearest sensors and study the decay of the MSC along the inter-distance values.
+
+\end{itemize}
+
+\end{document}
 
 \begin{remark}[on the noise]
 Typical station aperture  is 2 km. Noise is mainly due to the wind.

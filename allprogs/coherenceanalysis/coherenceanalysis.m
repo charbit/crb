@@ -2,7 +2,9 @@
 clear
 allcolors = ['b.';'r.';'m.';'c.';'g.';'k.';'rx';'yx';'mx';'rx';'kx';...
     'c.';'k.';'r.';'c.';'m.';'g.';'b.';'k.';'r.';'c.';'m.';'g.';'k.';...
+    'c.';'k.';'r.';'c.';'m.';'g.';'b.';'k.';'r.';'c.';'m.';'g.';'k.';...
     'c.';'k.';'r.';'c.';'m.';'g.';'b.';'k.';'r.';'c.';'m.';'g.';'k.'];
+
 switch computer
     case 'GLNXA64'
         addpath /dvlscratch/SHI/users/charbit/ProjectIMS2015b/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
@@ -18,7 +20,7 @@ nbfiles                = length(filenames);
 Fs_Hz                  = 20;
 Ts_sec                 = 1/Fs_Hz;
 
-for ifile = 3%:nbfiles
+for ifile = 16%:nbfiles
     filename1_ii = filenames(ifile).name;
     cdload = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
     eval(cdload)
@@ -36,7 +38,8 @@ for ifile = 3%:nbfiles
                 i1,i2];
         end
     end
-    [sortdistances, indsortdistance] = sort(distances,1);
+    [sortdistances, indsortdistance] = sort(distances(:,1));
+    sortdistances(:,2:3) = distances(indsortdistance,2:3);
     % orientations = zeros(combi,1);
     % for i1=1:Msensors-1
     %     for i2=i1+1:Msensors
@@ -102,8 +105,13 @@ for ifile = 3%:nbfiles
         end
     end
     allMSCsort = allMSC(indsortdistance);
+    
+    cdsave = sprintf('save %s%s allMSCsort taustationary_sec ratioDFT2SCP SIGcentered sortdistances indsortdistance bandwidthFilter_Hz time_sec frqsFFT_Hz xsensors_m',directorydatafromIDC,filename1_ii);
+   cdsave = sprintf('save %s%s',directorydatafromIDC,filename1_ii);
+    eval(cdsave)
+    
     %%
-    bandwidthMSC_Hz   = [0 0.15];
+    bandwidthMSC_Hz   = [0.08 0.12];
     
     id1 = find(frqsFFT_Hz<=bandwidthMSC_Hz(1),1,'last');
     id2 = find(frqsFFT_Hz<=bandwidthMSC_Hz(2),1,'last');
@@ -154,10 +162,10 @@ for ifile = 3%:nbfiles
             plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
                 meanlogaux,'.-','color',allcolors(ifq,1))
             hold on
-%                     plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
-%                        meanlogaux+stdlogaux,'--','color',allcolors(ifq,1))
-%                     plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
-%                        meanlogaux-+stdlogaux,'--','color',allcolors(ifq,1))
+                    plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+                       meanlogaux+stdlogaux,'--','color',allcolors(ifq,1))
+                    plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+                       meanlogaux-+stdlogaux,'--','color',allcolors(ifq,1))
         end
     end
     figure(ifile)
@@ -167,8 +175,8 @@ for ifile = 3%:nbfiles
     subplot(313)
     hold off
     grid on
-    set(gca,'ylim',[-3 0])
-    set(gca,'xlim',[0 3e4])
+    set(gca,'ylim',[-2 0])
+    set(gca,'xlim',[0 2e4])
     %    set(gca,'xlim',[0 sortdistances(25,1)* sortdistances(25,1)*frqsFFT_Hz(listindfreq(ifq))^2])
     
     %%
