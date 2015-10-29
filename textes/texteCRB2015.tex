@@ -77,7 +77,7 @@
 \newtheorem{property}{Properties}
 \newtheorem{remark}{Remark}
 \newtheorem{theorem}{Theorem - \thetheoreme}
-\newtheorem{definition}{Definition - \thedefinision}
+\newtheorem{definition}{Definition}
 \newtheorem{example}{Example}
 \newtheorem{lemme}{Lemme - \thelemme}
 \newtheorem{proof}{Proof - \theproof}
@@ -184,13 +184,33 @@
 %=======================================================
 
 
-In this study we are interested by the station design in term of parameter accuracy. In short, in presence of only pure coherent acoustic waves, it is clear that the best design is to locate sensors at far as possible. For which reason could we take into account an upper bound on the aperture ? Regarding the size of the station and the distance of the source, the only parameter which can induce a limitation on the previous design is the possible loss of coherence on distant pairs of sensors, in presence of coherent signal. By definition, two signals arriving on a two different locations are said non-coherent signals, or simply noises, if they are uncorrelated.
+In this study we are interested by the station design in term of parameter accuracy. In short, in presence of only pure coherent acoustic waves, it is clear that the best design is to locate sensors at far as possible. For which reason could we take into account an upper bound on the aperture ? Regarding the size of the station and the distance of the source, the only parameter which can induce a limitation on the previous design is the possible loss of coherence on distant pairs of sensors, in presence of a coherent acoustic signal. 
 
-Therefore to determine a good design, it is necessary to take into account the trade-off between the distance and the possible loss of coherence. A very naive model consists to take:
+By definition, two signals arriving on a two different locations are said non-coherent signals, or called noises, if they are spatially uncorrelated. More specifically if $s_{1}(t)$ and $s_{2}(t)$ denote the respective stationary signals observed in to different locations, the coherence level is defined by the magnitude square coherence:
 \begin{eqnarray*}
- \loc(f) &=& e^{-\beta \frac{d}{\lambda}}%e^{-\alpha df/c}
+ \MSC(f)&=&\frac{|S_{12}(f)|^{2}}{S_{11}(f)S_{22}(f)}
 \end{eqnarray*}
-where $\lambda$ denotes the wavelength and $d$ the distance between 2 sensors. If $\beta=0$ there is no loss of coherence. This very simple model has to be validated but here we assume that it is.
+where $S_{11}(f)$ and $S_{22}(f)$ denote the spectral densities of $s_{1}(t)$ and $s_{2}(t)$, and $S_{12}(f)$ the cross-spectrum. It is well known that $\MSC(f)\leq 1$. 
+\begin{definition}[coherence]
+\label{def:coherence2sensors}
+When $\MSC(f)=1$, we say that the 2 signals are perfectly coherent, elsewhere we speak about loss of coherence (LOC). 
+\end{definition}
+
+
+It is shown that the  $\MSC(f)$ between 2 signals is 1, if and only if it exists a filter, whose impulse respond is $g(t)$, such as $s_{1}(t)=g_{1}(t)\star s_{2}(t)$. A particular case is $g(t)=\delta(t-t_{0})$ relative to a pure delay.
+
+
+  \medskip
+ When $\MSC(f)=0$ we say that the 2 signals are spatially uncorrelated and are called noises.
+
+
+
+
+To determine a good station design, it is necessary to take into account the trade-off between the distance and the possible loss of coherence. A very simple model assumes that:
+\begin{eqnarray*}
+ \log\MSC(f) &=& -\beta \frac{f^{2}d^{2}}{c^{2}}
+\end{eqnarray*}
+where  $f$ denotes the frequency,  $d$  the distance between the 2 locations and $c$ the sound velocity. If $\beta=0$ there is no LOC. If $\beta=+\infty$, the signals are spatially non coherent. This very simple model has to be validated but here we assume that it is.
 
 \begin{remark}[on the noise]
 Typical station aperture  is 2 km. Noise is mainly due to the wind.
@@ -246,7 +266,15 @@ It follows  that, under the assumption  that $s(t)$ is stationary random process
 \begin{eqnarray*}
 \Gamma_{s}(f)&=&\gamma_{s}(f)d(f)d^{H}(f)
 \end{eqnarray*}
-where $d(f)$ is a $M$-ary vector whose the $m$-entry writes $e^{-2j\pi fr_{m}^{T}\theta}$. Clearly the matrix $\Gamma_{s}(f)$ is of rank 1, and that is the definition of the coherence. Loss of coherence (LOC) means that $\Gamma_{s}(f)$ is of rank greater than 1.
+where $d(f)$ is a $M$-ary vector whose the $m$-entry writes $e^{-2j\pi fr_{m}^{T}\theta}$. Clearly the matrix $\Gamma_{s}(f)$ is of rank 1, and that is the general definition of the coherence, in accordance with the definition \ref{def:coherence2sensors} for only 2 sensors. 
+\begin{definition}[coherence]
+\label{def:coherenceMsensors}
+$M$ stationary signals are said spatially coherent if their spectral matrix is of rank 1, elsewhere we speak about LOC. 
+\end{definition}
+
+\begin{remark}
+Coherence is not only restricted to the case of pure delays. Coherence is verified for filtering signals.
+\end{remark}
 
 
 \subsubsection{Discrete domain}
@@ -280,7 +308,7 @@ Under LOC, $C_{k}$ is no more a rank 1 projector.  In the following to take into
  \label{eq:CkwithGauss}
  C_{k,\ell\ell'} (\beta)&=&e^{-2\pi^2f_k^2(r_{\ell}-r_{\ell'})^TS(r_{\ell}-r_{\ell'})}
 \end{eqnarray}
-where $S$ is a $3\times 3$ covariance matrix. For simplicity we assume that $S\propto I_3$ then
+where $S$ is a $3\times 3$ covariance matrix. If we assume that $S$ is proportional to the identity then
 \begin{eqnarray}
  \label{eq:CkwithGauss-2}
  C_{k,\ell\ell'} (\beta)&=&e^{-\beta f_k^2 d_{\ell,\ell'}^2}
@@ -306,14 +334,14 @@ where the parameter $\alpha$ consists of
 \end{eqnarray}
 Its size is $K+5$.
 
-\begin{remark}
-To avoid intractable computation, we assume in the following that $\beta$ is known, leading to an uncertainty on only $\theta_{1}$, $\theta_{2}$, $\theta_{3}$, $\sigma^{2}$, $\gamma_{1}$, $\ldots$, $\gamma_{K}$. Now the unknown parameter has dimension $K+4$.
-\end{remark}
+%\begin{remark}
+%To avoid intractable computation, we assume in the following that $\beta$ is known, leading to an uncertainty on only $\theta_{1}$, $\theta_{2}$, $\theta_{3}$, $\sigma^{2}$, $\gamma_{1}$, $\ldots$, $\gamma_{K}$. Now the unknown parameter has dimension $K+4$.
+%\end{remark}
 %=======================================================
  \section{Validation}
 %=======================================================
 %=======================================================
-Taking the log of \eqref{eq:CkwithGauss-2} we get:
+Taking the log of expression \eqref{eq:CkwithGauss-2} we get:
 \begin{eqnarray}
  \label{eq:logCkwithcauchy}
  \log C_{k,\ell\ell'} (\beta)&=& -\beta f_k^2 d_{\ell,\ell'}^2
