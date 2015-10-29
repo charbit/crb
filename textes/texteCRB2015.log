@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.7.25)  29 OCT 2015 10:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.7.25)  29 OCT 2015 11:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -397,43 +397,57 @@ LaTeX Info: Redefining \nameref on input line 181.
 \@outlinefile=\write3
 \openout3 = `texteCRB2015.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 189.
-
-(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 189.
-
-(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 219.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 193.
 
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 219.
- [1
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 193.
+LaTeX Font Info:    Try loading font information for U+msa on input line 205.
 
-{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for U+dsrom on input line 237.
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 205.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for U+dsrom on input line 211.
 
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 )
-<../figures/uniforinterdistances.pdf, id=49, 455.7025pt x 284.06125pt>
+<../figures/uniforinterdistances.pdf, id=46, 455.7025pt x 284.06125pt>
 File: ../figures/uniforinterdistances.pdf Graphic file (type pdf)
 
 <use ../figures/uniforinterdistances.pdf>
 Package pdftex.def Info: ../figures/uniforinterdistances.pdf used on input line
- 244.
+ 218.
 (pdftex.def)             Requested size: 410.12845pt x 255.65274pt.
- [2 <../figures/uniforinterdistances.pdf>] [3
+ [1
 
-] [4] [5]
+{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <../
+figures/uniforinterdistances.pdf>]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 249.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 249.
+
+[3
+
+]
+
+LaTeX Warning: Reference `eq:CkwithGauss-2' on page 4 undefined on input line 3
+29.
+
+[4] [5]
 Appendix A.
 [6
 
@@ -444,7 +458,7 @@ Appendix B.
 ] [8]
 Appendix C.
 
-Overfull \hbox (22.96841pt too wide) in alignment at lines 509--530
+Overfull \hbox (22.96841pt too wide) in alignment at lines 495--516
  [][][] []
  []
 
@@ -453,30 +467,34 @@ Overfull \hbox (22.96841pt too wide) in alignment at lines 509--530
 ]
 Appendix D.
 
-Overfull \hbox (106.74536pt too wide) in alignment at lines 600--612
+Overfull \hbox (106.74536pt too wide) in alignment at lines 586--598
  [][][] []
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 616.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 602.
 [10
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 616.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 602.
  (./texteCRB2015.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 616.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 616.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 602.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 602.
 Package rerunfilecheck Info: File `texteCRB2015.out' has not changed.
-(rerunfilecheck)             Checksum: 66463FA70307FFF0BD322B5A349576CC;400.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 616.
+(rerunfilecheck)             Checksum: 0E520135837DCC26BC6E4D93AE6D03CA;609.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 602.
  ) 
 Here is how much of TeX's memory you used:
- 7537 strings out of 493089
- 107422 string characters out of 6134842
- 206448 words of memory out of 5000000
- 10858 multiletter control sequences out of 15000+600000
- 16876 words of font info for 46 fonts, out of 8000000 for 9000
+ 7562 strings out of 493089
+ 107779 string characters out of 6134842
+ 206452 words of memory out of 5000000
+ 10878 multiletter control sequences out of 15000+600000
+ 21306 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 32i,17n,30p,603b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,17n,31p,603b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
 /usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></
@@ -491,16 +509,17 @@ ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive
 /2015/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb></usr/local/texliv
 e/2015/texmf-dist/fonts/type1/public/doublestroke/dsrom8.pfb></usr/local/texliv
 e/2015/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/20
-15/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2015
-/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2015/t
-exmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2015/tex
-mf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2015/texmf
--dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on texteCRB2015.pdf (10 pages, 284387 bytes).
+2015/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/20
+15/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2015
+/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2015/t
+exmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2015/tex
+mf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2015/texmf
+-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2015/texmf-d
+ist/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on texteCRB2015.pdf (10 pages, 296497 bytes).
 PDF statistics:
- 207 PDF objects out of 1000 (max. 8388607)
- 171 compressed objects within 2 object streams
- 42 named destinations out of 1000 (max. 500000)
- 62 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 223 PDF objects out of 1000 (max. 8388607)
+ 186 compressed objects within 2 object streams
+ 44 named destinations out of 1000 (max. 500000)
+ 86 words of extra memory for PDF output out of 10000 (max. 10000000)
 
