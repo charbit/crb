@@ -18,7 +18,7 @@ nbfiles                = length(filenames);
 Fs_Hz                  = 20;
 Ts_sec                 = 1/Fs_Hz;
 
-for ifile = 6:nbfiles
+for ifile = 3%:nbfiles
     filename1_ii = filenames(ifile).name;
     cdload = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
     eval(cdload)
@@ -57,29 +57,29 @@ for ifile = 6:nbfiles
     for im=1:Msensors
         SIG(:,im) = observations.data(:,im);
     end
-    bandwidthFilter_Hz  = [0.05 1];
+    bandwidthFilter_Hz  = [0.02 1];
     [forward,  reverse] = butter(2,2*bandwidthFilter_Hz/Fs_Hz);
     for im = 1:Msensors
         SIG(:,im)       = filter(forward,reverse,SIG(:,im));
     end
     SIGcentered = SIG - ones(LSIG,1)*mean(SIG,1);
-% s1=SIGcentered(115000+(-10000:10000),1);
-% s2=SIGcentered(115000+(-10000:10000),2);
-% subplot(212)
-% mscohere(s1,s2,[],[],[],20)
-% set(gca,'xlim',[0 0.4])
-% subplot(211)
-% plot((0:20000)/Fs_Hz,[s1 s2])
-% 
-% 
-% return
-%
-%
-%     bandwidthMSC_Hz   = [0.05 0.2];
+    % s1=SIGcentered(115000+(-10000:10000),1);
+    % s2=SIGcentered(115000+(-10000:10000),2);
+    % subplot(212)
+    % mscohere(s1,s2,[],[],[],20)
+    % set(gca,'xlim',[0 0.4])
+    % subplot(211)
+    % plot((0:20000)/Fs_Hz,[s1 s2])
+    %
+    %
+    % return
+    %
+    %
+    %     bandwidthMSC_Hz   = [0.05 0.2];
     taustationary_sec = 500 ;
     ratioDFT2SCP      = 5;
     allMSC = cell(combi,1);
-
+    
     %=====================
     %=====================
     %=====================
@@ -103,61 +103,73 @@ for ifile = 6:nbfiles
     end
     allMSCsort = allMSC(indsortdistance);
     %%
-    bandwidthMSC_Hz   = [0.05 0.15];
-
+    bandwidthMSC_Hz   = [0 0.15];
+    
     id1 = find(frqsFFT_Hz<=bandwidthMSC_Hz(1),1,'last');
     id2 = find(frqsFFT_Hz<=bandwidthMSC_Hz(2),1,'last');
     
     listindfreq  = (id1:id2);
     frqsselected = frqsFFT_Hz(id1:id2);
     Lf           = length(listindfreq);
-
+    
     
     
     figure(ifile)
-    subplot(211)
-    plot((0:LSIG-1)/Fs_Hz/3600, SIG(:,[sortdistances(1,2:3)])/max(max(SIG)))
+    clf
+    subplot(311)
+    plot((0:LSIG-1)/Fs_Hz/3600, SIG(:,sortdistances(1,2:3))/max(max(SIG)))
     set(gca, 'ylim',[-1.5 1.5])
     
     LSCP = length(time_sec.SD);
     logaux = NaN(combi,LSCP,Lf);
     timeselect_samples = cell(Lf,1);
-    llll=linspace(0.9,1.1,Lf);
+    llll=linspace(0.8,1.2,Lf);
     for ifq=1:Lf
         aux = NaN(combi,LSCP);
-        indselect = find(and(...
+        indselect = find(and(and(...
             allMSCsort{1}(listindfreq(ifq),:)>0.8,...
-            allMSCsort{2}(listindfreq(ifq),:)>0));
-        timeselect_samples{ifq} = time_sec.SD(indselect)*Fs_Hz;
-        for ip=1:combi
-            aux(ip,indselect) = allMSCsort{ip}(listindfreq(ifq),indselect);
+            allMSCsort{2}(listindfreq(ifq),:)>0.8),...
+            allMSCsort{3}(listindfreq(ifq),:)>0.8));
+        if length(indselect)>30
+            timeselect_samples{ifq} = time_sec.SD(indselect)*Fs_Hz;
+            for ip=1:combi
+                aux(ip,indselect) = allMSCsort{ip}(listindfreq(ifq),indselect);
+            end
+            logaux(:,:,ifq) = log(aux);
+            meanlogaux =  nanmean(logaux(:,:,ifq),2);
+            stdlogaux =  nanstd(logaux(:,:,ifq),[],2);
+            
+            figure(ifile)
+            subplot(312)
+            hold on
+            %         plot(timeselect_samples{ifq}/Fs_Hz/3600,llll(ifq)*ones(length(indselect),1),'.')
+            
+            plot(timeselect_samples{ifq}/Fs_Hz/3600,frqsFFT_Hz(listindfreq(ifq)),'.',...
+                'color',allcolors(ifq,1))
+            hold off
+            
+            figure(ifile)
+            subplot(313)
+            
+            plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+                meanlogaux,'.-','color',allcolors(ifq,1))
+            hold on
+%                     plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+%                        meanlogaux+stdlogaux,'--','color',allcolors(ifq,1))
+%                     plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+%                        meanlogaux-+stdlogaux,'--','color',allcolors(ifq,1))
         end
-        logaux(:,:,ifq) = log(aux);
-        meanlogaux =  nanmean(logaux(:,:,ifq),2);
-        stdlogaux =  nanstd(logaux(:,:,ifq),[],2);
-        
-        figure(ifile)
-        subplot(211)
-        hold on
-        plot(timeselect_samples{ifq}/Fs_Hz/3600,llll(ifq)*ones(length(indselect),1),'.')
-        hold off
-        
-        figure(ifile)
-        subplot(212)
-
-        plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
-           meanlogaux,'.-','color',allcolors(ifq,1))
-         hold on
-%         plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
-%            meanlogaux+stdlogaux,'--','color',allcolors(ifq,1))
-%         plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
-%            meanlogaux-+stdlogaux,'--','color',allcolors(ifq,1))
     end
+    figure(ifile)
+    subplot(311)
+    subplot(312)
+    set(gca,'ylim',[0 0.5])
+    subplot(313)
     hold off
-        grid on
+    grid on
     set(gca,'ylim',[-3 0])
-    set(gca,'xlim',[0 2e4])
-%    set(gca,'xlim',[0 sortdistances(25,1)* sortdistances(25,1)*frqsFFT_Hz(listindfreq(ifq))^2])
+    set(gca,'xlim',[0 3e4])
+    %    set(gca,'xlim',[0 sortdistances(25,1)* sortdistances(25,1)*frqsFFT_Hz(listindfreq(ifq))^2])
     
     %%
     % addfig = 20;
@@ -206,7 +218,7 @@ for ifile = 6:nbfiles
     % end
     % % set(gca,'ylim',[log(0.3) log(0.8)])
     % hold off
-
+    
     %  imagesc(sortdistances .^2,frqsFFT_Hz(listindfreq) .^2,squeeze((nanmean(logaux,2))))
     
     %%1
