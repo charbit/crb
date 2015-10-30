@@ -43,9 +43,9 @@ K             = fix(N/2)-1;
 frequency_Hz  = (1:K)'*Fs_Hz/N;
 sigma2noise   = 10^(-SNR_dB/10);
 
-alpha_coh     = 0;%0.008;
+alpha_coh     = 1e-8;%0.008;
 Llistfactor   = 3;
-listfactor    = 1000;%[200, 1000, 2000];%linspace(500,2000,Llistfactor);
+listfactor    = [500, 1000, 5000];%linspace(500,2000,Llistfactor);
 Llistfactor   = length(listfactor);
 
 choice = 6;
@@ -115,10 +115,9 @@ for ifactor=1:Llistfactor
     end
     C     = zeros(K,M,M);
     for ik=1:K
-        lambda_k = aec.c_mps/frequency_Hz(ik);
         for im1=1:M
             for im2=1:M
-                C(ik,im1,im2)=exp(-alpha_coh*(sensordistance(im1,im2)/lambda_k)^2 );
+                C(ik,im1,im2)=exp(-alpha_coh*(sensordistance(im1,im2)^2*frequency_Hz(ik)^2 ));
             end
         end
     end
@@ -140,7 +139,7 @@ for ifactor=1:Llistfactor
     plot(x,'.-','color',allcolors(ifactor))
     hold off
     subplot(131)
-    Mmax = 0.7;%max(abs(x));
+    Mmax = 3;%max(abs(x));
     set(gca,'xlim',Mmax*[-1,1])
     set(gca,'ylim',Mmax*[-1,1])
     axis('square')
@@ -155,7 +154,7 @@ for ifactor=1:Llistfactor
     plot(x,'.-','color',allcolors(ifactor))
     hold off
     subplot(132)
-    Mmax = 5;
+    Mmax = 15;
     set(gca,'xlim',Mmax*[-1,1])
     set(gca,'ylim',Mmax*[-1,1])
     axis('square')
@@ -171,3 +170,20 @@ axis('square')
 % sqrt(CRB.aec(1,1))*180/pi
 % sqrt(CRB.aec(2,2))*180/pi
 % sqrt(CRB.aec(3,3))
+
+
+HorizontalSize = 12;
+VerticalSize   = 8;
+set(gcf,'units','centimeters');
+set(gcf,'paperunits','centimeters');
+set(gcf,'PaperType','a4');
+set(gcf,'position',[0 5 HorizontalSize VerticalSize]);
+set(gcf,'paperposition',[0 0 HorizontalSize VerticalSize]);
+
+set(gcf,'color', [1,1,0.92]);%0.7*ones(3,1))
+set(gcf, 'InvertHardCopy', 'off');
+subplot(131)
+title(sprintf('coeff = %4.2e\ngreen: %i, magenta: %i, red: %i ',alpha_coh,listfactor))
+
+stationnumber=37;
+fileprintepscmd = sprintf('print -depsc -loose ../../figures/CRBI%i.eps',stationnumber);
