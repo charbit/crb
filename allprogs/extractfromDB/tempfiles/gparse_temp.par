@@ -1,4 +1,4 @@
 open data_source=operations_archive user=charbit password=sqlmomo
-query wfdisc select * from sel3.wfdisc where sta in  ('I42H8') and chan in ('BDF')  and time between 1412035210  and 1412121010 order by sta,chan,time
+query wfdisc select * from sel3.wfdisc where sta in  ('I37H0') and chan in ('BDF')  and time between 1404345610  and 1404431410 order by sta,chan,time
 read waveforms
 write waveforms

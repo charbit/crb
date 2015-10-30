@@ -21,7 +21,7 @@ switch computer
 end
 % MSCtheresholdseed     = 0.;
 
-stationnumber         = 55;
+stationnumber         = 37;
 directorydatafromIDC  = sprintf('../../../../AAdataI%i/',stationnumber);
 
 filenames              = dir(sprintf('%s*.mat',directorydatafromIDC));
@@ -36,7 +36,7 @@ timeofanalysis_sec     = 500;
 ratioDFT2SCP4average   = 5;
 overlappingFFTrate     = 0.5;
 
-for ifile = 1%:nbfiles
+for ifile = 2%:nbfiles
     filename1_ii = filenames(ifile).name;
     cdload       = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
     eval(cdload)
@@ -109,7 +109,7 @@ for ifile = 1%:nbfiles
     frqsselected    = frqsFFT_Hz(id1:id2);
     nbfreq4MSC      = length(listindfreq);
 %%    
-MSCtheresholdseed     = 0.;
+MSCtheresholdseed     = 0;
 
     %===================================================================
     figure(ifile)
