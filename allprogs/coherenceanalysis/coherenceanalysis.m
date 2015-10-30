@@ -20,7 +20,7 @@ nbfiles                = length(filenames);
 Fs_Hz                  = 20;
 Ts_sec                 = 1/Fs_Hz;
 
-for ifile = 16%:nbfiles
+for ifile = 5%:nbfiles
     filename1_ii = filenames(ifile).name;
     cdload = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
     eval(cdload)
@@ -111,7 +111,7 @@ for ifile = 16%:nbfiles
     eval(cdsave)
     
     %%
-    bandwidthMSC_Hz   = [0.08 0.12];
+    bandwidthMSC_Hz   = [0.05 0.15];
     
     id1 = find(frqsFFT_Hz<=bandwidthMSC_Hz(1),1,'last');
     id2 = find(frqsFFT_Hz<=bandwidthMSC_Hz(2),1,'last');
@@ -136,8 +136,8 @@ for ifile = 16%:nbfiles
         aux = NaN(combi,LSCP);
         indselect = find(and(and(...
             allMSCsort{1}(listindfreq(ifq),:)>0.8,...
-            allMSCsort{2}(listindfreq(ifq),:)>0.8),...
-            allMSCsort{3}(listindfreq(ifq),:)>0.8));
+            allMSCsort{2}(listindfreq(ifq),:)>0.),...
+            allMSCsort{3}(listindfreq(ifq),:)>0.));
         if length(indselect)>30
             timeselect_samples{ifq} = time_sec.SD(indselect)*Fs_Hz;
             for ip=1:combi
@@ -159,13 +159,13 @@ for ifile = 16%:nbfiles
             figure(ifile)
             subplot(313)
             
-            plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+            plot(frqsFFT_Hz(listindfreq(ifq))^1.2*sortdistances(:,1) .^2, ...
                 meanlogaux,'.-','color',allcolors(ifq,1))
             hold on
-                    plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
-                       meanlogaux+stdlogaux,'--','color',allcolors(ifq,1))
-                    plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
-                       meanlogaux-+stdlogaux,'--','color',allcolors(ifq,1))
+%                     plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+%                        meanlogaux+stdlogaux,'--','color',allcolors(ifq,1))
+%                     plot(frqsFFT_Hz(listindfreq(ifq))^2*sortdistances(:,1) .^2, ...
+%                        meanlogaux-+stdlogaux,'--','color',allcolors(ifq,1))
         end
     end
     figure(ifile)
@@ -176,7 +176,7 @@ for ifile = 16%:nbfiles
     hold off
     grid on
     set(gca,'ylim',[-2 0])
-    set(gca,'xlim',[0 2e4])
+    set(gca,'xlim',[0 9e4])
     %    set(gca,'xlim',[0 sortdistances(25,1)* sortdistances(25,1)*frqsFFT_Hz(listindfreq(ifq))^2])
     
     %%
