@@ -10,7 +10,7 @@ stdvel = zeros(Laz,1);
 aec.e_deg      = 20;
 aec.c_mps      = 340;
 Fs_Hz          = 20;
-SNR_dB         = -15;
+SNR_dB         = 0;
 % T_sec is directly in relationship
 % with the max. of delay through the station,
 % which is equal to aec.c_mps * 3000m => 10 sec.
@@ -18,8 +18,8 @@ SNR_dB         = -15;
 % But for computation it is almost
 % equivalent to take 10 times less and adjust the
 % SNR by the ratio.
-T_sec          = 10;
-T_cal          = 10;
+T_sec          = 100;
+T_cal          = 100;
 % Then we correct by sqrt(T_cal/T_sec)
 RHO            = sqrt(T_cal/T_sec);
 N              = fix(T_cal*Fs_Hz);
@@ -39,13 +39,13 @@ numfig         = 1;
 % 20 Hz signals at 1.4Hz. Instead of N=2000 points
 % we have now N=140 points.
 %
-K             = fix(N/2)-1;
+K             = 18;%fix(N/2)-1;
 frequency_Hz  = (1:K)'*Fs_Hz/N;
 sigma2noise   = 10^(-SNR_dB/10);
 
-alpha_coh     = 1e-8;%0.008;
+alpha_coh     = 1.42e-4;%0.008;
 Llistfactor   = 3;
-listfactor    = [500, 1000, 5000];%linspace(500,2000,Llistfactor);
+listfactor    = [500, 1000, 2000];%linspace(500,2000,Llistfactor);
 Llistfactor   = length(listfactor);
 
 choice = 6;
@@ -116,11 +116,12 @@ for ifactor=1:Llistfactor
             sensordistance(im1,im2)=norm(xsensor_m(im1,:)-xsensor_m(im2,:));
         end
     end
-    C     = zeros(K,M,M);
+    C     = ones(K,M,M);
     for ik=1:K
-        for im1=1:M
-            for im2=1:M
+        for im1=1:M-1
+            for im2=im1+1:M
                 C(ik,im1,im2)=exp(-alpha_coh*(sensordistance(im1,im2)^2*frequency_Hz(ik)^2 ));
+                C(ik,im2,im1)=C(ik,im1,im2);
             end
         end
     end
@@ -152,19 +153,19 @@ for ifactor=1:Llistfactor
     hold off
 end
 subplot(131)
-Mmax = 1.8;
-set(gca,'xlim',Mmax*[-1,1])
-set(gca,'ylim',Mmax*[-1,1])
-set(gca,'xtick',[0],'ytick',[0])
+% Mmax = 1.8;
+% set(gca,'xlim',Mmax*[-1,1])
+% set(gca,'ylim',Mmax*[-1,1])
+% set(gca,'xtick',[0],'ytick',[0])
 xlabel('azimuth');
 axis('square')
 grid on
 drawnow
 
 subplot(132)
-Mmax = 10;
-set(gca,'xlim',Mmax*[-1,1])
-set(gca,'ylim',Mmax*[-1,1])
+% Mmax = 10;
+% set(gca,'xlim',Mmax*[-1,1])
+% set(gca,'ylim',Mmax*[-1,1])
 set(gca,'xtick',[0],'ytick',[0])
 xlabel('hor. velocity');
 axis('square')
@@ -203,5 +204,5 @@ subplot(132)
 title(sprintf('LOC-coeff = %4.2e\ngreen: %ix, magenta: %ix, red: %ix',alpha_coh,listfactor))
 
 stationnumber=37;
-fileprintepscmd = sprintf('print -depsc -loose ../../figures/CRBI%i.eps',stationnumber);
+fileprintepscmd = sprintf('print -depsc -loose ../../figures/CRBI0%i.eps',stationnumber);
 % eval(fileprintepscmd)
