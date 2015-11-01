@@ -7,7 +7,7 @@ clear
 %
 %=================================================================
 
-stationnumber         = 42;
+stationnumber         = 37;
 
 switch computer
     case 'GLNXA64'
@@ -44,15 +44,15 @@ password    = 'sqlmomo';
 channel     = '(''BDF'')';
 
 yearstart   =  '2014';
-monthstart  =  '09';
+monthstart  =  '07';
 HMSstart    = '00:00:10';
 yearend     =  '2014';
-monthend    =  '09';
+monthend    =  '07';
 HMSend      = '23:50:10';
 records     = cell(10,1);
 
 ihclist =  xsensors_m.name;
-for daystart_num    = 11:30% %1:2:25
+for daystart_num    = 1:5% %1:2:25
     if daystart_num<10
         daystart    = ['0' num2str(daystart_num)];
         if daystart_num==9

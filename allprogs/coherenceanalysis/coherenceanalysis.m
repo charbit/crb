@@ -22,6 +22,7 @@ end
 % MSCtheresholdseed     = 0.;
 
 stationnumber         = 31;
+
 directorydatafromIDC  = sprintf('../../../../AAdataI%i/',stationnumber);
 
 filenames              = dir(sprintf('%s*.mat',directorydatafromIDC));
