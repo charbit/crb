@@ -209,7 +209,7 @@ For a given frequency, we select the portions of signals where the MSC is greate
 
 \end{itemize}
 
-\end{document}
+
 
 \begin{remark}[on the noise]
 Typical station aperture  is 2 km. Noise is mainly due to the wind.
@@ -332,6 +332,7 @@ where $S_{\theta}$ is a $3\times 3$ covariance matrix depending on 3 free parame
 \end{eqnarray*}
 and the likelihood writes:
 \begin{eqnarray}
+ \label{eq:likelihood-function}
  \mathcal{L}(\alpha)&=&
  \sum_{k=1}^{K}\log\det\Gamma_{k}(\alpha)+\trace{\Gamma_{k}^{-1}(\alpha)X_{k}X_{k}^{T}}
 \end{eqnarray}
@@ -339,11 +340,11 @@ where the parameter $\alpha$ consists of
 \begin{eqnarray}
 \alpha&=&
 \{
-\gamma_{1},\ldots,\gamma_{K},\theta_{1},\theta_{2},\theta_{3},S_{\theta},\sigma^{2}
+\theta_{1},\theta_{2},\theta_{3},\gamma_{1},\ldots,\gamma_{K},S_{\theta},\sigma^{2}
 \}
-\in \mathds{R}^{+K}\times  \mathds{R}^{3}\times \mathcal{M}_{3}^{+}\times \mathds{R}^{+}
+\in \mathds{R}^{3}\times\mathds{R}^{+K}\times   \mathcal{M}_{3}^{+}\times \mathds{R}^{+}
 \end{eqnarray}
-where $\mathcal{M}_{3}^{+}$ is the set of $3\times 3$ positive matrices. The size of $\alpha$ is $K+7$.
+where $\mathcal{M}_{3}^{+}$ is the set of $3\times 3$ positive matrices. The size of the parameter $\alpha$ is $K+7$ whereas the number of observations is $2MK$.
 
 
 Another way is to characterize the slowness by azimuth, elevation and velocity and the LOC by the respective standard deviations of them, see expression \eqref{eq:theta2aec}.
@@ -351,14 +352,33 @@ Another way is to characterize the slowness by azimuth, elevation and velocity a
  \section{Validation}
 %=======================================================
 %=======================================================
-Taking the log of expression \eqref{eq:CkwithGauss-2} we get:
+Forsake of simplicity we assume that $S_{\theta}=\beta I_{3}$. Carrying this expression in  \eqref{eq:CkwithGauss-2} we get:
 \begin{eqnarray}
  \label{eq:logCkwithcauchy}
  \log C_{k,\ell\ell'} (\beta)&=& -\beta f_k^2 d_{\ell,\ell'}^2
 \end{eqnarray}
-meaning that the the log of MSC is proportional to the square to the frequency, and  to the distance. 
+meaning that the the log of MSC is proportional to the square to both frequency and  distance. In the following that $\beta$ is known and has been obtained on a large campaign of studies. The parameter reduces to:
+\begin{eqnarray}
+ \label{eq:alphareducted}
+\alpha&=&
+\{
+\theta_{1},\theta_{2},\theta_{3},\sigma^{2},\gamma_{1},\ldots,\gamma_{K}
+\}
+\in \mathds{R}^{3}\times   \mathds{R}^{+}\times\mathds{R}^{+K}
+\end{eqnarray}
+In the following we have to consider the derivative of the likelihood, expression \eqref{eq:likelihood-function}, w.r.t. the different components of $\alpha$. For that we consider that the derivatives are taken in the order of the components of $\alpha$ as given by the expression \eqref{eq:alphareducted}.
 
-For the proportionality to the frequency, it is not obvious to test it because we don't dispose of a coherent signal in a large frequency bandwidth of interest. 
+To studying the relationship between the MSC and the inter-distance between sensors we need (i) a  station with a large number of sensors and located in such a way that the distribution of the inter-distances is quiet  uniform, (ii) a coherent source almost permanently present. A good example is the microbarom, but unfortunately it covers a small part of the frequency bandwidth of interest. We have retained
+\begin{itemize}
+\item
+station IS37 with microbarom,
+\item
+station IS27 with microbarom,
+\item
+station IS55 with microbarom,
+\item
+station IS31 with gas flare,
+\end{itemize}
 
 
 %=======================================================
@@ -370,9 +390,9 @@ The $(\ell,\ell')$ entry of the Fisher information matrix  associated to the par
  \label{eq:FIM}
 \fim_{\ell,\ell'}(\alpha)&=&\sum_{k=1}^{K}\trace{\Gamma_{k}^{-1}\times\partial_{\ell}\Gamma_{k}\times\Gamma_{k}^{-1}\times\partial_{\ell'}\Gamma_{k}}
 \end{eqnarray}
-where $\ell,\ell'\in\{1,2,3,4\}$ and where $\partial_{\ell}\Gamma_{k}$ is the partial derivative w.r.t. $\theta_{1}$, $\theta_{2}$, $\theta_{3}$ and $\sigma^{2}$.  It is clear that the CRB terms relative to the correlation of $\theta$ and $\sigma^{2}$ are 0. We let:
+where $1\leq \ell,\ell'\leq K+4$ and where $\partial_{\ell}\Gamma_{k}$ is the partial derivative w.r.t. $\alpha$.   We let:
 \begin{eqnarray*}
- d_{k,\ell}(\theta)&=&
+ \dot d_{k,\ell}(\theta)&=&
   \begin{bmatrix}
   -2j\pi f_{k} r_{1,\ell}\,e^{-2j\pi f_{k}r_{1}^{T}\theta}
   \\
@@ -383,28 +403,36 @@ where $\ell,\ell'\in\{1,2,3,4\}$ and where $\partial_{\ell}\Gamma_{k}$ is the pa
 \end{eqnarray*}
 Then for $\ell=1,2,3$:
 \begin{eqnarray*}
-\partial_{\ell}\Gamma_{k}&=&\gamma_{k}
-   \diag{d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)+
-   D_{k}(\theta)C_{k}(\beta) \diag{d_{k,\ell}(\theta)}^{H}
+\partial_{\ell}\Gamma_{k}&=&
+   \gamma_{k}\diag{ \dot d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)+
+   \gamma_{k} D_{k}(\theta)C_{k}(\beta) \diag{ \dot d_{k,\ell}(\theta)}^{H}
    \\
-   &=&2\, \mathcal{R}\left(
+   &=&2\, \gamma_{k} \mathcal{R}\left(
    \diag{d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)\right)
 \end{eqnarray*}
 It is worth to notice that, if $\beta\approx +\infty$, $C_{k}=I_{M}$ and $\partial_{\ell}\Gamma_{k}=0$ which is normal because in this case $\Gamma_{k}$ does not depend on $\theta$. For the derivation w.r.t. $\sigma^{2}$ we have:
 \begin{eqnarray*}
 \partial_{4}\Gamma_{k}&=&I_{M}
 \end{eqnarray*}
-A direct consequence is that the FIM is of this shape:
+A direct consequence is that the FIM, w.r.t. the components \eqref{eq:alphareducted} of $\alpha$ is of this shape:
 \begin{eqnarray*}
  \fim&=&\begin{bmatrix}
- F_{123}&0_{3,1}&0_{3,K}
+ F_{11}&F_{12}&F_{13}&0&0&\ldots&0
  \\
- 0_{1,3}&f_{\sigma^{2}}&?
+ F_{21}&F_{22}&F_{23}&0&0&\ldots&0
  \\
- 0_{K,3}&?&F_{\gamma,K,K}
+F_{31}&F_{32}&F_{33}&0&0&\ldots&0
+ \\
+0&\ldots&0&F_{\sigma^{2}}&
+ \\
+0&\ldots&0&&
+\\
+\vdots&\ddots&\vdots&&&F_{\gamma,K,K}
+\\
+0&\ldots&0
  \end{bmatrix}
 \end{eqnarray*}
-Because the CRB on the estimation of $\theta$ is given by the $3\times 3$ matrix of the inverse of $\fim$ and because the correlations with other parameter estimates are 0, we are only concern with $ F_{123}$ by taking $ F_{123}^{-1}$ . Then the CRB w.r.t. the azimuth, elevation and velocity can be derived using the Jacobian of the one-to-one mapping between the slowness and the vector $(a,e,c)$ where $a$, $e$ and $c$ denote respectively the azimut, the elevation and the velocity. The same calculation can be used to derive the CRB w.r.t. the azimuth and the trace velocity.
+Because the CRB on the estimation of $\theta$ is given by the $3\times 3$ top-left matrix of the inverse of $\fim$, we are only concern with $ F_{123}$ by taking $ F_{123}^{-1}$ . Then the CRB w.r.t. the azimuth, elevation and velocity can be derived using the Jacobian of the one-to-one mapping between the slowness and the vector $(a,e,c)$ where $a$, $e$ and $c$ denote respectively the azimut, the elevation and the velocity. The same calculation can be used to derive the CRB w.r.t. the azimuth and the trace velocity.
 
 
 %=======================================================
@@ -623,6 +651,18 @@ we have
 \end{eqnarray*}
 Enumerating $k=1:K$, $m=1:M$, $m'=1:M$ with $m'>m$ leads to $KM(M-1)/2$ equations with 3 unknowns.
 
+%=======================================================
+%=======================================================
+\chapter{inverse of $\Gamma_{k}$}
+%=======================================================
+Here we give the analytical expression of the inverse of $\Gamma_{k}(\alpha)=\gamma_{k}D_{k}(\theta)\, C_{k}\,D_{k}^{H}(\theta)+\sigma^{2}I_{M}$
+\begin{eqnarray*}
+\Gamma_{k}^{-1}(\alpha)&=&
+\sigma^{-2}I_{M}-\sigma^{-4}D_{k}(\theta)(C_{k}^{-1}+\sigma^{-2}D_{k}^{H}(\theta)D_{k}(\theta))^{-1}D_{k}^{H}(\theta)
+\\
+&=&
+\sigma^{-2}I_{M}-\sigma^{-4}D_{k}(\theta)(C_{k}^{-1}+\sigma^{-2}I)^{-1}D_{k}^{H}(\theta)
+\end{eqnarray*}
 
 \end{document}
 

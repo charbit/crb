@@ -21,7 +21,7 @@ switch computer
 end
 % MSCtheresholdseed     = 0.;
 
-stationnumber         = 55;
+stationnumber         = 31;
 directorydatafromIDC  = sprintf('../../../../AAdataI%i/',stationnumber);
 
 filenames              = dir(sprintf('%s*.mat',directorydatafromIDC));
@@ -36,7 +36,7 @@ timeofanalysis_sec     = 500;
 ratioDFT2SCP4average   = 5;
 overlappingFFTrate     = 0.5;
 
-for ifile = 1%:nbfiles
+for ifile = 1:nbfiles
     filename1_ii = filenames(ifile).name;
     cdload       = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
     eval(cdload)
@@ -109,13 +109,14 @@ for ifile = 1%:nbfiles
     frqsselected    = frqsFFT_Hz(id1:id2);
     nbfreq4MSC      = length(listindfreq);
 %%    
-MSCtheresholdseed     = 0.;
+MSCtheresholdseed     = 0.4;
+    exp2 = '^{-2}';    
 
     %===================================================================
     figure(ifile)
     clf
     %=======
-    subplot(411)
+    subplot(221)
     plot((0:LSIG-1)/Fs_Hz/3600, SIG(:,sortdistances(1,2:3))/max(max(SIG)))
     set(gca, 'ylim',[-1.5 1.5])
     
@@ -130,7 +131,7 @@ MSCtheresholdseed     = 0.;
             allMSCsort{1}(listindfreq(ifq),:)>MSCtheresholdseed,...
             allMSCsort{2}(listindfreq(ifq),:)>MSCtheresholdseed),...
             allMSCsort{3}(listindfreq(ifq),:)>MSCtheresholdseed));
-        if length(indselect)>30
+        if length(indselect)>10
             timeselect_samples{ifq} = time_sec.SD(indselect)*Fs_Hz;
             for ip=1:combi
                 aux(ip,indselect) = allMSCsort{ip}(listindfreq(ifq),indselect);
@@ -142,7 +143,7 @@ MSCtheresholdseed     = 0.;
             
             %=======
             figure(ifile)
-            subplot(412)
+            subplot(223)
             hold on           
             plot(timeselect_samples{ifq}/Fs_Hz/3600,frqsFFT_Hz(listindfreq(ifq)),'.',...
                 'color',allcolors(ifq,1))
@@ -152,8 +153,8 @@ MSCtheresholdseed     = 0.;
             explicativevarsave = [explicativevarsave;explicativevar];
             %=======
             figure(ifile)
-            subplot(212)
-            semilogy(explicativevar, exp(meanlogaux),'.-','color',allcolors(ifq,1))
+            subplot(122)
+            semilogy(explicativevar/1e6, exp(meanlogaux),'.-','color',allcolors(ifq,1))
             hold on
 %             plot(explicativevar, meanlogaux{ifq}+stdlogaux,'--','color',allcolors(ifq,1))
 %             plot(explicativevar, meanlogaux{ifq}-stdlogaux,'--','color',0.3*[1 1 1])
@@ -161,25 +162,27 @@ MSCtheresholdseed     = 0.;
     end
     
     figure(ifile)
-    subplot(411)
-    set(gca,'xlim',[0 20])
+    subplot(221)
+    set(gca,'xlim',[0 4])
     xlabel('time - [hour]','fontname','times','fontsize',10)
         set(gca,'fontname','times','fontsize',10)
 
-    subplot(412)
+    subplot(223)
     hold off
     set(gca,'xlim',[0 20])
-    set(gca,'ylim',[0 bandwidthMSC_Hz(2)*1.1])
+    set(gca,'ylim',[0.01 bandwidthMSC_Hz(2)*1.1])
+    set(gca,'yscale','log')
     grid on
     ylabel('frequency - [Hz]','fontname','times','fontsize',10)
     set(gca,'fontname','times','fontsize',10)
+    set(gca,'box','on')
     
-    subplot(212)
+    subplot(122)
     grid on
-    set(gca,'xlim',[0 2e8])
+    set(gca,'xlim',[0 2e2])
     set(gca,'ylim',[5e-2 1])    
     set(gca,'fontname','times','fontsize',10)
-    xlabel('F2 x d2 - [Hz2m2]','fontname','times','fontsize',10)
+    xlabel(sprintf('F2 x d2 - [Hz%s x km%s]',exp2,exp2),'fontname','times','fontsize',10)
     ylabel('MSC','fontname','times','fontsize',10)
 
     %    set(gca,'xlim',[0 sortdistances(25,1)* sortdistances(25,1)*frqsFFT_Hz(listindfreq(ifq))^2])
@@ -187,17 +190,18 @@ MSCtheresholdseed     = 0.;
     sortmeanlogauxsave = meanlogauxsave(indsorteva);
     auxnum = find(sortexplicativevarsave<2e8,1,'last');
     coeff=sortexplicativevarsave(1:auxnum)\sortmeanlogauxsave(1:auxnum);
+
     figure(ifile)
-    subplot(212)
+    subplot(122)
     hold on
-    semilogy(sortexplicativevarsave([1 end]),exp(coeff*sortexplicativevarsave([1 end])))
+    semilogy(sortexplicativevarsave([1 end])/1e6,...
+        exp(coeff*sortexplicativevarsave([1 end])),'k','linew',1.5)
     hold off
-    title(sprintf('slope = %4.2e',coeff))
-    
-    
-    
-    HorizontalSize = 21;
-    VerticalSize   = 12;
+    title(sprintf('LOC - decay = %4.2e Hz%s x m%s',coeff,exp2,exp2), ...
+        'fontname','times','fontsize',10)    
+
+    HorizontalSize = 24;
+    VerticalSize   = 10;
     set(gcf,'units','centimeters');
     set(gcf,'paperunits','centimeters');
     set(gcf,'PaperType','a4');
@@ -207,7 +211,7 @@ MSCtheresholdseed     = 0.;
     set(gcf,'color', [1,1,0.92]);%0.7*ones(3,1))
     set(gcf, 'InvertHardCopy', 'off');
     fileprintepscmd = sprintf('print -depsc -loose ../../figures/coherenceI%i%s.eps',stationnumber,filename1_ii(1:8));
-
+% eval(fileprintepscmd)
     %%
     % addfig = 20;
     % figure(1+addfig)

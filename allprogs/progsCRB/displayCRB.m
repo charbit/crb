@@ -98,19 +98,22 @@ switch choice
         %
 end
 
-% gX       = xsensor0';
-% newX     = transform2isotrop(gX);
-% xsensor0 = newX';
+if 0
+    gX          = xsensor0';
+    xsensor0new = transform2isotrop(xsensor0);
+else
+    xsensor0new = xsensor0;
+end
 
-M = size(xsensor0,1);
+M = size(xsensor0new,1);
 for ifactor=1:Llistfactor
     factor    = listfactor(ifactor);
-    xsensor   = factor * xsensor0;
+    xsensor_m   = factor * xsensor0new;
     % end
     sensordistance = zeros(M,M);
     for im1=1:M
         for im2=1:M
-            sensordistance(im1,im2)=norm(xsensor(im1,:)-xsensor(im2,:));
+            sensordistance(im1,im2)=norm(xsensor_m(im1,:)-xsensor_m(im2,:));
         end
     end
     C     = zeros(K,M,M);
@@ -124,7 +127,7 @@ for ifactor=1:Llistfactor
     for iaz=1:Laz
         aec.a_deg = listaz(iaz);
         
-        CRB = evalCRBwithLOC(xsensor, sigma2noise, C, aec, frequency_Hz);
+        CRB = evalCRBwithLOC(xsensor_m, sigma2noise, C, aec, frequency_Hz);
         
         stdaz(iaz)  = sqrt(CRB.av(1,1))*180/pi;
         stdvel(iaz)  = sqrt(CRB.av(2,2));
@@ -137,14 +140,8 @@ for ifactor=1:Llistfactor
     end
     x = RHO * stdaz .* exp(1j*pi*listaz/180);
     plot(x,'.-','color',allcolors(ifactor))
-    hold off
-    subplot(131)
-    Mmax = 3;%max(abs(x));
-    set(gca,'xlim',Mmax*[-1,1])
-    set(gca,'ylim',Mmax*[-1,1])
-    axis('square')
+    hold off    
     
-    drawnow
     %==
     subplot(132)
     if not(ifactor==1)
@@ -153,26 +150,46 @@ for ifactor=1:Llistfactor
     x = RHO * stdvel .* exp(1j*pi*listaz/180);
     plot(x,'.-','color',allcolors(ifactor))
     hold off
-    subplot(132)
-    Mmax = 15;
-    set(gca,'xlim',Mmax*[-1,1])
-    set(gca,'ylim',Mmax*[-1,1])
-    axis('square')
-    drawnow
 end
-subplot(133)
-plot(xsensor0(:,1),xsensor0(:,2),'o')
-% set(gca,'xlim',5*[-1,1])
-% set(gca,'ylim',5*[-1,1])
+subplot(131)
+Mmax = 1.8;
+set(gca,'xlim',Mmax*[-1,1])
+set(gca,'ylim',Mmax*[-1,1])
+set(gca,'xtick',[0],'ytick',[0])
+xlabel('azimuth');
 axis('square')
+grid on
+drawnow
+
+subplot(132)
+Mmax = 10;
+set(gca,'xlim',Mmax*[-1,1])
+set(gca,'ylim',Mmax*[-1,1])
+set(gca,'xtick',[0],'ytick',[0])
+xlabel('hor. velocity');
+axis('square')
+grid on
+drawnow
+
+
+
+subplot(133)
+plot(xsensor0new(:,1),xsensor0new(:,2),'o')
+subplot(133)
+Mmax = 1.5;
+set(gca,'xlim',Mmax*[-1,1])
+set(gca,'ylim',Mmax*[-1,1])
+axis('square')
+set(gca,'xtick',[0],'ytick',[0])
+grid on
 % CRB.slowness
 % CRB.aec
 % sqrt(CRB.aec(1,1))*180/pi
 % sqrt(CRB.aec(2,2))*180/pi
 % sqrt(CRB.aec(3,3))
-
-
-HorizontalSize = 12;
+%%
+figure(1)
+HorizontalSize = 24;
 VerticalSize   = 8;
 set(gcf,'units','centimeters');
 set(gcf,'paperunits','centimeters');
@@ -182,8 +199,9 @@ set(gcf,'paperposition',[0 0 HorizontalSize VerticalSize]);
 
 set(gcf,'color', [1,1,0.92]);%0.7*ones(3,1))
 set(gcf, 'InvertHardCopy', 'off');
-subplot(131)
-title(sprintf('coeff = %4.2e\ngreen: %i, magenta: %i, red: %i ',alpha_coh,listfactor))
+subplot(132)
+title(sprintf('LOC-coeff = %4.2e\ngreen: %ix, magenta: %ix, red: %ix',alpha_coh,listfactor))
 
 stationnumber=37;
 fileprintepscmd = sprintf('print -depsc -loose ../../figures/CRBI%i.eps',stationnumber);
+% eval(fileprintepscmd)

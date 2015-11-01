@@ -1,12 +1,20 @@
+%=========== displayCRBlin.m
+% this program computes the CRB for the linear model
+% associated to the M-1 delays w.r.t. to the sensor 1 and 
+% the difference of sensor locations.
+% Usually these delays are performed by cross-correlation
+% maximization. We build the M-1 x d matrix H of the 
+% difference of locations wrt the sensor 1 and computes
+% inv(H'*H). To transform in a,e,c we use the Jacobian.
+%
 clear
-
-
 listaz = linspace(0,360,100)';
 Laz = length(listaz);
 stdaz = zeros(Laz,1);
 stdel = zeros(Laz,1);
 stdvel = zeros(Laz,1);
 
+transform2isoflag = 0;
 aec.e_deg      = 20;
 aec.c_mps      = 340;
 
@@ -59,7 +67,23 @@ switch choix
             -6.833279994535260   1.702617467129603  -0.059000000000000];
         
 end
-M = size(xsensors0_m,1);
+% if 1 we transform the array in isotrope array
+% for coherent signal.
+if transform2isoflag
+    newX     = transform2isotrop(xsensors0_m);
+    xsensors0_mnew = newX;
+else
+    xsensors0_mnew = xsensors0_m;
+end
+% 
+M = size(xsensors0_mnew,1);
+
+H3 = zeros(M-1,3);
+for im=2:M
+    H3(im-1,:) = (xsensors0_mnew(im,:)-xsensors0_mnew(1,:));
+end
+H3H3t = (H3'*H3);
+
 for iaz=1:Laz
     aec.a_deg = listaz(iaz);
     
@@ -71,8 +95,6 @@ for iaz=1:Laz
     c_mps    = aec.c_mps;
     v_mps = c_mps/cose;
     
-    
-    
     Jacobaec_k = ([...
         -sina*cose/c_mps -cosa*sine/c_mps -cosa*cose/c_mps/c_mps; ...
         cosa*cose/c_mps -sina*sine/c_mps -sina*cose/c_mps/c_mps;...
@@ -83,41 +105,51 @@ for iaz=1:Laz
         cosa/v_mps -sina/v_mps/v_mps 0;...
         0 -sine/cose/v_mps/v_mps 1/cose/cose/v_mps ...
         ]);
-    H3 = zeros(M-1,3);
-    for im=2:M
-        H3(im-1,:) = (xsensors0_m(im,:)-xsensors0_m(1,:));
-    end
-    H3H3t = (H3'*H3);
-    
-    
-    
+        
     CRB.linaec = (Jacobaec_k\H3H3t)/Jacobaec_k';
-    CRB.linav = (Jacobav_k\H3H3t)/Jacobav_k';
+    CRB.linav  = (Jacobav_k\H3H3t)/Jacobav_k';
     
+    figure(1)
+    subplot(222)
+    ellipse(zeros(2,1),CRB.linav(1:2,1:2),0.95);
+    hold on
+
     stdaz(iaz)   = sqrt(CRB.linav(1,1))*180/pi;
     stdvel(iaz)  = sqrt(CRB.linav(2,2));
     
 end
-
 figure(1)
-subplot(131)
+subplot(222)
+axis('square')
+set(gca,'xtick',[],'ytick',[])
+hold off
+title('BCR on (a,v)')
+
+subplot(223)
 x = stdaz .* exp(1j*pi*listaz/180) / max(stdaz);
 plot(x,'.-')
 hold off
 set(gca,'xlim',[-1,1])
 set(gca,'ylim',[-1,1])
+set(gca,'xtick',[],'ytick',[])
 axis('square')
+title('incertitude in azimut')
 
-figure(1)
-subplot(132)
+subplot(224)
 x = stdvel .* exp(1j*pi*listaz/180) / max(stdvel);
 plot(x,'.-')
 hold off
 set(gca,'xlim',[-1,1])
 set(gca,'ylim',[-1,1])
+set(gca,'xtick',[],'ytick',[])
 axis('square')
-subplot(133)
+title('incertitude in trace velocity')
+
+subplot(221)
 plot(xsensors0_m(:,1),xsensors0_m(:,2),'o')
 set(gca,'xlim',2*[-1,1])
 set(gca,'ylim',2*[-1,1])
+set(gca,'xtick',[],'ytick',[])
 axis('square')
+title('sensor locations')
+
