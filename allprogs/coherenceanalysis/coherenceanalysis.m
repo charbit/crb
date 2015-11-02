@@ -19,10 +19,15 @@ switch computer
     otherwise
         addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
 end
-% MSCtheresholdseed     = 0.;
 
-stationnumber         = 37;
+%=================================================================
 
+%=================================================================
+stationnumber         = 31;
+
+%=================================================================
+
+%=================================================================
 directorydatafromIDC  = sprintf('../../../../AAdataI%i/',stationnumber);
 
 filenames              = dir(sprintf('%s*.mat',directorydatafromIDC));
@@ -37,16 +42,16 @@ timeofanalysis_sec     = 500;
 ratioDFT2SCP4average   = 5;
 overlappingFFTrate     = 0.5;
 
-for ifile = 6
-    filename1_ii = filenames(ifile).name;
+for ifile = 10
+    filename1_ii = filenames(ifile).name;filename1_ii
     cdload       = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
     eval(cdload)
     
-    xsensors_m = observations.xsensors_m.coordinates;
-    Msensors   = size(xsensors_m,1);
-    cp = 0;
-    combi = Msensors*(Msensors-1)/2;
-    distances = zeros(combi,3);
+    xsensors_m   = observations.xsensors_m.coordinates;
+    Msensors     = size(xsensors_m,1);
+    cp           = 0;
+    combi        = Msensors*(Msensors-1)/2;
+    distances    = zeros(combi,3);
     for i1=1:Msensors-1
         for i2=i1+1:Msensors
             cp=cp+1;
@@ -94,7 +99,7 @@ for ifile = 6
             Lfft         = fix(Tfft_sec*Fs_Hz);
             GREF         = ones(Lfft,1);
             [allSDs, time_sec, frqsFFT_Hz] = ...
-                estimSCP(signal1_centered,signal2_centered,GREF, ...
+                estimSCP(signal2_centered,signal1_centered,GREF, ...
                 overlappingFFTrate, ...
                 ratioDFT2SCP4average, 0, Fs_Hz, 'hann');
             allMSC{cp} = [allSDs.MSC];
@@ -103,15 +108,15 @@ for ifile = 6
     allMSCsort = allMSC(indsortdistance);
         
     %%
-    bandwidthMSC_Hz   = [0.05 0.15];
+    bandwidthMSC_Hz   = [0.08 0.12];
     id1               = find(frqsFFT_Hz<=bandwidthMSC_Hz(1),1,'last');
     id2               = find(frqsFFT_Hz<=bandwidthMSC_Hz(2),1,'last');
     listindfreq       = (id1:id2);
     frqsselected_Hz   = frqsFFT_Hz(id1:id2);
     nbfreq4MSC        = length(listindfreq);
     
-    MSCtheresholdseed   = 0.6;
-    maxvarexplic_Hz2km2 = 0.02;
+    MSCtheresholdseed   = 0.9;
+    maxvarexplic_Hz2km2 = 0.02;%(bandwidthMSC_Hz(2)^2)*(sortdistances(combi)^2)*1e-6;
     %===================================================================
     figure(ifile)
     clf
@@ -128,6 +133,7 @@ for ifile = 6
     for ifq=1:nbfreq4MSC
         ifqcolor   = mod(ifq,length(allcolors))+1;
         frq_ifq_Hz = frqsselected_Hz(ifq);
+        frq_ifq_Hz2 = frq_ifq_Hz^2;
         aux        = NaN(combi,LSCP);
         indselect = find(and(and(...
             allMSCsort{1}(listindfreq(ifq),:)>MSCtheresholdseed,...
@@ -150,25 +156,29 @@ for ifile = 6
             plot(timeselect_samples{ifq}/Fs_Hz/3600,frqsFFT_Hz(listindfreq(ifq)),'.',...
                 'color',allcolors(ifqcolor,1))
 
-            explicativevar_Hz2km2 = (frq_ifq_Hz^2)*(sortdistances(:,1) .^2)/1e6;
+            explicativevar_Hz2km2     = frq_ifq_Hz2*(sortdistances(:,1) .^2)/1e6;
             explicativevarsave_Hz2km2 = [explicativevarsave_Hz2km2;explicativevar_Hz2km2];
             %=======
             figure(ifile)
             subplot(122)
             semilogy(explicativevar_Hz2km2, exp(meanlogaux),'.-','color',allcolors(ifqcolor,1))
             hold on
+%             semilogy(explicativevar_Hz2km2, exp(logaux(:,:,ifq)),'--','color',0.7*[1 1 1])
 %             semilogy(explicativevar_Hz2km2, exp(meanlogaux+stdlogaux),'--','color',0.3*[1 1 1])
 %             semilogy(explicativevar_Hz2km2, exp(meanlogaux-stdlogaux),'--','color',0.3*[1 1 1])
         end
     end
     
-    [sortexplicativevarsave_Hz2km2, indsorteva] = sort(explicativevarsave_Hz2km2);
-    sortmeanlogauxsave = meanlogauxsave(indsorteva);
-    auxnum = find(sortexplicativevarsave_Hz2km2<maxvarexplic_Hz2km2,1,'last');
-    HH = [sortexplicativevarsave_Hz2km2(1:auxnum)];
-    coeffs=HH\sortmeanlogauxsave(1:auxnum);
-    
-    
+    %=== regression on coefs
+    [sortexplicativevarsave_Hz2km2, indsorteva] = ...
+        sort(explicativevarsave_Hz2km2);
+    sortmeanlogauxsave                          = meanlogauxsave(indsorteva);
+    auxnum                                      = ...
+        find(sortexplicativevarsave_Hz2km2<maxvarexplic_Hz2km2,1,'last');
+    HH          = [ones(auxnum,1) sortexplicativevarsave_Hz2km2(1:auxnum)];
+    coeffs      = HH\sortmeanlogauxsave(1:auxnum);
+     
+    %======================================================
     figure(ifile)
     subplot(221)
     set(gca,'xlim',[0 24])
@@ -188,8 +198,8 @@ for ifile = 6
     
     subplot(122)
     grid on
-    set(gca,'xlim',[0 maxvarexplic_Hz2km2])
-    set(gca,'ylim',[5e-2 1])    
+%     set(gca,'xlim',[0 maxvarexplic_Hz2km2])
+    set(gca,'ylim',[1e-1 1])    
     set(gca,'fontname','times','fontsize',10)
     xlabel(sprintf('F2 x d2 - [Hz%s x km%s]',exp2,exp2),'fontname','times','fontsize',10)
     ylabel('MSC','fontname','times','fontsize',10)
@@ -198,9 +208,9 @@ for ifile = 6
     subplot(122)
     hold on
     semilogy(sortexplicativevarsave_Hz2km2([1 end]),...
-        exp([sortexplicativevarsave_Hz2km2([1 end])]*coeffs),'k','linew',1.5)
+        exp([ones(2,1) sortexplicativevarsave_Hz2km2([1 end])]*coeffs),'k','linew',1.5)
     hold off
-    title(sprintf('LOC - decay = %4.2e Hz%s x m%s',coeffs(1)*1e-6,exp2,exp2), ...
+    title(sprintf('LOC - decay = %4.2e Hz%s x m%s',coeffs(2)*1e-6,exp2,exp2), ...
         'fontname','times','fontsize',10)    
 
     HorizontalSize = 24;
@@ -214,96 +224,6 @@ for ifile = 6
     set(gcf,'color', [1,1,0.92]);%0.7*ones(3,1))
     set(gcf, 'InvertHardCopy', 'off');
     fileprintepscmd = sprintf('print -depsc -loose ../../figures/coherenceI%i%s.eps',stationnumber,filename1_ii(1:8));
-% eval(fileprintepscmd)
-    %%
-    % addfig = 20;
-    % figure(1+addfig)
-    %
-    % for ip=1:combi
-    %     subplot(7,7,ip)
-    %     pcolor(time_sec.SD/3600,frqsselected_Hz, allMSCsort{ip}(id1:id2,:))
-    %     shading flat
-    % end
-    %%
-    % slope = zeros(Lf,2);
-    % allMSC10 = zeros(combi,1);
-    % for ifreq=1:Lf
-    %     freq_ii = listindfreq(ifreq);
-    %     for ip=1:combi
-    %         allMSC10(ip) = (mean(allMSCsort{ip}(freq_ii,allMSCsort{ip}(freq_ii,:)>0.)));
-    %     end
-    %
-    % %   plot(sortdistances,allMSC10,'x')
-    % %   title(sprintf('freq = %5.2f',frqsFFT_Hz(freq_ii)))
-    % %   pause
-    %     logallMSC = log(allMSC10);
-    %     HH        = [ones(length(sortdistances),1) sortdistances]; %
-    %     alphareg  = HH \ logallMSC;
-    %     slope(ifreq,:) = alphareg;%  ;
-    %     figure(2+addfig)
-    %     subplot(211)
-    %     plot(sortdistances, [HH*alphareg logallMSC],'.-')
-    %     hold on
-    %     subplot(212)
-    %     plot(sortdistances, abs(logallMSC-HH*alphareg) ./ abs(logallMSC))
-    %     hold on
-    %     pause
-    % end
-    %%
-    % clf
-    % LSCP = length(time_sec.SD);
-    % for ip=1:combi
-    %     aux = NaN(Lf,LSCP);
-    %     indaux          = find(allMSCsort{ip}(listindfreq,:)>0);
-    %     aux(indaux)     = allMSCsort{ip}(indaux);
-    %     logallMSCasfreq = log((aux));
-    %         plot(frqsFFT_Hz(listindfreq).^2, nanmean(logallMSCasfreq,2),'.-','color',allcolors(ipcolor,1))
-    % hold on
-    % end
-    % % set(gca,'ylim',[log(0.3) log(0.8)])
-    % hold off
-    
-    %  imagesc(sortdistances .^2,frqsFFT_Hz(listindfreq) .^2,squeeze((nanmean(logaux,2))))
-    
-    %%1
-    % figure(2+addfig)
-    %     subplot(211)
-    % hold off
-    %     subplot(212)
-    % hold off
-    % figure(3+addfig)
-    % % subplot(211)
-    % plot(frqsFFT_Hz(listindfreq)',-slope(:,2)','.-');% .* frqsFFT_Hz(listindfreq)
-    %
-    % [ones(Lf,1) frqsFFT_Hz(listindfreq)']\slope(:,2)
-    % grid on
-    % % subplot(212)
-    % % semilogx(frqsFFT_Hz(listindfreq)',slope(:,2)' ./ frqsFFT_Hz,'.-')
-    % % grid on
-    % % subplot(313)
-    % % semilogx(frqsFFT_Hz(listindfreq)',slope(:,3)','.-')
-    % % grid on
-    % %         figure(indexofSTA2)
-    % %         pcolor(time_sec.SD/60/60, frqsFFT_Hz(1:400),allMSC(1:400,:))
-    % %         shading flat
-    % %         set(gca,'yscale','log')
-    % %         colorbar
-    %
+%     eval(fileprintepscmd)
+
 end
-
-
-
-
-% %%
-% for ifile=1:nbfiles
-%     figure(ifile)
-%     xlabel('distances - [m]')
-%     ylabel('log MSC')
-%     hfig=20;
-%     vfig=13;
-%     set(gcf,'units','centimeters');
-%     set(gcf,'paperunits','centimeters');
-%     set(gcf,'PaperType','a4');
-% %     set(gcf,'position',[8 10 hfig vfig]);
-%     set(gcf,'paperposition',[0 0 hfig vfig]);
-% end

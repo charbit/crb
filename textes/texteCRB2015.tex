@@ -286,6 +286,13 @@ It follows  that, under the assumption  that $s(t)$ is stationary random process
 \Gamma_{s}(f)&=&\gamma_{s}(f)d(f)d^{H}(f)
 \end{eqnarray*}
 where $d(f)$ is a $M$-ary vector whose the $m$-entry writes $e^{-2j\pi fr_{m}^{T}\theta}$. Clearly the matrix $\Gamma_{s}(f)$ is of rank 1, and that is the general definition of the coherence, in accordance with the definition \ref{def:coherence2sensors} for only 2 sensors. In any case, the matrix $\Gamma_{s}(f)\geq 0$ for any frequency $f$.
+
+If we assume that the spectral matrix of the noise $w(t)$ is $\sigma^{2}I_M$ for any frequency, it follows that the MSC between any two sensors writes:
+\begin{eqnarray*}
+ \MSC_{\ell,\ell'}(f)&=& \frac{\gamma_{s}^{2}(f)}{(\gamma_{s}(f)+\sigma^{2})(\gamma_{s}(f)+\sigma^{2})}
+\end{eqnarray*}
+Therefore the MSC level is not $1$, because the noise.
+
 \begin{definition}[coherence]
 \label{def:coherenceMsensors}
 $M$ stationary signals are said spatially coherent if their spectral matrix is of rank 1, elsewhere we speak about LOC. 
@@ -321,12 +328,44 @@ The expression \eqref{eq:spectralmatrixpuredelay} can be rewritten:
 \Gamma_{k}(\alpha)&=&\gamma_{k}D_{k}(\theta)\, C_{k}\,D_{k}^{H}(\theta)+\sigma^{2}I_{M}
 %\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
 \end{eqnarray}
-where $D_{k}(\theta)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$ and where $C_{k}=\mathds{1}\mathds{1}^{T}$ which is a rank 1 matrix. Under LOC, $C_{k}$ is no more a rank 1 projector.  A commonly used model for the LOC is for $1\leq \ell\leq M$ and $1\leq \ell'\leq M$:
+where $D_{k}(\theta)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$ and where $C_{k}=\mathds{1}\mathds{1}^{T}$ which is a rank 1 matrix. Under LOC, $C_{k}$ is no more a rank 1 projector. 
+
+From \eqref{eq:spectralmatrixLOC}, we get:
+\begin{eqnarray*}
+ \Gamma_{k,m,m'}&=& \gamma_{k}C_{k,m,m'}e^{-2j\pi f_{k} (r_{m}-r_{m'})^{T}\theta }+\sigma^{2}\delta_{m,m'}
+\end{eqnarray*}
+
+
+We let $\SNR_{k}=\gamma_{k}/\sigma^2$ the signal-to-noise ratio at the frequency $f_{k}$. It follows that the MSC at the frequency $f_{k}$  between any two sensors writes:
+\begin{eqnarray}
+\label{eq:MSCgeneralmodel}
+ \MSC_{k,m,m'}&=& \frac{1}{(1+\SNR_{k}^{-1})^2}\,C_{k,m,m'}^{2}
+\end{eqnarray}
+The level the MSC  is due in one hand to the noise and on the other to the LOC.
+
+
+A commonly used model for the LOC is for $1\leq m\leq M$ and $1\leq m'\leq M$:
 \begin{eqnarray}
  \label{eq:CkwithGauss}
- C_{k,\ell\ell'} &=&e^{-2\pi^2f_k^2(r_{\ell}-r_{\ell'})^TS_{\theta}(r_{\ell}-r_{\ell'})}
+ C_{k,m,m'} &=&e^{-2\pi^2f_k^2(r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})}
 \end{eqnarray}
-where $S_{\theta}$ is a $3\times 3$ covariance matrix depending on 3 free parameters. In summary   we can write that:
+where $S_{\theta}$ is a $3\times 3$ covariance matrix depending on 3 free parameters. Using \eqref{eq:MSCgeneralmodel}, we get:
+\begin{eqnarray*}
+\label{eq:MSCgaussianmodel}
+ \log \MSC_{k,m,m'}&=& -2 \log(1+\SNR_{k}^{-1})
+-4\pi^2f_k^2(r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})
+\end{eqnarray*}
+In the simple case where $_{\theta}$ is proportional to the identity, and omitting the frequency index $k$, this expression simplifies as:
+\begin{eqnarray*}
+\label{eq:MSCgaussianmodel}
+ \log \MSC_{m,m'}&=& \beta_{0}+\beta_{1} d_{m,m'}
+%-4\pi^2f_k^2(r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})
+\end{eqnarray*}
+If we assume constant SNR in consecutive time windows we can estimate $\beta_0$ and $\beta_1$.
+
+
+\subsubsection{Likelihood function}
+In summary   we can write that:
 \begin{eqnarray*}
  (X_{1},\ldots,X_{K}) &\sim&\prod_{k=1}^{K}\mathcal{N}_{c}(x_{k};0_{M},\Gamma_{k}(\alpha))
 \end{eqnarray*}
