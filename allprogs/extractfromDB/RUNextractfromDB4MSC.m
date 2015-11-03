@@ -8,7 +8,7 @@ clear
 %=================================================================
 
 %=================================================================
-stationnumber         = 31;
+stationnumber         = '07'; %MUST BE A STRING
 %=================================================================
 %========= source of data
 data_source = 'operations_archive';%testbed_archive';
@@ -17,11 +17,11 @@ password    = 'sqlmomo';
 % channel     = '(''BDF'',''BDF'',''LWS'',''LWD'',''LKO'')';
 channel     = '(''BDF'')';
 
-yearstart   =  '2014';
-monthstart  =  '12';
+yearstart   =  '2015';
+monthstart  =  '02';
 HMSstart    = '00:00:10';
-yearend     =  '2014';
-monthend    =  '12';
+yearend     =  '2015';
+monthend    =  '02';
 HMSend      = '23:50:10';
 
 %=================================================================
@@ -32,9 +32,9 @@ switch computer
         addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/00pierrick/
 end
 %========== matlab format files are saved into the following directory
-directorydatafromIDC  = sprintf('../../../../AAdataI%i/',stationnumber);
+directorydatafromIDC  = sprintf('../../../../AAdataI%s/',stationnumber);
 %=== sensor locations
-cdeloadX = sprintf('load(''../../../../sensorlocation/I%i.mat'');',stationnumber);
+cdeloadX = sprintf('load(''../../../../sensorlocation/I%s.mat'');',stationnumber);
 eval(cdeloadX)
 Msensors               = size(xsensors_m.coordinates,1);
 %====================================================================
@@ -55,7 +55,7 @@ end
 records     = cell(10,1);
 
 ihclist =  xsensors_m.name;
-for daystart_num    = 11:16% %1:2:25
+for daystart_num    = 1:10% %1:2:25
     if daystart_num<10
         daystart    = ['0' num2str(daystart_num)];
         if daystart_num==9
@@ -71,7 +71,7 @@ for daystart_num    = 11:16% %1:2:25
     for indhc=1:Msensors
         elementtype = xsensors_m.name{indhc}(4);
         ihcname = str2double(xsensors_m.name{indhc}(5));
-        stations    = sprintf(' (''I%i%s%i'') ',stationnumber,elementtype, ihcname);
+        stations    = sprintf(' (''I%s%s%i'') ',stationnumber,elementtype, ihcname);
         
         %=== clean temporary files
         commandclean = sprintf('!rm %s/*.*',temporary_gparse_dir);

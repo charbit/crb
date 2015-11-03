@@ -287,11 +287,11 @@ It follows  that, under the assumption  that $s(t)$ is stationary random process
 \end{eqnarray*}
 where $d(f)$ is a $M$-ary vector whose the $m$-entry writes $e^{-2j\pi fr_{m}^{T}\theta}$. Clearly the matrix $\Gamma_{s}(f)$ is of rank 1, and that is the general definition of the coherence, in accordance with the definition \ref{def:coherence2sensors} for only 2 sensors. In any case, the matrix $\Gamma_{s}(f)\geq 0$ for any frequency $f$.
 
-If we assume that the spectral matrix of the noise $w(t)$ is $\sigma^{2}I_M$ for any frequency, it follows that the MSC between any two sensors writes:
+If we assume that the spectral matrix of the noise $w(t)$ is $\sigma^{2}I_M$ for any frequency, it follows that the MSC between any  sensor pair $(m,m')$ writes:
 \begin{eqnarray*}
- \MSC_{\ell,\ell'}(f)&=& \frac{\gamma_{s}^{2}(f)}{(\gamma_{s}(f)+\sigma^{2})(\gamma_{s}(f)+\sigma^{2})}
+ \MSC_{m,m'}(f)&=& \frac{\gamma_{s}^{2}(f)}{(\gamma_{s}(f)+\sigma^{2})(\gamma_{s}(f)+\sigma^{2})}
 \end{eqnarray*}
-Therefore the MSC level is not $1$, because the noise.
+Therefore, in presence of noise, the MSC level is no more equal to $1$.
 
 \begin{definition}[coherence]
 \label{def:coherenceMsensors}
@@ -303,6 +303,9 @@ Coherence is not only restricted to the case of pure delays. Perfect coherence i
 \end{remark}
 
 
+\begin{remark}
+Noise induces a LOC.
+\end{remark}
 
 %=======================================================
 \subsection{Discrete domain}
@@ -341,10 +344,10 @@ We let $\SNR_{k}=\gamma_{k}/\sigma^2$ the signal-to-noise ratio at the frequency
 \label{eq:MSCgeneralmodel}
  \MSC_{k,m,m'}&=& \frac{1}{(1+\SNR_{k}^{-1})^2}\,C_{k,m,m'}^{2}
 \end{eqnarray}
-The level the MSC  is due in one hand to the noise and on the other to the LOC.
+It follows that the MSC could be less than 1 on one hand to the presence of noise and on the other to the LOC of the acoustic wave.
 
 
-A commonly used model for the LOC is for $1\leq m\leq M$ and $1\leq m'\leq M$:
+A commonly used model for the LOC of the acoustic source is for $1\leq m\leq M$ and $1\leq m'\leq M$:
 \begin{eqnarray}
  \label{eq:CkwithGauss}
  C_{k,m,m'} &=&e^{-2\pi^2f_k^2(r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})}
@@ -355,13 +358,13 @@ where $S_{\theta}$ is a $3\times 3$ covariance matrix depending on 3 free parame
  \log \MSC_{k,m,m'}&=& -2 \log(1+\SNR_{k}^{-1})
 -4\pi^2f_k^2(r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})
 \end{eqnarray*}
-In the simple case where $_{\theta}$ is proportional to the identity, and omitting the frequency index $k$, this expression simplifies as:
-\begin{eqnarray*}
-\label{eq:MSCgaussianmodel}
- \log \MSC_{m,m'}&=& \beta_{0}+\beta_{1} d_{m,m'}
+In the simple case where $S_{\theta}$ is proportional to the identity, this expression simplifies as:
+\begin{eqnarray}
+\label{eq:logMSCgaussianmodel}
+ \log \MSC_{k,m,m'}&=& \beta_{0}+\beta_{1} f_k^2 d_{m,m'}^2
 %-4\pi^2f_k^2(r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})
-\end{eqnarray*}
-If we assume constant SNR in consecutive windows we can estimate $\beta_0$ and $\beta_1$.
+\end{eqnarray}
+which is linear w.r.t. the parameter $\beta$. Moreover, if we assume a constant SNR in consecutive time windows we can estimate $\beta_0$ and $\beta_1$.
 
 
 \subsubsection{Likelihood function}
@@ -391,23 +394,12 @@ Another way is to characterize the slowness by azimuth, elevation and velocity a
  \section{Validation}
 %=======================================================
 %=======================================================
-Forsake of simplicity we assume that $S_{\theta}=\beta I_{3}$. Carrying this expression in  \eqref{eq:CkwithGauss-2} we get:
-\begin{eqnarray}
- \label{eq:logCkwithcauchy}
- \log C_{k,\ell\ell'} (\beta)&=& -\beta f_k^2 d_{\ell,\ell'}^2
-\end{eqnarray}
-meaning that the the log of MSC is proportional to the square to both frequency and  distance. In the following that $\beta$ is known and has been obtained on a large campaign of studies. The parameter reduces to:
-\begin{eqnarray}
- \label{eq:alphareducted}
-\alpha&=&
-\{
-\theta_{1},\theta_{2},\theta_{3},\sigma^{2},\gamma_{1},\ldots,\gamma_{K}
-\}
-\in \mathds{R}^{3}\times   \mathds{R}^{+}\times\mathds{R}^{+K}
-\end{eqnarray}
-In the following we have to consider the derivative of the likelihood, expression \eqref{eq:likelihood-function}, w.r.t. the different components of $\alpha$. For that we consider that the derivatives are taken in the order of the components of $\alpha$ as given by the expression \eqref{eq:alphareducted}.
+Forsake of simplicity we assume that $S_{\theta}=\beta I_{3}$ and use the expression \eqref{eq:logMSCgaussianmodel}, meaning that the log-MSC is linear w.r.t. the parameter $\beta$. We rewrite this expression:
+\begin{eqnarray*}
+ \log \MSC_{k,m,m'}&=& \beta_{0}+\beta_{1} f_{k}^2 d_{m,m'}^{2}
+\end{eqnarray*}
 
-To studying the relationship between the MSC and the inter-distance between sensors we need (i) a  station with a large number of sensors and located in such a way that the distribution of the inter-distances is quiet  uniform, (ii) a coherent source almost permanently present. A good example is the microbarom, but unfortunately it covers a small part of the frequency bandwidth of interest. We have retained
+To studying this relationship we need (i) a  station with a large number of sensors and located in such a way that the distribution of the inter-distances is quiet  uniform, (ii) a coherent source almost permanently present. A good example is the microbarom, but unfortunately it covers a small part of the frequency bandwidth of interest. We have retained
 \begin{itemize}
 \item
 station IS37 with microbarom,

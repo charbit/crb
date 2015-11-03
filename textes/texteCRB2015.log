@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2015.10.19)  2 NOV 2015 13:55
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2015.10.19)  3 NOV 2015 08:23
 entering extended mode
  %&-line parsing enabled.
 **texteCRB2015.tex
@@ -348,8 +348,8 @@ Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
 
 ] [5]
 
-LaTeX Warning: Reference `eq:CkwithGauss-2' on page 6 undefined on input line 3
-94.
+LaTeX Warning: Reference `eq:logMSCgaussianmodel' on page 6 undefined on input 
+line 397.
 
 [6] [7] [8]
 Appendix A.
@@ -362,7 +362,7 @@ Appendix B.
 ] [11]
 Appendix C.
 
-Overfull \hbox (22.96841pt too wide) in alignment at lines 587--608
+Overfull \hbox (22.96841pt too wide) in alignment at lines 579--600
  [][][] []
  []
 
@@ -371,7 +371,7 @@ Overfull \hbox (22.96841pt too wide) in alignment at lines 587--608
 ]
 Appendix D.
 
-Overfull \hbox (106.74536pt too wide) in alignment at lines 678--690
+Overfull \hbox (106.74536pt too wide) in alignment at lines 670--682
  [][][] []
  []
 
@@ -381,19 +381,19 @@ Overfull \hbox (106.74536pt too wide) in alignment at lines 678--690
 Appendix E.
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `math shift' on input line 695.
+(hyperref)                removing `math shift' on input line 687.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `\Gamma' on input line 695.
+(hyperref)                removing `\Gamma' on input line 687.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `subscript' on input line 695.
+(hyperref)                removing `subscript' on input line 687.
 
 
 Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `math shift' on input line 695.
+(hyperref)                removing `math shift' on input line 687.
 
 [14
 
@@ -407,7 +407,7 @@ LaTeX Warning: There were multiply-defined labels.
  ) 
 Here is how much of TeX's memory you used:
  4893 strings out of 256216
- 63901 string characters out of 1917071
+ 63904 string characters out of 1917071
  131717 words of memory out of 1500000
  8030 multiletter control sequences out of 10000+200000
  26241 words of font info for 83 fonts, out of 1200000 for 2000
@@ -431,9 +431,9 @@ pe1/bluesky/cm/cmr8.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmsy10.pfb></u
 sr/share/texmf/fonts/type1/bluesky/cm/cmsy6.pfb></usr/share/texmf/fonts/type1/b
 luesky/cm/cmsy8.pfb></usr/share/texmf/fonts/type1/public/doublestroke/dsrom12.p
 fb></usr/share/texmf/fonts/type1/public/doublestroke/dsrom8.pfb>
-Output written on texteCRB2015.pdf (14 pages, 210518 bytes).
+Output written on texteCRB2015.pdf (14 pages, 210204 bytes).
 PDF statistics:
- 496 PDF objects out of 1000 (max. 8388607)
+ 495 PDF objects out of 1000 (max. 8388607)
  52 named destinations out of 1000 (max. 131072)
  110 words of extra memory for PDF output out of 10000 (max. 10000000)
 

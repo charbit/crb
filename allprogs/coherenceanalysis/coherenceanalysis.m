@@ -1,10 +1,10 @@
 %====================== coherenceanalysis.m =============================
 % file contains OBSERVATIONS structure
-% with 
+% with
 %           .xsensors_m.coordinates : sensor coordinates in m
 %           .xsensors_m.name
 %           .data : data
-% used functions: 
+% used functions:
 %   estimSCP.m
 %======================
 clear
@@ -20,21 +20,22 @@ switch computer
         addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
 end
 
+addpath ../progsCRB/
 %=================================================================
 
 %=================================================================
-stationnumber         = 31;
+stationnumber         = '37';
 
 %=================================================================
 
 %=================================================================
-directorydatafromIDC  = sprintf('../../../../AAdataI%i/',stationnumber);
+directorydatafromIDC  = sprintf('../../../../AAdataI%s/',stationnumber);
 
 filenames              = dir(sprintf('%s*.mat',directorydatafromIDC));
 nbfiles                = length(filenames);
 Fs_Hz                  = 20;
 Ts_sec                 = 1/Fs_Hz;
-BWFilter4anal_Hz       = [0.01 5];
+BWFilter4anal_Hz       = [0.02 4];
 [forward,  reverse]    = butter(2,2*BWFilter4anal_Hz/Fs_Hz);
 usefilterflag          = 1;
 %========= MSC analysis
@@ -42,7 +43,8 @@ timeofanalysis_sec     = 500;
 ratioDFT2SCP4average   = 5;
 overlappingFFTrate     = 0.5;
 
-for ifile = 10
+for ifile = 7
+    ifig = 22;
     filename1_ii = filenames(ifile).name;filename1_ii
     cdload       = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
     eval(cdload)
@@ -66,7 +68,7 @@ for ifile = 10
     % for i1=1:Msensors-1
     %     for i2=i1+1:Msensors
     %         cp=cp+1;
-    %         orientations(cp) = atan((xsensors_m(i1,2)-xsensors_m(i2,2)) / 
+    %         orientations(cp) = atan((xsensors_m(i1,2)-xsensors_m(i2,2)) /
     %         (xsensors_m(i1,2)-xsensors_m(i2,2));
     %     end
     % end
@@ -81,44 +83,93 @@ for ifile = 10
             SIG(:,im) = filter(forward,reverse,SIG(:,im));
         end
     end
- 
+    
     SIGcentered = SIG - ones(LSIG,1)*mean(SIG,1);
     
     %=====================
     %======== MSC analysis
     %=====================
     allMSC = cell(combi,1);
-
+    allSpectrum = cell(Msensors,1);
     cp=0;
     for im1 = 1:Msensors-1
+        signal1_centered=SIGcentered(:,im1);
         for im2 = im1+1:Msensors
             cp = cp+1;
-            signal1_centered=SIGcentered(:,im1);
             signal2_centered=SIGcentered(:,im2);
             Tfft_sec     = timeofanalysis_sec/ratioDFT2SCP4average;
             Lfft         = fix(Tfft_sec*Fs_Hz);
             GREF         = ones(Lfft,1);
             [allSDs, time_sec, frqsFFT_Hz] = ...
-                estimSCP(signal2_centered,signal1_centered,GREF, ...
+                estimSCP(signal1_centered,signal2_centered,GREF, ...
                 overlappingFFTrate, ...
                 ratioDFT2SCP4average, 0, Fs_Hz, 'hann');
             allMSC{cp} = [allSDs.MSC];
         end
+        allSpectrum{im1} = [allSDs.UU];
     end
+
+    allSpectrum{Msensors} = [allSDs.RR];
     allMSCsort = allMSC(indsortdistance);
-        
+    
+    bandwidthdisplay_Hz   = [0.05 0.3];    
+    id1a         = find(frqsFFT_Hz<=bandwidthdisplay_Hz(1),1,'last');
+    id2a         = find(frqsFFT_Hz<=bandwidthdisplay_Hz(2),1,'last');
+    listindfreqa = (id1a:id2a);
+    frqsselected_Hza   = frqsFFT_Hz(id1a:id2a);
+    
+    figure(100)
+    for im=1:Msensors,
+        subplot(Msensors,1,im),
+        pcolor(time_sec.SD/3600,frqsselected_Hza,10*(allSpectrum{im}(listindfreqa,:))),
+%         set(gca,'ylim',[0.08 1]),
+        set(gca,'yscale','log')
+        shading flat
+    end
+  
     %%
-    bandwidthMSC_Hz   = [0.08 0.12];
+    Lalign_sec = 300;
+    signalsample = zeros(Lalign_sec*Fs_Hz,Msensors);
+    for im=1:Msensors
+        signalsample(:,im) = SIGcentered(6*3600*Fs_Hz+(1:Lalign_sec*Fs_Hz),im);
+    end
+    
+    bandwidthMSC_Hz   = [0.08 0.14];
+    
     id1               = find(frqsFFT_Hz<=bandwidthMSC_Hz(1),1,'last');
     id2               = find(frqsFFT_Hz<=bandwidthMSC_Hz(2),1,'last');
     listindfreq       = (id1:id2);
     frqsselected_Hz   = frqsFFT_Hz(id1:id2);
     nbfreq4MSC        = length(listindfreq);
     
-    MSCtheresholdseed   = 0.9;
+    
+ 
+
+    [xalign, taupts, signal_notalign, cormax]   = ...
+        alignmentwrt1(signalsample,1,Lalign_sec*Fs_Hz,bandwidthMSC_Hz/Fs_Hz);
+    figure(1000)
+    cormax, (taupts/Fs_Hz)
+    subplot(211);
+    plot((1:Lalign_sec*Fs_Hz)/Fs_Hz/60,signal_notalign)
+%     set(gca,'xlim',[6000 7000])
+    subplot(212);
+    plot((1:Lalign_sec*Fs_Hz)/Fs_Hz/60,xalign(:,:))
+%     set(gca,'xlim',[6000 7000])
+
+    drawnow
+    incorrmax = find(cormax>0.8);
+    if length(incorrmax)>2
+    thetaSN = xsensors_m(incorrmax+1,1:2)\(taupts(incorrmax+1)/Fs_Hz);
+    1/norm(thetaSN)
+    atan2(thetaSN(2),thetaSN(1))*180/pi
+    else
+        disp('NAN')
+    end
+
+    MSCtheresholdseed   = 0.8;
     maxvarexplic_Hz2km2 = 0.02;%(bandwidthMSC_Hz(2)^2)*(sortdistances(combi)^2)*1e-6;
     %===================================================================
-    figure(ifile)
+    figure(ifig)
     clf
     %=======
     subplot(221)
@@ -150,22 +201,22 @@ for ifile = 10
             meanlogauxsave = [meanlogauxsave;meanlogaux];
             
             %=======
-            figure(ifile)
+            figure(ifig)
             subplot(223)
-            hold on           
+            hold on
             plot(timeselect_samples{ifq}/Fs_Hz/3600,frqsFFT_Hz(listindfreq(ifq)),'.',...
                 'color',allcolors(ifqcolor,1))
-
+            
             explicativevar_Hz2km2     = frq_ifq_Hz2*(sortdistances(:,1) .^2)/1e6;
             explicativevarsave_Hz2km2 = [explicativevarsave_Hz2km2;explicativevar_Hz2km2];
             %=======
-            figure(ifile)
+            figure(ifig)
             subplot(122)
             semilogy(explicativevar_Hz2km2, exp(meanlogaux),'.-','color',allcolors(ifqcolor,1))
             hold on
-%             semilogy(explicativevar_Hz2km2, exp(logaux(:,:,ifq)),'--','color',0.7*[1 1 1])
-%             semilogy(explicativevar_Hz2km2, exp(meanlogaux+stdlogaux),'--','color',0.3*[1 1 1])
-%             semilogy(explicativevar_Hz2km2, exp(meanlogaux-stdlogaux),'--','color',0.3*[1 1 1])
+%                         semilogy(explicativevar_Hz2km2, exp(logaux(:,:,ifq)),'--','color',0.7*[1 1 1])
+            %             semilogy(explicativevar_Hz2km2, exp(meanlogaux+stdlogaux),'--','color',0.3*[1 1 1])
+            %             semilogy(explicativevar_Hz2km2, exp(meanlogaux-stdlogaux),'--','color',0.3*[1 1 1])
         end
     end
     
@@ -177,15 +228,15 @@ for ifile = 10
         find(sortexplicativevarsave_Hz2km2<maxvarexplic_Hz2km2,1,'last');
     HH          = [ones(auxnum,1) sortexplicativevarsave_Hz2km2(1:auxnum)];
     coeffs      = HH\sortmeanlogauxsave(1:auxnum);
-     
+    
     %======================================================
-    figure(ifile)
+    figure(ifig)
     subplot(221)
     set(gca,'xlim',[0 24])
     grid on
     xlabel('time - [hour]','fontname','times','fontsize',10)
-        set(gca,'fontname','times','fontsize',10)
-
+    set(gca,'fontname','times','fontsize',10)
+    
     subplot(223)
     hold off
     set(gca,'xlim',[0 24])
@@ -198,32 +249,32 @@ for ifile = 10
     
     subplot(122)
     grid on
-%     set(gca,'xlim',[0 maxvarexplic_Hz2km2])
-    set(gca,'ylim',[1e-1 1])    
+     set(gca,'xlim',[0 0.04]);%maxvarexplic_Hz2km2])
+    set(gca,'ylim',[1e-1 1])
     set(gca,'fontname','times','fontsize',10)
     xlabel(sprintf('F2 x d2 - [Hz%s x km%s]',exp2,exp2),'fontname','times','fontsize',10)
     ylabel('MSC','fontname','times','fontsize',10)
-
-    figure(ifile)
+    
+    figure(ifig)
     subplot(122)
     hold on
     semilogy(sortexplicativevarsave_Hz2km2([1 end]),...
         exp([ones(2,1) sortexplicativevarsave_Hz2km2([1 end])]*coeffs),'k','linew',1.5)
     hold off
     title(sprintf('LOC - decay = %4.2e Hz%s x m%s',coeffs(2)*1e-6,exp2,exp2), ...
-        'fontname','times','fontsize',10)    
-
+        'fontname','times','fontsize',10)
+    
     HorizontalSize = 24;
     VerticalSize   = 10;
     set(gcf,'units','centimeters');
     set(gcf,'paperunits','centimeters');
     set(gcf,'PaperType','a4');
-    set(gcf,'position',[0 5 HorizontalSize VerticalSize]);
+%     set(gcf,'position',[0 5 HorizontalSize VerticalSize]);
     set(gcf,'paperposition',[0 0 HorizontalSize VerticalSize]);
     
     set(gcf,'color', [1,1,0.92]);%0.7*ones(3,1))
     set(gcf, 'InvertHardCopy', 'off');
-    fileprintepscmd = sprintf('print -depsc -loose ../../figures/coherenceI%i%s.eps',stationnumber,filename1_ii(1:8));
-%     eval(fileprintepscmd)
-
+    fileprintepscmd = sprintf('print -depsc -loose ../../figures/coherenceI%%s%s.eps',stationnumber,filename1_ii(1:8));
+    %     eval(fileprintepscmd)
+    
 end
