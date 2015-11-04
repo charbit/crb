@@ -43,7 +43,7 @@ timeofanalysis_sec     = 500;
 ratioDFT2SCP4average   = 5;
 overlappingFFTrate     = 0.5;
 
-for ifile = 7
+for ifile = 9
     ifig = 22;
     filename1_ii = filenames(ifile).name;filename1_ii
     cdload       = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
@@ -117,11 +117,11 @@ for ifile = 7
     id2a         = find(frqsFFT_Hz<=bandwidthdisplay_Hz(2),1,'last');
     listindfreqa = (id1a:id2a);
     frqsselected_Hza   = frqsFFT_Hz(id1a:id2a);
-    
+ %%   
     figure(100)
     for im=1:Msensors,
-        subplot(Msensors,1,im),
-        pcolor(time_sec.SD/3600,frqsselected_Hza,10*(allSpectrum{im}(listindfreqa,:))),
+        subplot(Msensors/2,2,im),
+        pcolor(time_sec.SD/3600,frqsselected_Hza,10*log10(allSpectrum{im}(listindfreqa,:))),
 %         set(gca,'ylim',[0.08 1]),
         set(gca,'yscale','log')
         shading flat
@@ -142,9 +142,6 @@ for ifile = 7
     frqsselected_Hz   = frqsFFT_Hz(id1:id2);
     nbfreq4MSC        = length(listindfreq);
     
-    
- 
-
     [xalign, taupts, signal_notalign, cormax]   = ...
         alignmentwrt1(signalsample,1,Lalign_sec*Fs_Hz,bandwidthMSC_Hz/Fs_Hz);
     figure(1000)
@@ -261,7 +258,7 @@ for ifile = 7
     semilogy(sortexplicativevarsave_Hz2km2([1 end]),...
         exp([ones(2,1) sortexplicativevarsave_Hz2km2([1 end])]*coeffs),'k','linew',1.5)
     hold off
-    title(sprintf('LOC - decay = %4.2e Hz%s x m%s',coeffs(2)*1e-6,exp2,exp2), ...
+    title(sprintf('LOC - decay = %4.2e Hz%s x m%s\nSNR = %4.2f dB',coeffs(2)*1e-6,exp2,exp2,-10*log10(exp(-coeffs(1)/2)-1)), ...
         'fontname','times','fontsize',10)
     
     HorizontalSize = 24;

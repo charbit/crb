@@ -76,7 +76,7 @@
 %===============================================
 \newtheorem{property}{Properties}
 \newtheorem{remark}{Remark}
-\newtheorem{theorem}{Theorem - \thetheoreme}
+\newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
 \newtheorem{example}{Example}
 \newtheorem{lemme}{Lemme - \thelemme}
@@ -251,18 +251,18 @@ In the absence of LOC, we will see below that the best performances are associat
 %=======================================================
 %=======================================================
 \subsection{Case of 2 sensors}
-By definition, two signals arriving on a two different locations are said non-coherent signals, or called noises, if they are spatially uncorrelated. More specifically if $s_{1}(t)$ and $s_{2}(t)$ denote the respective stationary signals observed in to different locations, the coherence level is defined by the magnitude square coherence:
+By definition, two signals arriving on a two different locations are said non-coherent signals, or called noises, if they are spatially uncorrelated. More specifically if $x_{1}(t)$ and $x_{2}(t)$ denote the respective stationary signals observed in to different locations, the coherence level is defined by the magnitude square coherence:
 \begin{eqnarray*}
  \MSC(f)&=&\frac{|S_{12}(f)|^{2}}{S_{11}(f)S_{22}(f)}
 \end{eqnarray*}
-where $S_{11}(f)$ and $S_{22}(f)$ denote the spectral densities of $s_{1}(t)$ and $s_{2}(t)$, and $S_{12}(f)$ the cross-spectrum. It is well known that $\MSC(f)\leq 1$. 
-\begin{definition}[coherence]
+where $S_{11}(f)$ and $S_{22}(f)$ denote the spectral densities of $x_{1}(t)$ and $x_{2}(t)$, and $S_{12}(f)$ the cross-spectrum. It is well known that $\MSC(f)\leq 1$. 
+\begin{definition}[coherence - I]
 \label{def:coherence2sensors}
 When $\MSC(f)=1$, we say that the 2 signals are perfectly coherent, elsewhere we speak about loss of coherence (LOC). 
 \end{definition}
 
 
-It is shown that the  $\MSC(f)$ between 2 signals is 1, if and only if it exists a filter, whose impulse respond is $g(t)$, such as $s_{1}(t)=g_{1}(t)\star s_{2}(t)$. A particular case is $g(t)=\delta(t-t_{0})$ relative to a pure delay.
+It is shown that the  $\MSC(f)$ between the two signals is 1, if and only if it exists a filter, whose impulse respond is denoted $g(t)$, such that $x_{1}(t)=g_{1}(t)\star x_{2}(t)$. A particular case is $g(t)=\delta(t-t_{0})$ which corresponds to the pure delay $t_{0}$.
 
 
   \medskip
@@ -272,31 +272,55 @@ It is shown that the  $\MSC(f)$ between 2 signals is 1, if and only if it exists
 
 %=======================================================
 \subsection{Case of $M$ sensors}
-We consider a station with $M$ sensors. There is only one acoustic source faraway from the station, in such a way it can be considered as planar wave. Therefore the $M$-ary signal  writes: 
+We consider a station with $M$ sensors. There is only one acoustic source faraway from the station, in such a way it can be considered as planar wave. This source is called in the following signal of interest (SOI). Therefore the $M$-ary signal  writes: 
 \begin{eqnarray*}
-x(t) & = & \underbrace{s(t;\theta)}_{\text{acoustic signal}}+ \underbrace{w(t)}_{\text{noise}}
+x(t) & = & \underbrace{s(t;\theta)}_{\text{SOI: acoustic signal}}+ \underbrace{w(t)}_{\text{noise}}
 \end{eqnarray*}
-where $\theta$ denotes the 3D slowness vector. Under assumption of pure delay we can write for the $m$-th sensor located in $r_{m}$:
+where $\theta$ denotes the 3D slowness vector. Under  pure delay assumption we can write for the $m$-th sensor located in $r_{m}$:
 \begin{eqnarray}
 \label{eq:mthentryofst}
 s_{m}(t;\theta)&=&s(t-r_{m}^{T}\theta)
 \end{eqnarray}
+
 It follows  that, under the assumption  that $s(t)$ is stationary random process with spectral density $\gamma_{s}(f)$, the spectral matrix of the $M$-ary process $s(t)$, whose the $m$-th entry is \eqref{eq:mthentryofst}, writes:
 \begin{eqnarray*}
 \Gamma_{s}(f)&=&\gamma_{s}(f)d(f)d^{H}(f)
 \end{eqnarray*}
-where $d(f)$ is a $M$-ary vector whose the $m$-entry writes $e^{-2j\pi fr_{m}^{T}\theta}$. Clearly the matrix $\Gamma_{s}(f)$ is of rank 1, and that is the general definition of the coherence, in accordance with the definition \ref{def:coherence2sensors} for only 2 sensors. In any case, the matrix $\Gamma_{s}(f)\geq 0$ for any frequency $f$.
+where $d(f)$ is a $M$-ary vector whose the $m$-entry writes $e^{-2j\pi fr_{m}^{T}\theta}$. Clearly the matrix $\Gamma_{s}(f)$ is of rank 1.  That represents the general definition of the coherence. 
+\begin{definition}[coherence - II]
+\label{def:coherenceMsensors}
+$M$ stationary signals are said coherent if their spectral matrix is of rank 1 . 
+\end{definition}
 
-If we assume that the spectral matrix of the noise $w(t)$ is $\sigma^{2}I_M$ for any frequency, it follows that the MSC between any  sensor pair $(m,m')$ writes:
+This definition is in accordance with the definition \ref{def:coherence2sensors} given for 2 sensors. 
+
+\begin{theorem}[fundamental property]
+For any frequency $f$, the spectral matrix is positive.
+\end{theorem}
+
+
+We assume that the $M$-ary noise $w(t)$ is temporally and spatial white. That writes $\esp{w(t)w^{T}(t')}=\sigma^{2}\delta(t-t')$, therefore its spectral matrix writes $\sigma^{2}I_M$ for any frequency. Assuming that the noise and the SOI are not correlated, it follows that the spectral matrix of the observation writes $\Gamma_{x}(f)= \gamma_{s}(f)d(f)d^{H}(f) + \sigma^{2}I_M$ that can be rewritten:
+\begin{eqnarray}
+\label{eq:generaldensitymatrixwithLOC}
+ \Gamma_{x}(f)&=& \gamma_{s}(f)D(f)C(f)D^{H}(f) + \sigma^{2}I_M
+\end{eqnarray}
+where $D(f)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{m,m}=e^{-2j\pi f r_{m}^{T}\theta }$ and where $C(f)=\mathds{1}\mathds{1}^{T}$. The LOC is then characterized by a matrix $C(f)$ which is no more of rank 1,  but must be positive and with diagonal element equal to $1$. This expression can be a little bit more generalized:
+\begin{eqnarray*}
+ \Gamma_{x}(f)&=&D(f)\Gamma_{s}(f)C(f)\Gamma_{s}(f)D^{H}(f)+ \sigma^{2}I_M
+\end{eqnarray*}
+where $\Gamma_{s}(f)$ is a diagonal matrix whose the $m$-th diagonal entry is $\gamma_{s,m}^{1/2}(f)$ meaning that the SOI arrives on each sensor with different spectral content. That is not considered in the following. We only consider that $\gamma_{s,m}(f)=\gamma_{s}(f)$ does not depend on $m$.
+
+\medskip
+It follows that, for a pure delay and in the absence of LOC, taken $C(f)=\mathds{1}\mathds{1}^{T}$ in expressed in \eqref{eq:generaldensitymatrixwithLOC}, the MSC between any  sensor pair $(m,m')$ writes:
 \begin{eqnarray*}
  \MSC_{m,m'}(f)&=& \frac{\gamma_{s}^{2}(f)}{(\gamma_{s}(f)+\sigma^{2})(\gamma_{s}(f)+\sigma^{2})}
 \end{eqnarray*}
-Therefore, in presence of noise, the MSC level is no more equal to $1$.
+Therefore, in presence of noise, the MSC level is no more equal to $1$. In more general case:
+\begin{eqnarray*}
+ \MSC_{m,m'}(f)&=& \frac{\gamma_{s}^{2}(f)\, C_{m,m'}(f)}{(\gamma_{s}(f)+\sigma^{2})(\gamma_{s}(f)+\sigma^{2})}
+\end{eqnarray*}
 
-\begin{definition}[coherence]
-\label{def:coherenceMsensors}
-$M$ stationary signals are said spatially coherent if their spectral matrix is of rank 1, elsewhere we speak about LOC. 
-\end{definition}
+
 
 \begin{remark}
 Coherence is not only restricted to the case of pure delays. Perfect coherence is also verified for filtering signals.
@@ -331,7 +355,7 @@ The expression \eqref{eq:spectralmatrixpuredelay} can be rewritten:
 \Gamma_{k}(\alpha)&=&\gamma_{k}D_{k}(\theta)\, C_{k}\,D_{k}^{H}(\theta)+\sigma^{2}I_{M}
 %\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
 \end{eqnarray}
-where $D_{k}(\theta)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$ and where $C_{k}=\mathds{1}\mathds{1}^{T}$ which is a rank 1 matrix. Under LOC, $C_{k}$ is no more a rank 1 projector. 
+where $D_{k}(\theta)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{k,m,m'}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$ and where $C_{k}=\mathds{1}\mathds{1}^{T}$ which is a rank 1 matrix. Under LOC, $C_{k}$ is no more a rank 1 projector,  but must be positive and such that $C_{k,m,m}=1$.
 
 From \eqref{eq:spectralmatrixLOC}, we get:
 \begin{eqnarray*}
@@ -342,7 +366,7 @@ From \eqref{eq:spectralmatrixLOC}, we get:
 We let $\SNR_{k}=\gamma_{k}/\sigma^2$ the signal-to-noise ratio at the frequency $f_{k}$. It follows that the MSC at the frequency $f_{k}$  between any two sensors writes:
 \begin{eqnarray}
 \label{eq:MSCgeneralmodel}
- \MSC_{k,m,m'}&=& \frac{1}{(1+\SNR_{k}^{-1})^2}\,C_{k,m,m'}^{2}
+ \MSC_{k,m,m'}&=& \frac{1}{(1+\SNR_{k}^{-1})^2}\,|C_{k,m,m'}|^{2}
 \end{eqnarray}
 It follows that the MSC could be less than 1 on one hand to the presence of noise and on the other to the LOC of the acoustic wave.
 
@@ -364,7 +388,10 @@ In the simple case where $S_{\theta}$ is proportional to the identity, this expr
  \log \MSC_{k,m,m'}&=& \beta_{0}+\beta_{1} f_k^2 d_{m,m'}^2
 %-4\pi^2f_k^2(r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})
 \end{eqnarray}
-which is linear w.r.t. the parameter $\beta$. Moreover, if we assume a constant SNR in consecutive time windows we can estimate $\beta_0$ and $\beta_1$.
+where we have assumed that the SNR does not depend on $k$ and writes:
+\begin{eqnarray*}
+ \SNR&=&\frac{1}{e^{- \beta_{0}/2}-1}
+\end{eqnarray*}
 
 
 \subsubsection{Likelihood function}
@@ -391,15 +418,19 @@ where $\mathcal{M}_{3}^{+}$ is the set of $3\times 3$ positive matrices. The siz
 
 Another way is to characterize the slowness by azimuth, elevation and velocity and the LOC by the respective standard deviations of them, see expression \eqref{eq:theta2aec}.
 %=======================================================
- \section{Validation}
+ \section{LOC study: numerical results}
 %=======================================================
 %=======================================================
-For sake of simplicity we assume that $S_{\theta}=\beta I_{3}$ and use the expression \eqref{eq:logMSCgaussianmodel}, meaning that the log-MSC is linear w.r.t. the parameter $\beta$. We rewrite this expression:
+The objective of this section is to validate, by numerical results, the simple relationship between the LOC and the distance given by the expression \eqref{eq:logMSCgaussianmodel}, that we rewrite below:
 \begin{eqnarray*}
  \log \MSC_{k,m,m'}&=& \beta_{0}+\beta_{1} f_{k}^2 d_{m,m'}^{2}
 \end{eqnarray*}
+It is worth to notice that $ \beta_{0}$ is related to the SNR level at the frequency $k$. Here for sake of simplicity we assume that this SNR does not depend on the frequency. That could be well verified if the bandwidth of the SOI is narrow enough.
 
-To studying this relationship we need (i) a  station with a large number of sensors and located in such a way that the distribution of the inter-distances is quiet  uniform, (ii) a coherent source almost permanently present. A good example is the microbarom, but unfortunately it covers a small part of the frequency bandwidth of interest. We have retained
+To studying this LOC model we need (i) a  station with a large number of sensors located in such a way that the distribution of the inter-distances is quiet  uniform, (ii) a coherent source almost permanently present. A good example is the microbarom, but unfortunately it covers a small part of the frequency bandwidth of interest. 
+
+
+We have retained
 \begin{itemize}
 \item
 station IS37 with microbarom,
