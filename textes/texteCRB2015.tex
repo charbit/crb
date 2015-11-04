@@ -8,12 +8,12 @@
 \usepackage[english]{babel}
 \usepackage{pdfpages}
 %====================================
- \textheight 22cm
+ \textheight 24cm
 % \doublespace
   \oddsidemargin -0.5cm
   \evensidemargin +1.5cm
-  \textwidth 15cm
- \topmargin 0cm
+  \textwidth 17cm
+ \topmargin -2cm
 %============================================
 % Figures
 %============================================
@@ -30,7 +30,7 @@
     \hbox{ \includegraphics[scale=#4]{#1} }
 }
 \begin{center}
-\parbox{12 cm}
+\parbox{14 cm}
 {
     \caption{\protect\small\it  {#2}}
     \label {#3}
@@ -184,7 +184,7 @@
 %=======================================================
 
 
-In this study we are interested by the station design in term of parameter accuracy, and more particularly of the azimuth. In short, in presence of only pure coherent acoustic waves, it is clear that the best design is to locate sensors at far as possible. For which reason could we take into account an upper bound on the aperture ? 
+In this study we are interested by the station design in term of parameter accuracy, and more particularly on the accuracy of the azimuth. In short, in presence of only pure coherent acoustic waves, it is clear that the best design is to locate sensors at far as possible. For which reason could we take into account an upper bound on the aperture ? 
 
 Regarding the size of the station and the distance of the source, a possible phenomena, which could induce a limitation on the station aperture in presence of a coherent acoustic signal, is that the loss of coherence (LOC) which usually increases when the distance between sensors increases.
 
@@ -429,48 +429,82 @@ It is worth to notice that $ \beta_{0}$ is related to the SNR level at the frequ
 
 To studying this LOC model we need (i) a  station with a large number of sensors located in such a way that the distribution of the inter-distances is quiet  uniform, (ii) a coherent source almost permanently present. A good example is the microbarom, but unfortunately it covers a small part of the frequency bandwidth of interest. 
 
+\figscale{../figures/tempspectanalysisI3720140905.pdf}{Typical observations on I37 during about $20$ hours. The signals are filtered in the band $0.01$ Hz to $4$ Hz. The plot im grey represents the time observations. The color image represents the spectral analysis. The time wimdows is $500$ seconds. We observe an almost permanent component below $0.1$ Hz and another around $0.28$ Hz.}{fig:tempspectanalysisI3720140905}{0.67}
 
-We have retained
-\begin{itemize}
-\item
-station IS37 with microbarom,
-\item
-station IS27 with microbarom,
-\item
-station IS55 with microbarom,
-\item
-station IS31 with gas flare,
-\end{itemize}
+Figure \ref{fig:tempspectanalysisI3720140905}, we observe an almost permanent component around $0.04$ Hz and another around $0.28$ Hz. We also observe bursts in red in the low frequency. These bursts present a low coherence between them as we see figure \ref{}.
 
 
+
+\newcommand{\paquet}[2]{
+%==================================================================
+%\subsubsection{In the band $0.05$ Hz to $0.1$ Hz/In the band $0.25$ Hz to $0.3$ Hz}
+\figscale{../figures/#1}{LHS figures: on top, the two nearest sensor signals. Bottom: time slots where the MSC is greater than $0.9$ for different frequencies in the band $0.05$ Hz to $0.1$ Hz. RHS figure: the decay of the MSC for the different frequencies reported on the LHS bottom figure as a function of the $10\times 9/2=45$ values of $f^2d^2$.  In the model given by \eqref{eq:logMSCgaussianmodel}, the intercept is related to the SNR.}{}{0.6}
+
+\figscale{../figures/#2}
+{LHS figures: on top, the two nearest sensor signals. Bottom: time slots where the MSC is greater than $0.9$ for different frequencies in the band $0.25$ Hz to $0.3$ Hz. RHS figure: the decay of the MSC for the different frequencies reported on the LHS bottom figure as a function of the $10\times 9/2=45$ values of $f^2d^2$.  In the model given by \eqref{eq:logMSCgaussianmodel}, the intercept is related to the SNR.}{}{0.6}
+}
+
+%\subsubsection{In the band $0.05$ Hz to $0.1$ Hz/In the band $0.25$ Hz to $0.3$ Hz}
+
+%==================================================================
+\paquet{coherence2nearestI3720140902LOW.pdf}{coherence2nearestI3720140902HIGH.pdf}
+
+%==================================================================
+\paquet{coherence2nearestI3720140903LOW.pdf}{coherence2nearestI3720140903HIGH.pdf}
+
+%==================================================================
+\paquet{coherence2nearestI3720140904LOW.pdf}{coherence2nearestI3720140904HIGH.pdf}
+
+%==================================================================
+\paquet{coherence2nearestI3720140905LOW.pdf}{coherence2nearestI3720140905HIGH.pdf}
+
+%==================================================================
+\paquet{coherence2nearestI3720140906LOW.pdf}{coherence2nearestI3720140906HIGH.pdf}
+
+%==================================================================
+
+
+ \newpage\clearpage
 %=======================================================
  \section{Cramer-Rao bound (CRB)}
 %=======================================================
 %=======================================================
-The $(\ell,\ell')$ entry of the Fisher information matrix  associated to the parameter $\alpha$ writes:
-\begin{eqnarray}
- \label{eq:FIM}
-\fim_{\ell,\ell'}(\alpha)&=&\sum_{k=1}^{K}\trace{\Gamma_{k}^{-1}\times\partial_{\ell}\Gamma_{k}\times\Gamma_{k}^{-1}\times\partial_{\ell'}\Gamma_{k}}
-\end{eqnarray}
-where $1\leq \ell,\ell'\leq K+4$ and where $\partial_{\ell}\Gamma_{k}$ is the partial derivative w.r.t. $\alpha$.   We let:
+Let us consider a statistical model associated to an $N$ dimensional observation $X$, whose probability measure has a probability density we denote $p(x;\alpha)$ where $\alpha$ is a $L$-dimensional parameter. Then any unbiased estimator $\hat\alpha_{N}$ of $\alpha$ has a covariance matrix which verifies:
 \begin{eqnarray*}
- \dot d_{k,\ell}(\theta)&=&
+ \esp{(\hat\alpha_{N}-\alpha) (\hat\alpha_{N}-\alpha)^{T}}&\leq& \mathrm{CRB}(\alpha) = F^{-1}(\alpha)
+\end{eqnarray*}
+where $F$ is called the Fisher information matrix (FIM) whose $(m,m')$ entry writes:
+\begin{eqnarray*}
+ F_{m,m'}&=&\esp{\nabla_{\alpha}p(x;\alpha)\nabla_{\alpha}^{T}p(x;\alpha)}
+\end{eqnarray*}
+where $\nabla_{\alpha}p(x;\alpha)$ is the gradient of $p(x;\alpha)$ w.r.t. $\alpha$. It is worth to notice that $F$ is $L$ dimensional square matrix.
+
+
+ \bigskip
+In the Gaussian case given by the expression \eqref{eq:likelihood-function}, it is shown:
+\begin{eqnarray}
+ \label{eq:FIMgaussian}
+\fim_{m,m'}(\alpha)&=&\sum_{k=1}^{K}\trace{\Gamma_{k}^{-1}\times\partial_{m}\Gamma_{k}\times\Gamma_{k}^{-1}\times\partial_{m'}\Gamma_{k}}
+\end{eqnarray}
+where $1\leq m,m'\leq K+4$ and where $\partial_{\ell}\Gamma_{k}$ is the partial derivative w.r.t. $\alpha$.   We let:
+\begin{eqnarray*}
+ \dot d_{k,m}(\theta)&=&
   \begin{bmatrix}
-  -2j\pi f_{k} r_{1,\ell}\,e^{-2j\pi f_{k}r_{1}^{T}\theta}
+  -2j\pi f_{k} r_{1,m}\,e^{-2j\pi f_{k}r_{1}^{T}\theta}
   \\
   \vdots
   \\
-  -2j\pi f_{k} r_{M,\ell}\,e^{-2j\pi f_{k}r_{M}^{T}\theta}
+  -2j\pi f_{k} r_{M,m}\,e^{-2j\pi f_{k}r_{M}^{T}\theta}
   \end{bmatrix}
 \end{eqnarray*}
-Then for $\ell=1,2,3$:
+Then for $m=1,2,3$:
 \begin{eqnarray*}
-\partial_{\ell}\Gamma_{k}&=&
-   \gamma_{k}\diag{ \dot d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)+
+\partial_{m}\Gamma_{k}&=&
+   \gamma_{k}\diag{ \dot d_{k,m}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)+
    \gamma_{k} D_{k}(\theta)C_{k}(\beta) \diag{ \dot d_{k,\ell}(\theta)}^{H}
    \\
    &=&2\, \gamma_{k} \mathcal{R}\left(
-   \diag{d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)\right)
+   \diag{d_{k,m}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)\right)
 \end{eqnarray*}
 It is worth to notice that, if $\beta\approx +\infty$, $C_{k}=I_{M}$ and $\partial_{\ell}\Gamma_{k}=0$ which is normal because in this case $\Gamma_{k}$ does not depend on $\theta$. For the derivation w.r.t. $\sigma^{2}$ we have:
 \begin{eqnarray*}
