@@ -1,5 +1,5 @@
 function [xalign, tkl_pts, signal_notalign, cormax] = ...
-    alignmentwrt1(signal,startindex, windowlength_samples, frequencyrange_bins)
+    alignmentwrt1(signal, startindex, windowlength_samples, rate, frequencyrange_bins)
 %===================================================================
 % we align signals wrt to sensor 1
 % with structured delays wrt the sensor locations
@@ -34,8 +34,6 @@ signal    = filter(forward,reverse,signal);
 signal = signal ./ (ones(size(signal,1),1)*std(signal,[],1));
 signal_notalign = signal;
 
-
-rate      = 8;
 signal    = resample(signal,rate, 1);
 windowlength_samples = rate*windowlength_samples;
 startindex = (startindex-1)*rate+1;
