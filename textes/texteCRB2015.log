@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.7.25)  4 NOV 2015 23:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.7.25)  5 NOV 2015 07:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -444,189 +444,195 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 [3
 
 ] [4] [5]
-<../figures/tempspectanalysisI3720140905.pdf, id=128, 796.9775pt x 739.76375pt>
-File: ../figures/tempspectanalysisI3720140905.pdf Graphic file (type pdf)
-<use ../figures/tempspectanalysisI3720140905.pdf>
-Package pdftex.def Info: ../figures/tempspectanalysisI3720140905.pdf used on in
-put line 432.
-(pdftex.def)             Requested size: 533.97214pt x 495.63913pt.
+<../figures/tempspectanalysisH1I3720140905.pdf, id=128, 284.06125pt x 227.85126
+pt>
+File: ../figures/tempspectanalysisH1I3720140905.pdf Graphic file (type pdf)
+ <use ../figures/tempspectanalysisH1I3720140905.pdf>
+Package pdftex.def Info: ../figures/tempspectanalysisH1I3720140905.pdf used on 
+input line 434.
+(pdftex.def)             Requested size: 227.24928pt x 182.28123pt.
 
-
-LaTeX Warning: Reference `' on page 6 undefined on input line 434.
-
-[6] [7 <../figures/tempspectanalysisI3720140905.pdf>]
-<../figures/coherence2nearestI3720140902LOW.pdf, id=160, 569.12625pt x 398.4887
+<../figures/tempspectanalysisH1bisI3720140905.pdf, id=129, 284.06125pt x 227.85
+126pt>
+File: ../figures/tempspectanalysisH1bisI3720140905.pdf Graphic file (type pdf)
+ <use ../figures/tempspectanalysisH1bisI3720140905.pdf>
+Package pdftex.def Info: ../figures/tempspectanalysisH1bisI3720140905.pdf used 
+on input line 436.
+(pdftex.def)             Requested size: 227.24928pt x 182.28123pt.
+ [6 <../figures/tempspectanalysisH1I3720140905.pdf> <../figures/tempspectanalys
+isH1bisI3720140905.pdf>]
+<../figures/coherence2nearestI3720140902LOW.pdf, id=153, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140902LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140902LOW.pdf>
 Package pdftex.def Info: ../figures/coherence2nearestI3720140902LOW.pdf used on
- input line 457.
+ input line 470.
 (pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140902HIGH.pdf, id=161, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140902HIGH.pdf, id=154, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140902HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140902HIGH.pdf>
 Package pdftex.def Info: ../figures/coherence2nearestI3720140902HIGH.pdf used o
-n input line 457.
+n input line 470.
 (pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140903LOW.pdf, id=163, 569.12625pt x 284.0612
+<../figures/coherence2nearestI3720140903LOW.pdf, id=156, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140903LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140903LOW.pdf>
 Package pdftex.def Info: ../figures/coherence2nearestI3720140903LOW.pdf used on
- input line 460.
-(pdftex.def)             Requested size: 375.62448pt x 187.48099pt.
+ input line 473.
+(pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140903HIGH.pdf, id=164, 569.12625pt x 284.061
-25pt>
+<../figures/coherence2nearestI3720140903HIGH.pdf, id=157, 569.12625pt x 398.488
+75pt>
 File: ../figures/coherence2nearestI3720140903HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140903HIGH.pdf>
 Package pdftex.def Info: ../figures/coherence2nearestI3720140903HIGH.pdf used o
-n input line 460.
-(pdftex.def)             Requested size: 375.62448pt x 187.48099pt.
+n input line 473.
+(pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140904LOW.pdf, id=166, 569.12625pt x 284.0612
+<../figures/coherence2nearestI3720140904LOW.pdf, id=159, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140904LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140904LOW.pdf>
 Package pdftex.def Info: ../figures/coherence2nearestI3720140904LOW.pdf used on
- input line 463.
-(pdftex.def)             Requested size: 375.62448pt x 187.48099pt.
+ input line 476.
+(pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140904HIGH.pdf, id=167, 569.12625pt x 284.061
-25pt>
+<../figures/coherence2nearestI3720140904HIGH.pdf, id=160, 569.12625pt x 398.488
+75pt>
 File: ../figures/coherence2nearestI3720140904HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140904HIGH.pdf>
 Package pdftex.def Info: ../figures/coherence2nearestI3720140904HIGH.pdf used o
-n input line 463.
-(pdftex.def)             Requested size: 375.62448pt x 187.48099pt.
+n input line 476.
+(pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140905LOW.pdf, id=169, 569.12625pt x 284.0612
+<../figures/coherence2nearestI3720140905LOW.pdf, id=162, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140905LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140905LOW.pdf>
 Package pdftex.def Info: ../figures/coherence2nearestI3720140905LOW.pdf used on
- input line 466.
-(pdftex.def)             Requested size: 375.62448pt x 187.48099pt.
+ input line 479.
+(pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140905HIGH.pdf, id=170, 569.12625pt x 284.061
-25pt>
+<../figures/coherence2nearestI3720140905HIGH.pdf, id=163, 569.12625pt x 398.488
+75pt>
 File: ../figures/coherence2nearestI3720140905HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140905HIGH.pdf>
 Package pdftex.def Info: ../figures/coherence2nearestI3720140905HIGH.pdf used o
-n input line 466.
-(pdftex.def)             Requested size: 375.62448pt x 187.48099pt.
+n input line 479.
+(pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140906LOW.pdf, id=172, 569.12625pt x 284.0612
+<../figures/coherence2nearestI3720140906LOW.pdf, id=165, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140906LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140906LOW.pdf>
 Package pdftex.def Info: ../figures/coherence2nearestI3720140906LOW.pdf used on
- input line 469.
-(pdftex.def)             Requested size: 375.62448pt x 187.48099pt.
+ input line 482.
+(pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140906HIGH.pdf, id=173, 569.12625pt x 284.061
-25pt>
+<../figures/coherence2nearestI3720140906HIGH.pdf, id=166, 569.12625pt x 398.488
+75pt>
 File: ../figures/coherence2nearestI3720140906HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140906HIGH.pdf>
 Package pdftex.def Info: ../figures/coherence2nearestI3720140906HIGH.pdf used o
-n input line 469.
-(pdftex.def)             Requested size: 375.62448pt x 187.48099pt.
+n input line 482.
+(pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[8 <../figures/coherence2nearestI3720140902LOW.pdf> <../figures/coherence2neare
-stI3720140902HIGH.pdf>] [9 <../figures/coherence2nearestI3720140903LOW.pdf> <..
-/figures/coherence2nearestI3720140903HIGH.pdf>] [10 <../figures/coherence2neare
-stI3720140904LOW.pdf> <../figures/coherence2nearestI3720140904HIGH.pdf>]
-[11 <../figures/coherence2nearestI3720140905LOW.pdf> <../figures/coherence2near
-estI3720140905HIGH.pdf>] [12 <../figures/coherence2nearestI3720140906LOW.pdf> <
+[7 <../figures/coherence2nearestI3720140902LOW.pdf> <../figures/coherence2neare
+stI3720140902HIGH.pdf>] [8 <../figures/coherence2nearestI3720140903LOW.pdf> <..
+/figures/coherence2nearestI3720140903HIGH.pdf>] [9 <../figures/coherence2neares
+tI3720140904LOW.pdf> <../figures/coherence2nearestI3720140904HIGH.pdf>]
+[10 <../figures/coherence2nearestI3720140905LOW.pdf> <../figures/coherence2near
+estI3720140905HIGH.pdf>] [11 <../figures/coherence2nearestI3720140906LOW.pdf> <
 ../figures/coherence2nearestI3720140906HIGH.pdf>]
 
-LaTeX Warning: Reference `eq:alphareducted' on page 13 undefined on input line 
-520.
+LaTeX Warning: Reference `eq:alphareducted' on page 12 undefined on input line 
+533.
 
-[13
+[12
 
 ]
 Appendix A.
-[14
+[13
 
 ]
 Appendix B.
-[15
+[14
 
-] [16]
+] [15]
 Appendix C.
-[17
+[16
 
 ]
 Appendix D.
 
-Overfull \hbox (49.83986pt too wide) in alignment at lines 742--754
+Overfull \hbox (49.83986pt too wide) in alignment at lines 755--767
  [][][] []
  []
 
-[18
+[17
 
 ]
 Appendix E.
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 759.
+(hyperref)                removing `math shift' on input line 772.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\Gamma' on input line 759.
+(hyperref)                removing `\Gamma' on input line 772.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 759.
+(hyperref)                removing `subscript' on input line 772.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 759.
+(hyperref)                removing `math shift' on input line 772.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 770.
-[19
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 783.
+[18
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 770.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 783.
  (./texteCRB2015.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 770.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 770.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 783.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 783.
 Package rerunfilecheck Info: File `texteCRB2015.out' has not changed.
 (rerunfilecheck)             Checksum: 241946F483F673B2E5CEAF608A6E3AF4;676.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 770.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 783.
  ) 
 Here is how much of TeX's memory you used:
- 7670 strings out of 493089
- 111190 string characters out of 6134842
- 207995 words of memory out of 5000000
- 10958 multiletter control sequences out of 15000+600000
+ 7673 strings out of 493089
+ 111438 string characters out of 6134842
+ 208007 words of memory out of 5000000
+ 10961 multiletter control sequences out of 15000+600000
  27876 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  32i,17n,31p,583b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -655,10 +661,10 @@ st/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2015/texmf-dist
 /fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2015/texmf-dist/f
 onts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2015/texmf-dist/fon
 ts/type1/public/cm-super/sfti1200.pfb>
-Output written on texteCRB2015.pdf (19 pages, 1458256 bytes).
+Output written on texteCRB2015.pdf (18 pages, 2001049 bytes).
 PDF statistics:
- 370 PDF objects out of 1000 (max. 8388607)
- 292 compressed objects within 3 object streams
- 60 named destinations out of 1000 (max. 500000)
- 149 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 396 PDF objects out of 1000 (max. 8388607)
+ 313 compressed objects within 4 object streams
+ 59 named destinations out of 1000 (max. 500000)
+ 154 words of extra memory for PDF output out of 10000 (max. 10000000)
 

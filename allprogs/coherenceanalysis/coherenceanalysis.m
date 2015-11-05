@@ -35,7 +35,7 @@ filenames              = dir(sprintf('%s*.mat',directorydatafromIDC));
 nbfiles                = length(filenames);
 Fs_Hz                  = 20;
 Ts_sec                 = 1/Fs_Hz;
-BWFilter4anal_Hz       = [0.01 4];
+BWFilter4anal_Hz       = [0.1 4];
 [forward,  reverse]    = butter(2,2*BWFilter4anal_Hz/Fs_Hz);
 usefilterflag          = 1;
 %========= MSC analysis
@@ -43,8 +43,7 @@ timeofanalysis_sec     = 500;
 ratioDFT2SCP4average   = 5;
 overlappingFFTrate     = 0.5;
 
-for ifile = 4
-    ifig = 22;
+for ifile = 5
     filename1_ii = filenames(ifile).name;filename1_ii
     cdload       = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
     eval(cdload)
@@ -95,10 +94,10 @@ for ifile = 4
     allSpectrum = cell(Msensors,1);
     cp=0;
     for im1 = 1:Msensors-1
-        signal1_centered=SIGcentered(:,im1);
+        signal1_centered = SIGcentered(:,im1);
         for im2 = im1+1:Msensors
             cp = cp+1;
-            signal2_centered=SIGcentered(:,im2);
+            signal2_centered = SIGcentered(:,im2);
             Tfft_sec     = timeofanalysis_sec/ratioDFT2SCP4average;
             Lfft         = fix(Tfft_sec*Fs_Hz);
             GREF         = ones(Lfft,1);
@@ -114,12 +113,57 @@ for ifile = 4
     allSpectrum{Msensors} = [allSDs.RR];
     allMSCsort = allMSC(indsortdistance);
     
-    bandwidthdisplay_Hz   = [0.01 1];
+    bandwidthdisplay_Hz   = [0.01 4];
     id1a         = find(frqsFFT_Hz<=bandwidthdisplay_Hz(1),1,'last');
     id2a         = find(frqsFFT_Hz<=bandwidthdisplay_Hz(2),1,'last');
     listindfreqa = (id1a:id2a);
     frqsselected_Hza   = frqsFFT_Hz(id1a:id2a);
     %%
+    figure(101)
+    im=1;
+    subplot(2,1,1),
+    plot(time_sec.signals/3600,SIGcentered(:,im),'color',0.5*[1 1 1]),
+    set(gca,'xlim',[0 20]),
+    set(gca,'ylim',[-1 1]),
+    set(gca,'fontnam','times','fontsize',10)
+    if or(im==9,im==10)
+        xlabel('times - [H]')
+    end
+    title(sprintf('H%i : filtered in [%4.2f Hz - %4.2f Hz]',im, ...
+        BWFilter4anal_Hz(1),BWFilter4anal_Hz(2)))
+    %
+    subplot(2,1,2),
+    pcolor(time_sec.SD/3600,frqsselected_Hza,10*log10(allSpectrum{im}(listindfreqa,:))),
+    shading flat
+    set(gca,'ylim',[0 4]);
+    set(gca,'xlim',[0 20]),
+    set(gca,'yscale','log')
+    set(gca,'fontnam','times','fontsize',10)
+    xlabel('times - [H]')
+    ylabel('freq. - [Hz]')
+    title(sprintf('Spectral analysis in %i second time window',timeofanalysis_sec))
+    
+    
+    HorizontalSize = 10;
+    VerticalSize   = 8;
+    set(gcf,'units','centimeters');
+    set(gcf,'paperunits','centimeters');
+    set(gcf,'PaperType','a4');
+    %     set(gcf,'position',[0 5 HorizontalSize VerticalSize]);
+    set(gcf,'paperposition',[0 0 HorizontalSize VerticalSize]);
+    
+    set(gcf,'color', [1,1,0.92]);%0.7*ones(3,1))
+    set(gcf, 'InvertHardCopy', 'off');
+    
+    figure(101)
+    fileprintepscmd = sprintf('print -depsc -loose ../../figures/tempspectanalysisH1bisI%s%s.eps',stationnumber,filename1_ii(1:8));
+    fileeps2pdf = sprintf('!epstopdf  ../../figures/tempspectanalysisI%s%s.eps',stationnumber,filename1_ii(1:8));
+    rmeps = sprintf('!rm  ../../figures/tempspectanalysisI%s%s.eps',stationnumber,filename1_ii(1:8));
+    %      eval(fileprintepscmd)
+    %      eval(fileeps2pdf)
+    %      eval(rmeps)
+return
+%%
     figure(100)
     for im=1:Msensors,
         subplot(Msensors/2,4,2*im-1),
@@ -135,7 +179,7 @@ for ifile = 4
         subplot(Msensors/2,4,2*im),
         pcolor(time_sec.SD/3600,frqsselected_Hza,10*log10(allSpectrum{im}(listindfreqa,:))),
         shading flat
-        set(gca,'ylim',bandwidthdisplay_Hz),
+        set(gca,'ylim',[0 4]);%bandwidthdisplay_Hz),
         set(gca,'xlim',[0 20]),
         set(gca,'yscale','log')
         set(gca,'fontnam','times','fontsize',10)
@@ -154,6 +198,8 @@ for ifile = 4
     
     set(gcf,'color', [1,1,0.92]);%0.7*ones(3,1))
     set(gcf, 'InvertHardCopy', 'off');
+    
+    figure(100)
     fileprintepscmd = sprintf('print -depsc -loose ../../figures/tempspectanalysisI%s%s.eps',stationnumber,filename1_ii(1:8));
     fileeps2pdf = sprintf('!epstopdf  ../../figures/tempspectanalysisI%s%s.eps',stationnumber,filename1_ii(1:8));
     rmeps = sprintf('!rm  ../../figures/tempspectanalysisI%s%s.eps',stationnumber,filename1_ii(1:8));
@@ -166,10 +212,12 @@ for ifile = 4
     for HIGHBAND = [0,1]
         %===================================================================
         if HIGHBAND
+            ifig = 22;
             bandwidthMSC_Hz   = [0.22 0.3];
             maxvarexplic_Hz2km2 = 0.15;
             nameprint = sprintf('../../figures/coherence2nearestI%s%sHIGH.eps',stationnumber,filename1_ii(1:8));
         else
+            ifig = 23;
             bandwidthMSC_Hz   = [0.05 0.1];
             maxvarexplic_Hz2km2 = 0.02;
             nameprint = sprintf('../../figures/coherence2nearestI%s%sLOW.eps',stationnumber,filename1_ii(1:8));
@@ -311,8 +359,8 @@ for ifile = 4
         fileeps2pdf = sprintf('!epstopdf %s',nameprint);
         rmeps = sprintf('!rm  %s',nameprint);
         figure(ifig)
-        eval(fileprintepscmd)
-        eval(fileeps2pdf)
-        eval(rmeps)
+%         eval(fileprintepscmd)
+%         eval(fileeps2pdf)
+%         eval(rmeps)
     end
 end
