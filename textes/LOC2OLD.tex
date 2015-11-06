@@ -1,0 +1,304 @@
+\documentclass[a4paper, 12pt]{report}
+%================================================================
+\usepackage{color,amsmath,amsfonts,amssymb,epsfig,hyperref}
+\usepackage{graphicx}
+\usepackage{dsfont}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{pdfpages}
+%============================================
+ \textheight 22cm
+% \doublespace
+  \oddsidemargin -0.5cm
+  \evensidemargin +1.5cm
+  \textwidth 15cm
+ \topmargin 0cm
+%============================================
+% Figures
+%============================================
+\newcommand{\figsstit}[2]{
+\begin{figure}[hbtp]
+\centerline{
+    \hbox{ \epsfig{figure={#1}, scale=#2} }
+}
+\end{figure}}
+%============================================
+\newcommand{\figscale}[4]{
+\begin{figure}[hbtp]
+\centerline{
+    \hbox{ \includegraphics[scale=#4]{#1} }
+}
+\begin{center}
+\parbox{12 cm}
+{
+    \caption{\protect\small\it  {#2}}
+    \label {#3}
+}
+\end{center}
+
+\end{figure}}
+
+%%============================================
+%\newcommand{\figsstit}[2]{
+%\begin{figure}[hbtp]
+%\centerline{
+%    \hbox{ \includegraphics{figure={#1}, scale=#2} }
+%}
+%\end{figure}}
+%
+
+%==================================================
+\newcommand\algo[1]%
+{
+    \begin{center} %
+    \begin{tabular} {||p{10 cm}l ||}%
+    \hline
+               #1 &  \\
+    \hline
+    \end{tabular}
+    \vspace{12pt}
+    \end{center}
+}
+
+
+%==============================================
+\newcommand{\prob}[1]{\mathds{P}\left( #1 \right)}
+\newcommand{\esp}[1]{\mathds{E}\left[ #1 \right]}
+\newcommand{\var}[1]{\mathrm{var}\left( #1 \right)}
+\newcommand{\cov}[1]{\mathrm{cov}\left( #1 \right)}
+\newcommand{\diag}[1]{\mathrm{diag}\left( #1 \right)}
+\newcommand{\trace}[1]{\mathrm{trace}\left( #1 \right)}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\myemph}[1]{\emph{\color{red}#1}}
+
+%%============================================================================
+\def\thesection{\arabic{section}}
+%\def\thesubsection{\arabic{section}.\arabic{subsection}}
+%\def\thesubsubsection{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+%\def\thefigure{\arabic{figure}}
+%\def\theequation{\arabic{equation}}
+%\def\theexercice{\arabic{exercice}}
+%\def\theexample{\arabic{example}}
+%\def\theproof{\arabic{proof}}
+
+%===============================================
+\newtheorem{property}{Properties}
+\newtheorem{remark}{Remark}
+\newtheorem{theorem}{Theorem - \thetheoreme}
+\newtheorem{definition}{Definition - \thedefinision}
+\newtheorem{example}{Example}
+\newtheorem{lemme}{Lemme - \thelemme}
+\newtheorem{proof}{Proof - \theproof}
+\newenvironment{TAB}{\begin{table}[[hbt] \center \leavevmode}{\end{table}}
+%%============================================================================
+%\renewcommand\arraystretch{1.6}
+
+\def\ua{\underline a}
+\def\ub{\underline b}
+\def\uB{\underline B}
+\def\uH{\underline H}
+\def\ur{\underline r}
+\def\us{\underline s}
+\def\ux{\underline x}
+\def\uX{\underline X}
+\def\uZ{\underline Z}
+\def\utheta{\underline \theta}
+
+
+
+\def\tn{\mathrm{TN}}
+\def\fn{\mathrm{FN}}
+\def\tp{\mathrm{TP}}
+\def\fp{\mathrm{FP}}
+\def\tpn{\mathrm{tPN}}
+\def\tnn{\mathrm{tNN}}
+\def\tdn{\mathrm{tDN}}
+
+\def\precision{\mathrm{\color{red}Precision}}
+\def\recall{\mathrm{\color{red}Recall}}
+\def\fscore{{\color{red}F\mathrm{-score}}}
+\def\far{\mathrm{FAR}}
+\def\mdr{\mathrm{MDR}}
+\def\vdr{\mathrm{VDR}}
+\def\ci{\mathrm{CI}}
+\def\pfa{P_{\mathrm{FA}}}
+\def\pd{P_{\mathrm{D}}}
+\def\loc{\mathrm{LOC}}
+
+\def\SNR{\mathrm{SNR}}
+\def\crb{\mathrm{CRB}}
+\def\fim{\mathrm{FIM}}
+
+\def\auc{\mathrm{AUC}}
+
+\def\void{{\small void}}
+\def\nomeaning{{\small meaningless}}
+\def\unknown{{\small unknown}}
+\def\MSC{\mathrm{MSC}}
+\def\hMSC{\widehat{\MSC}}%{\MSC}} 
+\def\ellk{{k}}
+\def\SOI{common signal part }
+\def\absGamma{\Phi}
+
+%============== colors ========================
+\definecolor{enstrouge}{RGB}{212,65,84}
+\definecolor{lightorange}{RGB}{235,226,52}
+\definecolor{greennoise}{RGB}{243,42,255}
+\definecolor{lightred}{RGB}{255,181,183}
+\definecolor{light-grey}{rgb}{0.95,0.95,0.95}
+\definecolor{peach}{rgb}{0.98,0.49,0.25}
+\definecolor{burntorange}{rgb}{0.79,0.37,0}
+\definecolor{light-yellow}{rgb}{1,1,0.92}
+
+\definecolor{light-green}{RGB}{231,255,145}
+\definecolor{enstorange}{RGB}{255,214,10}
+\definecolor{enstrouge}{RGB}{212,65,84}
+\definecolor{grey}{RGB}{204,204,204}
+\definecolor{blue}{RGB}{0,0,255}
+\definecolor{almost-black}{RGB}{100,100,100}
+\definecolor{violet}{rgb}{0.4,0,0.4}
+\definecolor{cyan}{RGB}{0,255,255}
+\definecolor{magenta}{RGB}{243,42,255}
+
+\def\degree{^{\circ}}
+\def\simiid{\stackrel{\mathrm{i.i.d.}}{\sim}}
+\def\simind{\stackrel{\mathrm{ind.}}{\sim}}
+
+ 
+%%%============================================================================
+%%\def\thesection{\arabic{section}}
+%%\def\thefigure{\arabic{figure}}
+%%\def\theequation{\arabic{equation}}
+%%\def\theexercice{\arabic{exercice}}
+%%\def\theequation{\arabic{exercice}.\arabic{equation}}
+%%%============================================================================
+%%\newcounter{auxiliaire}
+%%%%%%%%% comment
+%%\setcounter{auxiliaire}{\theenumi}
+%%\end{enumerate}
+%% TEXTE
+%%\begin{enumerate}
+%%\setcounter{enumi}{\theauxiliaire}
+%%%============================================================================
+
+ \bibliographystyle{plain} 
+
+\begin{document}
+ \sloppy
+%=======================================================
+%=======================================================
+
+
+In this study we are interested by the best station design in term of parameter accuracy. In short, in presence of only pure coherent acoustic waves, it is clear that the best design is to locate sensors at far as possible. For which reason could we take into account an upper bound on the aperture ? Regarding the size of the station and the distance of the source, the only parameter which can induce a limitation on the previous design is the possible loss of coherence on distant pairs of sensors.
+
+Therefore to determine a good design, it is necessary to take into account the trade-off between the distance and the loss of coherence. A very naive model consists to take:
+\begin{eqnarray*}
+ \loc(f) &=& e^{-\alpha \frac{d}{\lambda}}%e^{-\alpha df/c}
+\end{eqnarray*}
+where $\lambda$ denotes the wavelength and $d$ the distance between 2 sensors. If $\alpha=0$ there is no loss of coherence. This very simple model has to be validated but here we assume that it is.
+
+\begin{remark}[on the noise]
+Typical station aperture  is 2 km. Therefore assuming that the noise has the same level on each sensor is unrealistic. However the noise level is not directly related to the inter-distances between sensors. It follows that, for the station design understanding, we can consider that the noise levels are identical on all sensors. 
+\end{remark}
+
+
+%=======================================================
+ \section{Introduction}
+%=======================================================
+%=======================================================
+
+
+We consider a station with $M$ sensors. There is only one acoustic source faraway from the station, in such a way it can be considered as planar wave. Therefore the $M$-ary signal  writes: 
+\begin{eqnarray*}
+x(t) & = & \underbrace{s(t;\theta)}_{\text{acoustic signal}}+ \underbrace{w(t)}_{\text{noise}}
+\end{eqnarray*}
+where $\theta$ denotes the 3D slowness vector. Under assumption of pure delay, and therefore in full coherence, we can write for the $m$-th sensor located in $r_{m}$:
+\begin{eqnarray*}
+s_{m}(t;\theta)&=&s(t-r_{m}^{T}\theta)
+\end{eqnarray*}
+All signals are real and sampled at the sampling frequency  $F_{s}=20$ Hz. After sampling we obtain $x_{n}=x(n/F_{s})$. For $k=0$ to $(N-1)$ we consider the $M$-ary discrete Fourier transform:
+ \begin{eqnarray*}
+ X_{k}&=&\frac{1}{\sqrt{N}}\sum_{n=0}^{N-1}x_{n}\,e^{-2j\pi n f_{k}}
+    \quad\mathrm{where}\quad
+ f_{k}=kF_{s}/N
+ \end{eqnarray*}
+We let $K=N/2$.
+For $K$ great enough, $X_{1}$, $\ldots$, $X_{K}$ is a sequence of  $M$-ary independent circularly gaussian random vectors with zero-mean and respective covariance:
+\begin{eqnarray}
+\label{eq:spectralmatrixpuredelay}
+\Gamma_{k}(\alpha)&=&d_{k}(\theta)d_{k}^{H}(\theta)+\sigma^{2}I_{M}
+%\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
+\end{eqnarray}
+where $d_{k}(\theta)$ is an $M$-ary vector whose the $m$-th entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$.
+
+Under LOC, the expression \eqref{eq:spectralmatrixpuredelay} can be rewritten:
+\begin{eqnarray}
+\label{eq:spectralmatrixLOC}
+\Gamma_{k}(\alpha)&=&D_{k}(\theta)\, C_{k}\,D_{k}^{H}(\theta)+\sigma^{2}I_{M}
+%\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
+\end{eqnarray}
+where $D_{k}(\theta)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{k,m}=e^{-2j\pi f_{k} r_{m}^{T}\theta }$. $C_{k}$ is a matrix taking into account the LOC. Typically in the absence of LOC, $C_{k}$ is a rank 1 matrix that writes $C_{k}=\mathds{1}\mathds{1}^{T}$ and \eqref{eq:spectralmatrixLOC} leads back to \eqref{eq:spectralmatrixpuredelay}. In the following we assume that 
+\begin{eqnarray*}
+ C_{k,\ell\ell'} (\beta)&=&e^{-\beta \frac{d_{\ell,\ell'}}{\lambda_{k}}}=e^{-\beta \frac{d_{\ell,\ell'}f_{k}}{c}}
+\end{eqnarray*}
+where $\lambda=c/f$ is the wavelength, $d_{\ell,\ell'}$ the distance between 2 locations $\ell$ and $\ell'$ in the 3D space, and $\beta$ a positive constant. For $\beta=0$, $C(\beta)=\mathds{1}\mathds{1}^{T}$ leading to a perfect coherence. If $\beta\approx+\infty$, $C(\beta)=I_{M}$ and there is full absence of coherence between any 2 locations.
+
+
+%=======================================================
+ \section{Cramer-Rao}
+%=======================================================
+%=======================================================
+We use the following result:
+\begin{itemize}
+\item
+ $X_{1}$, $\ldots$, $X_{K}$ is a sequence of  $M$-ary independent circularly gaussian random $M$-ary vectors with zero-mean and respective covariance:
+\begin{eqnarray*}
+\Gamma_{k}&=&D_{k}(\theta)C_{k}(\beta)D_{k}^{H}(\theta)+\sigma^{2}I_{M}
+%\diag{\begin{matrix}\sigma_{1},\ldots,\sigma_{M}\end{matrix}}
+\end{eqnarray*}
+\item
+the parameter of interest is $\mu=\{\theta_{1},\theta_{2},\theta_{3},\sigma^{2}\}$. Here we consider that $\beta$ is known.
+\end{itemize}
+
+In this case the Fisher information matrix  associated to the parameter $\theta=\{\theta_{1},\theta_{2},\theta_{3}\}$ writes:
+\begin{eqnarray}
+ \label{eq:FIM}
+\fim_{\ell,\ell'}(\theta)&=&\frac{1}{\sigma^{2}}\sum_{k=1}^{K}\trace{\Gamma_{k}^{-1}\times\partial_{\ell}\Gamma_{k}\times\Gamma_{k}^{-1}\times\partial_{\ell'}\Gamma_{k}}
+\end{eqnarray}
+where $\ell,\ell'\in\{1,2,3\}$ and where $\partial_{\ell}\Gamma_{k}$ is the partial derivative w.r.t. $\theta_{\ell}$. It is clear that the CRB terms relative to the correlation of $\theta$ and $\sigma^{2}$ are 0. We let:
+\begin{eqnarray*}
+ d_{k,\ell}(\theta)&=&
+  \begin{bmatrix}
+  -2j\pi f_{k} r_{1,\ell}\,e^{-2j\pi f_{k}r_{1}^{T}\theta}
+  \\
+  \vdots
+  \\
+  -2j\pi f_{k} r_{M,\ell}\,e^{-2j\pi f_{k}r_{M}^{T}\theta}
+  \end{bmatrix}
+\end{eqnarray*}
+Then 
+\begin{eqnarray*}
+\partial_{\ell}\Gamma_{k}&=&
+   \diag{d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)+
+   D_{k}(\theta)C_{k}(\beta) \diag{d_{k,\ell}(\theta)}^{H}
+   \\
+   &=&2\, \mathcal{R}\left(
+   \diag{d_{k,\ell}(\theta)}C_{k}(\beta)D_{k}^{H}(\theta)\right)
+\end{eqnarray*}
+It is worth to notice that, if $\beta\approx +\infty$, $C_{k}=I_{M}$ and $\partial_{\ell}\Gamma_{k}=0$ which is normal because in this case $\Gamma_{k}$ does not depend on $\theta$. Using \eqref{eq:FIM} we derived the CRB as
+\begin{eqnarray}
+ \label{eq:CRB}
+\crb&=& \fim^{-1}
+\end{eqnarray}
+
+
+The CRB w.r.t. the azimuth, elevation and velocity is derived from \eqref{eq:CRB} using the Jacobian of the one-to-one mapping between the slowness and the vector $(a,e,c)$ where $a$, $e$ and $c$ denote respectively the azimut, the elevation and the velocity.
+
+
+%=======================================================
+%=======================================================
+
+
+\end{document}
+
