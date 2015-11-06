@@ -304,11 +304,7 @@ We assume that the $M$-ary noise $w(t)$ is temporally and spatial white. That wr
 \label{eq:generaldensitymatrixwithLOC}
  \Gamma_{x}(f)&=& \gamma_{s}(f)D(f)C(f)D^{H}(f) + \sigma^{2}I_M
 \end{eqnarray}
-where $D(f)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{m,m}=e^{-2j\pi f r_{m}^{T}\theta }$ and where $C(f)=\mathds{1}\mathds{1}^{T}$. The LOC is then characterized by a matrix $C(f)$ which is no more of rank 1,  but must be positive and with diagonal element equal to $1$. This expression can be a little bit more generalized:
-\begin{eqnarray*}
- \Gamma_{x}(f)&=&D(f)\Gamma_{s}(f)C(f)\Gamma_{s}(f)D^{H}(f)+ \sigma^{2}I_M
-\end{eqnarray*}
-where $\Gamma_{s}(f)$ is a diagonal matrix whose the $m$-th diagonal entry is $\gamma_{s,m}^{1/2}(f)$ meaning that the SOI arrives on each sensor with different spectral content. That is not considered in the following. We only consider that $\gamma_{s,m}(f)=\gamma_{s}(f)$ does not depend on $m$.
+where $D(f)$ is an $M$-ary diagonal matrix whose the $m$-th diagonal entry writes $D_{m,m}=e^{-2j\pi f r_{m}^{T}\theta }$ and where $C(f)=\mathds{1}\mathds{1}^{T}$. The LOC is then characterized by a matrix $C(f)$ which is no more of rank 1,  but must be positive and with diagonal element equal to $1$. 
 
 \medskip
 It follows that, for a pure delay and in the absence of LOC, taken $C(f)=\mathds{1}\mathds{1}^{T}$ in expressed in \eqref{eq:generaldensitymatrixwithLOC}, the MSC between any  sensor pair $(m,m')$ writes:
@@ -377,11 +373,11 @@ A commonly used model for the LOC of the acoustic source is for $1\leq m\leq M$ 
  C_{k,m,m'} &=&e^{-2\pi^2f_k^2(r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})}
 \end{eqnarray}
 where $S_{\theta}$ is a $3\times 3$ covariance matrix depending on 3 free parameters. Using \eqref{eq:MSCgeneralmodel}, we get:
-\begin{eqnarray*}
-\label{eq:MSCgaussianmodel}
+\begin{eqnarray}
+\label{eq:MSCgaussianmodelwithnoise}
  \log \MSC_{k,m,m'}&=& -2 \log(1+\SNR_{k}^{-1})
 -4\pi^2f_k^2(r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})
-\end{eqnarray*}
+\end{eqnarray}
 In the simple case where $S_{\theta}$ is proportional to the identity, this expression simplifies as:
 \begin{eqnarray}
 \label{eq:logMSCgaussianmodel}
@@ -422,9 +418,10 @@ Another way is to characterize the slowness by azimuth, elevation and velocity a
 %=======================================================
 %=======================================================
 The objective of this section is to validate, by numerical results, the simple relationship between the LOC and the distance given by the expression \eqref{eq:logMSCgaussianmodel}, that we rewrite below:
-\begin{eqnarray*}
+\begin{eqnarray}
+\label{eq:simplemodelMSC}
  \log \MSC_{k,m,m'}&=& \beta_{0}+\beta_{1} f_{k}^2 d_{m,m'}^{2}
-\end{eqnarray*}
+\end{eqnarray}
 It is worth to notice that $ \beta_{0}$ is related to the SNR level at the frequency $k$. Here for sake of simplicity we assume that this SNR does not depend on the frequency. That could be well verified if the bandwidth of the SOI is narrow enough.
 
 To studying this LOC model we need (i) a  station with a large number of sensors located in such a way that the distribution of the inter-distances is quiet  uniform, (ii) a coherent source almost permanently present. A good example is the microbarom, but unfortunately it covers a small part of the frequency bandwidth of interest. 
@@ -438,7 +435,7 @@ To studying this LOC model we need (i) a  station with a large number of sensors
 \begin{center}
 \parbox{14 cm}
 {
-    \caption{\protect\small\it  {Typical observations on I37 during about $20$ hours. The signals are filtered in the band $0.01$ Hz to $4$ Hz and in the band $0.1$ Hz to $4$ Hz. The plot im grey represents the time observations. The color image represents the spectral analysis. The analysis time window is $500$ seconds. A low frequency components appears on the left figures.}}
+    \caption{\protect\small\it  {Typical observations on I37 during about $20$ hours. The signals are filtered in the band $0.01$ Hz to $4$ Hz and in the band $0.1$ Hz to $4$ Hz. The plot im grey represents the time observations. The color image represents the spectral analysis. The analysis time window is $500$ seconds. A low frequency components appears on the left figures. A common frequency component appears around the frequency band $[0.2-0.3]$ Hz}}
     \label {fig:tempspectanalysisI3720140905}
 }
 \end{center}
@@ -588,61 +585,121 @@ It is easy to verify that $YY^{T}=\alpha_{0}I_{d}$.
 
 %=======================================================
 %=======================================================
-\chapter{Coherence}
-The LOC is modeled by the random slowness:
+\chapter{Loss of coherence (LOC)}
+The LOC is modeled by the randomness of the slowness vector as:
 \begin{eqnarray*}
 \Theta &=& \theta_0+\epsilon
 \end{eqnarray*}
-where $\theta_0$ is a 3D deterministic vector and $\epsilon$ a 3D random vector with zero-mean and distribution probability density denoted $p_{\epsilon}$. The spectral matrix of the $M$-ary random vectors associated to the sensor locations has the following entry:
+where $\theta_0$ is a 3D deterministic vector and $\epsilon$ a 3D random vector with zero-mean and distribution probability density denoted $p_{\epsilon}$. The spectral matrix entry of the $M$-ary random vectors associated to the sensor pair location $r_{m}$ and $r_{m'}$, writes:
 \begin{eqnarray*}
-S_{\ell,\ell'}(f) &=& \gamma(f)\int_{\mathds{R}^3}e^{-2j\pi f (r_{\ell}-r_{\ell'})^Tt}p_{e}(t-\theta_0)dt
+S_{m,m'}(f) &=& \gamma(f)\int_{\mathds{R}^3}e^{-2j\pi f (r_{m}-r_{m'})^Tt}p_{e}(t-\theta_0)dt
 \\
 &=&\gamma(f)
-e^{-2j\pi f (r_{\ell}-r_{\ell'})^T\theta_0}
-\int_{\mathds{R}^3}e^{-2j\pi f (r_{\ell}-r_{\ell'})^Tt}p_{e}(t)dt
+e^{-2j\pi f (r_{m}-r_{m'})^T\theta_0}
+\int_{\mathds{R}^3}e^{-2j\pi f (r_{m}-r_{m'})^Tt}p_{e}(t)dt
 \\
 &=&\gamma(f)
-e^{-2j\pi f (r_{\ell}-r_{\ell'})^T\theta_0}\times
-\Phi_{e}(2\pi f(r_{\ell}-r_{\ell'}))
+e^{-2j\pi f (r_{m}-r_{m'})^T\theta_0}\times
+\Phi_{e}(2\pi f(r_{m}-r_{m'}))
 \end{eqnarray*}
-where $\Phi_{e}(v)$ denotes the characteristic function of the r.v. $e$. The deterministic case where $\epsilon=0$ leads to:
-\begin{eqnarray*}
-S_{\ell,\ell'}(f) &=& \gamma(f)e^{-2j\pi f (r_{\ell}-r_{\ell'})^T\theta_0}
-\end{eqnarray*}
-and therefore $S(f)=d(f)d^H(f)$ where $d$ is a complex vector whose the $\ell$-entry writes $e^{-2j\pi f r_{\ell}^T\theta_0}$. Hence $S$ is a projector of rank 1 and corresponds to a pure coherent case.
-
-In the general case:
-\begin{eqnarray*}
+where $\Phi_{e}(v)$ denotes the characteristic function of the r.v. $e$. The expression of the matrix $S$ writes:
+\begin{eqnarray}
+\label{eq:spectralmatrixwithequaldensity}
  S(f) &=& \gamma_s(f)D(f)C(f)D^H(f)
-\end{eqnarray*}
-$D(f)$ is a diagonal matrix whose the $\ell$-th diagonal entry is $e^{-2j\pi f r_{\ell}^T\theta_0}$ and $C(f)$ a matrix whose the $(\ell,\ell')$-entry writes:
+\end{eqnarray}
+$D(f)$ is a diagonal matrix whose the $m$-th diagonal entry is $e^{-2j\pi f r_{m}^T\theta_0}$ and $C(f)$ a matrix whose the $(m,m')$-entry writes:
 \begin{eqnarray*}
- C_{\ell,\ell'}(f) &=& \Phi_{e}(2\pi f(r_{\ell}-r_{\ell'}))
+ C_{m,m'}(f) &=& \Phi_{e}(2\pi f(r_{m}-r_{m'}))
 \end{eqnarray*}
 
-If $\epsilon$ is gaussian with covariance matrix $\Sigma_{\theta}$:
+If the distribution of $\epsilon$ is symmetric, the matrix $C$ is real valued.
+
+
+The expression \eqref{eq:spectralmatrixwithequaldensity} can be a little bit more generalized by taking into account different spectral distribution on the $M$ sensors:
 \begin{eqnarray*}
- \Phi_{e}(2\pi f(r_{\ell}-r_{\ell'}))&=& e^{-2\pi^2f^2 (r_{\ell}-r_{\ell'})^T\Sigma_{\theta}(r_{\ell}-r_{\ell'})}
+ \Gamma_{x}(f)&=&D(f)\Gamma_{s}(f)C(f)\Gamma_{s}(f)D^{H}(f)+ \sigma^{2}I_M
 \end{eqnarray*}
-$\Sigma_{\theta}$ depends on 6 free parameters. 
+where $\Gamma_{s}(f)$ is a diagonal matrix whose the $m$-th diagonal entry is $\gamma_{m}^{1/2}(f)$ meaning that the SOI arrives on each sensor with different spectral content. In most cases when the SOI is very far away from the station, we can consider that $\gamma_{m}(f)$ does not depend on $m$.
+
+
+%=======================================================
+%=======================================================
+\subsubsection{Deterministic case}
+%=======================================================
+The deterministic case meaning $\epsilon=0$ leads to:
+\begin{eqnarray*}
+S_{m,m'}(f) &=& \gamma(f)e^{-2j\pi f (r_{m}-r_{m'})^T\theta_0}
+\end{eqnarray*}
+and therefore $S(f)=d(f)d^H(f)$ where $d$ is a complex vector whose the $m$-entry writes $e^{-2j\pi f r_{m}^T\theta_0}$. Hence $S$ is a projector of rank 1 and corresponds to a pure coherent case.
+
+%=======================================================
+%=======================================================
+\subsubsection{Gaussian case}
+%=======================================================
+If we assume that $\epsilon$ is gaussian with covariance matrix $S_{\theta}$:
+\begin{eqnarray*}
+ \Phi_{e}(2\pi f(r_{m}-r_{m'}))&=& e^{-2\pi^2f^2 (r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})}
+\end{eqnarray*}
+$S_{\theta}$ depends on 6 free parameters. Using \eqref{eq:MSCgeneralmodel} and in the absence of noise, the log MSC writes:
+\begin{eqnarray}
+\label{eq:MSCgaussianwithoutnoise}
+ \log \MSC(f) &=& -4\pi^2f^2 (r_{m}-r_{m'})^TS_{\theta}(r_{m}-r_{m'})
+\end{eqnarray}
 
 \begin{remark}[Unities]
-the covariance matrix $\Sigma_{\theta}$ is in s$^2$/m$^2$. It follows that $f^2 \Sigma_{\theta}$ is homogeneous at the inverse of the wavelength square.
+the covariance matrix $S_{\theta}$ is in s$^2$/m$^2$. It follows that $f^2 S_{\theta}$ is homogeneous at the inverse of the wavelength square.
 \end{remark}
 
 
-Using \eqref{eq:jacobianaec2theta}, we can derive an expression in term of azimuth $a$, elevation $e$ and velocity $c$. We have:
+%=======================================================
+%=======================================================
+\subsubsection{Estimation of the parameters of $S_{\theta}$}
+%=======================================================
+Considering the gaussian case for the slowness vector, and reporting the expression \eqref{eq:MSCgaussianmodelwithnoise}, we can write: 
+\begin{eqnarray*}
+ \log C_{k,m,m'} &=&
+-2\log(1+\SNR_k^{-1})
+-4\pi^{2} f_{k}^{2}(r_{m}-r_{m'})^{T}S_{\theta}(r_{m}-r_{m'})
+ \\
+ &=&
+-2\log(1+\SNR_k^{-1})
+-4\pi^{2} f_{k}^{2}(r_{m,1}-r_{m',1})^{2}S_{11}
+-4\pi^{2} f_{k}^{2}(r_{m,2}-r_{m',2})^{2}S_{22}
+\\&&
+-8\pi^{2} f_{k}^{2}(r_{m,1}-r_{m',1})(r_{m,2}-r_{m',2})S_{12}
+\\
+&=&
+\beta_{0}(k)
++\mu_{1}(k,m,m')S_{11}
++\mu_{2}(k,m,m')S_{22}
++2\mu_{3}(k,m,m')S_{12}
+\end{eqnarray*}
+which is linear w.r.t. the parameters $\beta_{0}(k)$, $S_{11}$, $S_{22}$ and $S_{12}$. That provides an easy way to estimate.
+Enumerating the frequency index, $k=1:K$, the sensor index $m=1:M$, $m'=1:M$ with $m'>m$ leads to $KM(M-1)/2$ equations with $K+3$ unknowns.
+If we assume that $S_{\theta}=sI_3$, and the SNR does not depend on $k$, the expression simplifies:
+\begin{eqnarray*}
+ \log C_{k,m,m'} &=&
+-2\log(1+\SNR^{-1})
+-4\pi^{2} f_{k}^{2}(r_{m,1}-r_{m',1})^{2}s
+\\
+&=&\beta_{0}+\beta_{1}f_{k}^{2}(r_{m,1}-r_{m',1})^{2}
+\end{eqnarray*}
+which is \eqref{eq:simplemodelMSC}.
+%=======================================================
+%=======================================================
+\subsubsection{Expression in azimut, elevation, velocity}
+Using \eqref{eq:jacobianaec2theta}, we can derive an expression for the LOC in terms of azimuth $a$, elevation $e$ and velocity $c$. We have:
 \begin{eqnarray}
 \label{eq:theta2aec}
-\Sigma_{\theta}=J\,\Sigma_{\aec}\,J^{T}
+S_{\theta}=J\,S_{\aec}\,J^{T}
 \end{eqnarray}
 Then
 \begin{eqnarray*}
- \log \Phi_{e}(2\pi f(r_{\ell}-r_{\ell'}))&=& 
--2\pi^2\frac{f^2}{c^2} (r_{\ell}-r_{\ell'})^TK(a,e,c)\Sigma_{\aec}K^T(a,e,c)(r_{\ell}-r_{\ell'})
+ \log \Phi_{e}(2\pi f(r_{m}-r_{m'}))&=& 
+-2\pi^2\frac{f^2}{c^2} (r_{m}-r_{m'})^TK(a,e,c)S_{\aec}K^T(a,e,c)(r_{m}-r_{m'})
 \\
 &=&
--2\pi^2(\rho_{\ell}-\rho_{\ell'})^TK_{\aec}\Sigma_{\aec}K^T_{\aec}(\rho_{\ell}-\rho_{\ell'})
+-2\pi^2(\rho_{m}-\rho_{m'})^TK_{\aec}S_{\aec}K^T_{\aec}(\rho_{m}-\rho_{m'})
 \end{eqnarray*}
 where $\rho=r/\lambda$ with $\lambda=c/f$ and
 \begin{eqnarray*}
@@ -655,7 +712,7 @@ K_{\aec}&=&
 0&\cos(e)&-c^{-1}\sin(e)
 \end{bmatrix}
 \end{eqnarray*}
-A simple case is if we take $\Sigma_{\aec}$ diagonal and hence depending on only 3 free parameters. 
+A simple case is if we take $S_{\aec}$ diagonal and hence depending on only 3 free parameters. 
 
 
 
@@ -755,38 +812,19 @@ whose the Jacobian is
 0&v^{-1}/\cos^2(e)&-v^{-2}\tan(e)
 \end{bmatrix}
 \end{equation}
-%=======================================================
-%=======================================================
-\chapter{Estimation of parameters}
-%=======================================================
-we have 
-\begin{eqnarray*}
- \log C_{k,m,m'} &=&-2\pi^{2} f_{k}^{2}(r_{m}-r_{m'})^{T}\Gamma(r_{m}-r_{m'})
- \\
- &=&
--2\pi^{2} f_{k}^{2}(r_{m,1}-r_{m',1})^{2}\Gamma_{11}
--2\pi^{2} f_{k}^{2}(r_{m,2}-r_{m',2})^{2}\Gamma_{22}
--4\pi^{2} f_{k}^{2}(r_{m,1}-r_{m',1})(r_{m,2}-r_{m',2})\Gamma_{12}
-\\
-&=&
-\mu_{1}(k,m,m')\Gamma_{11}
-+\mu_{2}(k,m,m')\Gamma_{22}
-+2\mu_{3}(k,m,m')\Gamma_{12}
-\end{eqnarray*}
-Enumerating $k=1:K$, $m=1:M$, $m'=1:M$ with $m'>m$ leads to $KM(M-1)/2$ equations with 3 unknowns.
 
-%=======================================================
-%=======================================================
-\chapter{inverse of $\Gamma_{k}$}
-%=======================================================
-Here we give the analytical expression of the inverse of $\Gamma_{k}(\alpha)=\gamma_{k}D_{k}(\theta)\, C_{k}\,D_{k}^{H}(\theta)+\sigma^{2}I_{M}$
-\begin{eqnarray*}
-\Gamma_{k}^{-1}(\alpha)&=&
-\sigma^{-2}I_{M}-\sigma^{-4}D_{k}(\theta)(C_{k}^{-1}+\sigma^{-2}D_{k}^{H}(\theta)D_{k}(\theta))^{-1}D_{k}^{H}(\theta)
-\\
-&=&
-\sigma^{-2}I_{M}-\sigma^{-4}D_{k}(\theta)(C_{k}^{-1}+\sigma^{-2}I)^{-1}D_{k}^{H}(\theta)
-\end{eqnarray*}
+%%=======================================================
+%%=======================================================
+%\chapter{inverse of $\Gamma_{k}$}
+%%=======================================================
+%Here we give the analytical expression of the inverse of $\Gamma_{k}(\alpha)=\gamma_{k}D_{k}(\theta)\, C_{k}\,D_{k}^{H}(\theta)+\sigma^{2}I_{M}$
+%\begin{eqnarray*}
+%\Gamma_{k}^{-1}(\alpha)&=&
+%\sigma^{-2}I_{M}-\sigma^{-4}D_{k}(\theta)(C_{k}^{-1}+\sigma^{-2}D_{k}^{H}(\theta)D_{k}(\theta))^{-1}D_{k}^{H}(\theta)
+%\\
+%&=&
+%\sigma^{-2}I_{M}-\sigma^{-4}D_{k}(\theta)(C_{k}^{-1}+\sigma^{-2}I)^{-1}D_{k}^{H}(\theta)
+%\end{eqnarray*}
 
 \end{document}
 

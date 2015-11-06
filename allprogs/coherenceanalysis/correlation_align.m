@@ -24,7 +24,7 @@ for iT=1:LSCP
     [xalign, taupts, signal_notalign, cormax(:,iT)]   = ...
         alignmentwrt1(signalsample,1,Lcorr_pts,1,bandwidthMSC_Hz/Fs_Hz);
 
-    incorrmax       = find(cormax(:,iT)>0.8);
+    incorrmax       = find(cormax(:,iT)>0.7);
     for im=1:Msensors-1
     MSCsel(im,iT)    = mean([allMSC{im}(idf1:idf2,iT)]);
     end
@@ -40,4 +40,5 @@ subplot(411); plot(time_sec.SD/3600, horizvelocity_mps)
 subplot(412); plot(time_sec.SD/3600, azimuth_deg) 
 % subplot(413); plot(time_sec.SD/3600, MSCsel) 
 % subplot(414); plot(time_sec.SD/3600, cormax) 
-subplot(212); plot(cormax, MSCsel,'.') 
+subplot(212); plot(cormax, MSCsel,'.')
+set(gca,'xlim',[0 1],'ylim',[0 1])

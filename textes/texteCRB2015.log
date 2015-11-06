@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2015.10.19)  5 NOV 2015 17:56
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2015.10.19)  6 NOV 2015 10:48
 entering extended mode
  %&-line parsing enabled.
 **texteCRB2015.tex
@@ -327,7 +327,7 @@ File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 
 pdfTeX warning: pdflatex (file ../figures/uniforinterdistances.pdf): PDF inclus
 ion: found PDF version <1.5>, but at most version <1.4> allowed
-<../figures/uniforinterdistances.pdf, id=65, 455.7025pt x 284.06125pt>
+<../figures/uniforinterdistances.pdf, id=57, 455.7025pt x 284.06125pt>
 File: ../figures/uniforinterdistances.pdf Graphic file (type pdf)
 
 <use ../figures/uniforinterdistances.pdf> [2 <../figures/uniforinterdistances.p
@@ -343,22 +343,22 @@ Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
 [3
 
 ] [4] [5]
-<../figures/tempspectanalysisH1LOWI3720140906.pdf, id=132, 284.06125pt x 227.85
+<../figures/tempspectanalysisH1LOWI3720140906.pdf, id=125, 284.06125pt x 227.85
 126pt>
 File: ../figures/tempspectanalysisH1LOWI3720140906.pdf Graphic file (type pdf)
  <use ../figures/tempspectanalysisH1LOWI3720140906.pdf>
-<../figures/tempspectanalysisH1HIGHI3720140906.pdf, id=133, 284.06125pt x 227.8
+<../figures/tempspectanalysisH1HIGHI3720140906.pdf, id=126, 284.06125pt x 227.8
 5126pt>
 File: ../figures/tempspectanalysisH1HIGHI3720140906.pdf Graphic file (type pdf)
 
  <use ../figures/tempspectanalysisH1HIGHI3720140906.pdf> [6 <../figures/tempspe
 ctanalysisH1LOWI3720140906.pdf> <../figures/tempspectanalysisH1HIGHI3720140906.
 pdf>]
-<../figures/coherence2nearestI3720140902LOW.pdf, id=151, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140902LOW.pdf, id=145, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140902LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140902LOW.pdf>
-<../figures/coherence2nearestI3720140902HIGH.pdf, id=152, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140902HIGH.pdf, id=146, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140902HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140902HIGH.pdf>
@@ -366,11 +366,11 @@ File: ../figures/coherence2nearestI3720140902HIGH.pdf Graphic file (type pdf)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140903LOW.pdf, id=154, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140903LOW.pdf, id=148, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140903LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140903LOW.pdf>
-<../figures/coherence2nearestI3720140903HIGH.pdf, id=155, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140903HIGH.pdf, id=149, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140903HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140903HIGH.pdf>
@@ -378,11 +378,11 @@ File: ../figures/coherence2nearestI3720140903HIGH.pdf Graphic file (type pdf)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140904LOW.pdf, id=157, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140904LOW.pdf, id=151, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140904LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140904LOW.pdf>
-<../figures/coherence2nearestI3720140904HIGH.pdf, id=158, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140904HIGH.pdf, id=152, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140904HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140904HIGH.pdf>
@@ -390,11 +390,11 @@ File: ../figures/coherence2nearestI3720140904HIGH.pdf Graphic file (type pdf)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140905LOW.pdf, id=160, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140905LOW.pdf, id=154, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140905LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140905LOW.pdf>
-<../figures/coherence2nearestI3720140905HIGH.pdf, id=161, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140905HIGH.pdf, id=155, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140905HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140905HIGH.pdf>
@@ -402,11 +402,11 @@ File: ../figures/coherence2nearestI3720140905HIGH.pdf Graphic file (type pdf)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140906LOW.pdf, id=163, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140906LOW.pdf, id=157, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140906LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140906LOW.pdf>
-<../figures/coherence2nearestI3720140906HIGH.pdf, id=164, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140906HIGH.pdf, id=158, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140906HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140906HIGH.pdf>
@@ -414,11 +414,11 @@ File: ../figures/coherence2nearestI3720140906HIGH.pdf Graphic file (type pdf)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140907LOW.pdf, id=166, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140907LOW.pdf, id=160, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140907LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140907LOW.pdf>
-<../figures/coherence2nearestI3720140907HIGH.pdf, id=167, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140907HIGH.pdf, id=161, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140907HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140907HIGH.pdf>
@@ -426,11 +426,11 @@ File: ../figures/coherence2nearestI3720140907HIGH.pdf Graphic file (type pdf)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140908LOW.pdf, id=169, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140908LOW.pdf, id=163, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140908LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140908LOW.pdf>
-<../figures/coherence2nearestI3720140908HIGH.pdf, id=170, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140908HIGH.pdf, id=164, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140908HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140908HIGH.pdf>
@@ -438,11 +438,11 @@ File: ../figures/coherence2nearestI3720140908HIGH.pdf Graphic file (type pdf)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140909LOW.pdf, id=172, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140909LOW.pdf, id=166, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140909LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140909LOW.pdf>
-<../figures/coherence2nearestI3720140909HIGH.pdf, id=173, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140909HIGH.pdf, id=167, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140909HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140909HIGH.pdf>
@@ -462,7 +462,7 @@ estI3720140908HIGH.pdf>] [14 <../figures/coherence2nearestI3720140909LOW.pdf> <
 ../figures/coherence2nearestI3720140909HIGH.pdf>]
 
 LaTeX Warning: Reference `eq:alphareducted' on page 15 undefined on input line 
-541.
+538.
 
 [15
 
@@ -478,48 +478,19 @@ Appendix B.
 Appendix C.
 [19
 
-]
-Appendix D.
-
-Overfull \hbox (49.83986pt too wide) in alignment at lines 763--775
- [][][] []
- []
-
-[20
-
-]
-Appendix E.
-
-Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `math shift' on input line 780.
-
-
-Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `\Gamma' on input line 780.
-
-
-Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `subscript' on input line 780.
-
-
-Package hyperref Warning: Token not allowed in a PDFDocEncoded string,
-(hyperref)                removing `math shift' on input line 780.
-
-[21
-
 ] (./texteCRB2015.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 5002 strings out of 256216
- 68507 string characters out of 1917071
+ 4985 strings out of 256216
+ 68267 string characters out of 1917071
  132713 words of memory out of 1500000
- 8111 multiletter control sequences out of 10000+200000
- 27885 words of font info for 90 fonts, out of 1200000 for 2000
+ 8091 multiletter control sequences out of 10000+200000
+ 22959 words of font info for 69 fonts, out of 1200000 for 2000
  645 hyphenation exceptions out of 8191
- 32i,17n,39p,583b,405s stack positions out of 5000i,500n,6000p,200000b,15000s
+ 32i,17n,39p,589b,405s stack positions out of 5000i,500n,6000p,200000b,15000s
  </home/consult/charbit/.texlive2007/texmf-var/fonts/pk/ljfour/jknappen/ec/ec
 bx2488.600pk> </home/consult/charbit/.texlive2007/texmf-var/fonts/pk/ljfour/jkn
 appen/ec/ecrm1095.600pk> </home/consult/charbit/.texlive2007/texmf-var/fonts/pk
@@ -535,15 +506,14 @@ pen/ec/ecrm1200.600pk></usr/share/texmf/fonts/type1/bluesky/cm/cmex10.pfb></usr
 uesky/cm/cmmi12.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmmi6.pfb></usr/sh
 are/texmf/fonts/type1/bluesky/cm/cmmi8.pfb></usr/share/texmf/fonts/type1/bluesk
 y/cm/cmr10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr12.pfb></usr/share/t
-exmf/fonts/type1/bluesky/cm/cmr17.pfb></usr/share/texmf/fonts/type1/bluesky/cm/
-cmr6.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr8.pfb></usr/share/texmf/fo
-nts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmsy6.
-pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmsy8.pfb></usr/share/texmf/fonts/
-type1/public/doublestroke/dsrom12.pfb></usr/share/texmf/fonts/type1/public/doub
-lestroke/dsrom8.pfb>
-Output written on texteCRB2015.pdf (21 pages, 1804790 bytes).
+exmf/fonts/type1/bluesky/cm/cmr6.pfb></usr/share/texmf/fonts/type1/bluesky/cm/c
+mr8.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf/f
+onts/type1/bluesky/cm/cmsy6.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmsy8.
+pfb></usr/share/texmf/fonts/type1/public/doublestroke/dsrom12.pfb></usr/share/t
+exmf/fonts/type1/public/doublestroke/dsrom8.pfb>
+Output written on texteCRB2015.pdf (19 pages, 1803988 bytes).
 PDF statistics:
- 703 PDF objects out of 1000 (max. 8388607)
- 62 named destinations out of 1000 (max. 131072)
- 200 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 700 PDF objects out of 1000 (max. 8388607)
+ 66 named destinations out of 1000 (max. 131072)
+ 184 words of extra memory for PDF output out of 10000 (max. 10000000)
 
