@@ -24,7 +24,7 @@ addpath ../progsCRB/
 %=================================================================
 
 %=================================================================
-stationnumber         = '31';
+stationnumber         = '37';
 
 %=================================================================
 
@@ -43,7 +43,7 @@ timeofanalysis_sec     = 500;
 ratioDFT2SCP4average   = 5;
 overlappingFFTrate     = 0.5;
 
-for ifile = 1
+for ifile = 5
     filename1_ii = filenames(ifile).name;filename1_ii
     cdload       = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
     eval(cdload)
@@ -71,7 +71,7 @@ for ifile = 1
    for i1=1:Msensors-1
         for i2=i1+1:Msensors
             cp=cp+1;
-            orientations(cp) = atan(xsensors_m(i1,2)/xsensors_m(i2,2))*180/pi;
+            orientations(cp) = atan2(xsensors_m(i1,2),xsensors_m(i2,2))*180/pi;
         end
     end
     sortorientations = orientations(indsortdistance);
@@ -217,11 +217,11 @@ for ifile = 1
     
     
     %%
-    for HIGHBAND = [0,1]
+    for HIGHBAND = [1]
         %===================================================================
         if HIGHBAND
             ifig = 22;
-            bandwidthMSC_Hz   = [0.2 0.3];
+            bandwidthMSC_Hz   = [0.28 0.28];
             maxvarexplic_Hz2km2 = 0.15;
             nameprint = sprintf('../../figures/coherence2nearestI%s%sHIGH.eps',stationnumber,filename1_ii(1:8));
         else
@@ -289,7 +289,8 @@ for ifile = 1
                 %=======
                 
                 subplot(122)
-                semilogy(explicativevar_Hz2km2, exp(meanlogaux),'.-','color',allcolors(ifqcolor,1))
+                semilogy(explicativevar_Hz2km2((1:2:end)), ...
+                    exp(meanlogaux((1:2:end))),'.-','color',allcolors(ifqcolor,1))
                 hold on
                 %                         semilogy(explicativevar_Hz2km2, exp(logaux(:,:,ifq)),'--','color',0.7*[1 1 1])
                 %             semilogy(explicativevar_Hz2km2, exp(meanlogaux+stdlogaux),'--','color',0.3*[1 1 1])
