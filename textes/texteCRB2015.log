@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.7.25)  7 NOV 2015 07:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.7.25)  10 NOV 2015 17:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -444,7 +444,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 [3
 
 ] [4] [5]
-<../figures/tempspectanalysisH1LOWI3720140906.pdf, id=127, 284.06125pt x 227.85
+<../figures/tempspectanalysisH1LOWI3720140906.pdf, id=121, 284.06125pt x 227.85
 126pt>
 File: ../figures/tempspectanalysisH1LOWI3720140906.pdf Graphic file (type pdf)
  <use ../figures/tempspectanalysisH1LOWI3720140906.pdf>
@@ -452,7 +452,7 @@ Package pdftex.def Info: ../figures/tempspectanalysisH1LOWI3720140906.pdf used
 on input line 431.
 (pdftex.def)             Requested size: 227.24928pt x 182.28123pt.
 
-<../figures/tempspectanalysisH1HIGHI3720140906.pdf, id=128, 284.06125pt x 227.8
+<../figures/tempspectanalysisH1HIGHI3720140906.pdf, id=122, 284.06125pt x 227.8
 5126pt>
 File: ../figures/tempspectanalysisH1HIGHI3720140906.pdf Graphic file (type pdf)
 
@@ -462,7 +462,7 @@ Package pdftex.def Info: ../figures/tempspectanalysisH1HIGHI3720140906.pdf used
 (pdftex.def)             Requested size: 227.24928pt x 182.28123pt.
  [6 <../figures/tempspectanalysisH1LOWI3720140906.pdf> <../figures/tempspectana
 lysisH1HIGHI3720140906.pdf>]
-<../figures/coherence2nearestI3720140902LOW.pdf, id=146, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140902LOW.pdf, id=139, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140902LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140902LOW.pdf>
@@ -470,7 +470,7 @@ Package pdftex.def Info: ../figures/coherence2nearestI3720140902LOW.pdf used on
  input line 467.
 (pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140902HIGH.pdf, id=147, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140902HIGH.pdf, id=140, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140902HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140902HIGH.pdf>
@@ -482,7 +482,7 @@ n input line 467.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140903LOW.pdf, id=149, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140903LOW.pdf, id=142, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140903LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140903LOW.pdf>
@@ -490,7 +490,7 @@ Package pdftex.def Info: ../figures/coherence2nearestI3720140903LOW.pdf used on
  input line 470.
 (pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140903HIGH.pdf, id=150, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140903HIGH.pdf, id=143, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140903HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140903HIGH.pdf>
@@ -502,7 +502,7 @@ n input line 470.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140904LOW.pdf, id=152, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140904LOW.pdf, id=145, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140904LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140904LOW.pdf>
@@ -510,7 +510,7 @@ Package pdftex.def Info: ../figures/coherence2nearestI3720140904LOW.pdf used on
  input line 473.
 (pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140904HIGH.pdf, id=153, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140904HIGH.pdf, id=146, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140904HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140904HIGH.pdf>
@@ -522,7 +522,7 @@ n input line 473.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140905LOW.pdf, id=155, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140905LOW.pdf, id=148, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140905LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140905LOW.pdf>
@@ -530,7 +530,7 @@ Package pdftex.def Info: ../figures/coherence2nearestI3720140905LOW.pdf used on
  input line 476.
 (pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140905HIGH.pdf, id=156, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140905HIGH.pdf, id=149, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140905HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140905HIGH.pdf>
@@ -542,7 +542,7 @@ n input line 476.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140906LOW.pdf, id=158, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140906LOW.pdf, id=151, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140906LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140906LOW.pdf>
@@ -550,7 +550,7 @@ Package pdftex.def Info: ../figures/coherence2nearestI3720140906LOW.pdf used on
  input line 479.
 (pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140906HIGH.pdf, id=159, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140906HIGH.pdf, id=152, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140906HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140906HIGH.pdf>
@@ -562,7 +562,7 @@ n input line 479.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140907LOW.pdf, id=161, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140907LOW.pdf, id=154, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140907LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140907LOW.pdf>
@@ -570,7 +570,7 @@ Package pdftex.def Info: ../figures/coherence2nearestI3720140907LOW.pdf used on
  input line 482.
 (pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140907HIGH.pdf, id=162, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140907HIGH.pdf, id=155, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140907HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140907HIGH.pdf>
@@ -582,7 +582,7 @@ n input line 482.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140908LOW.pdf, id=164, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140908LOW.pdf, id=157, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140908LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140908LOW.pdf>
@@ -590,7 +590,7 @@ Package pdftex.def Info: ../figures/coherence2nearestI3720140908LOW.pdf used on
  input line 485.
 (pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140908HIGH.pdf, id=165, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140908HIGH.pdf, id=158, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140908HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140908HIGH.pdf>
@@ -602,7 +602,7 @@ n input line 485.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-<../figures/coherence2nearestI3720140909LOW.pdf, id=167, 569.12625pt x 398.4887
+<../figures/coherence2nearestI3720140909LOW.pdf, id=160, 569.12625pt x 398.4887
 5pt>
 File: ../figures/coherence2nearestI3720140909LOW.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140909LOW.pdf>
@@ -610,7 +610,7 @@ Package pdftex.def Info: ../figures/coherence2nearestI3720140909LOW.pdf used on
  input line 488.
 (pdftex.def)             Requested size: 375.62448pt x 263.00339pt.
 
-<../figures/coherence2nearestI3720140909HIGH.pdf, id=168, 569.12625pt x 398.488
+<../figures/coherence2nearestI3720140909HIGH.pdf, id=161, 569.12625pt x 398.488
 75pt>
 File: ../figures/coherence2nearestI3720140909HIGH.pdf Graphic file (type pdf)
  <use ../figures/coherence2nearestI3720140909HIGH.pdf>
@@ -656,98 +656,50 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 829.
  (./texteCRB2015.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 829.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 829.
+Package rerunfilecheck Info: File `texteCRB2015.out' has not changed.
+(rerunfilecheck)             Checksum: 21CC9348C267EBEA163523E36D64E64D;582.
 
-
-Package rerunfilecheck Warning: File `texteCRB2015.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `texteCRB2015.out':
-(rerunfilecheck)             Before: 6FACDFFAA42E8B5B5581C8ECC96A2A7B;555
-(rerunfilecheck)             After:  21CC9348C267EBEA163523E36D64E64D;582.
 
 LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 829.
  ) 
 Here is how much of TeX's memory you used:
- 7702 strings out of 493089
- 112832 string characters out of 6134842
- 209144 words of memory out of 5000000
+ 7689 strings out of 493089
+ 112694 string characters out of 6134842
+ 209289 words of memory out of 5000000
  10965 multiletter control sequences out of 15000+600000
  22950 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 32i,17n,31p,589b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{equation.C.1} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.12} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.8} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.B.1} has been referenced but does not exis
-t, replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.10} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.9} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.B.3} has been referenced but does not exis
-t, replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.6} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.5} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.4} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.3} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.2} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.1} has been referenced but does not exist,
- replaced by a fixed one
-
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</
-usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></u
-sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
-r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr
-/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/l
-ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loc
-al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local
-/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/t
-exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texl
-ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive
-/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/20
-15/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2015
-/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb></usr/local/texlive/201
-5/texmf-dist/fonts/type1/public/doublestroke/dsrom8.pfb></usr/local/texlive/201
-5/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2015/
-texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2015/te
-xmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2015/texm
-f-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2015/texmf-
-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2015/texmf-di
-st/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2015/texmf-dist
-/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2015/texmf-dist/f
-onts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2015/texmf-dist/fon
-ts/type1/public/cm-super/sfti1200.pfb>
-Output written on texteCRB2015.pdf (19 pages, 1907238 bytes).
+ 32i,17n,31p,583b,404s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/te
+xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
+e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/20
+15/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/public/doublestroke/dsrom8.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2015/
+texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2015/te
+xmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2015/texm
+f-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2015/texmf-
+dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2015/texmf-di
+st/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2015/texmf-dist
+/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2015/texmf-dist/f
+onts/type1/public/cm-super/sfti1200.pfb>
+Output written on texteCRB2015.pdf (19 pages, 1907808 bytes).
 PDF statistics:
- 412 PDF objects out of 1000 (max. 8388607)
- 339 compressed objects within 4 object streams
- 79 named destinations out of 1000 (max. 500000)
+ 395 PDF objects out of 1000 (max. 8388607)
+ 322 compressed objects within 4 object streams
+ 66 named destinations out of 1000 (max. 500000)
  168 words of extra memory for PDF output out of 10000 (max. 10000000)
 
