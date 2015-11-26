@@ -1,5 +1,5 @@
 %===================================================
-function [area] = ellipse(X0, R, alpha)
+function [area] = ellipse(X0, R, alpha, col)
 %===================================================
 % Drawing ellipse
 % SYNOPSIS: ELLIPSE(X0, R, alpha)
@@ -11,12 +11,13 @@ function [area] = ellipse(X0, R, alpha)
 % areaMC : area using monte-carlo
 % area : area of the confidence ellipse at 100alpha%
 %===================================================
-c=-2*log(1-alpha);
-N=100; theta = (0:N) * (2*pi) ./ N ;
-Y = sqrt(c)*[cos(theta);sin(theta)];
-Fm1=sqrtm(R);
-X = diag(X0)*ones(2,N+1)+Fm1*Y;
-plot(X(1,:),X(2,:));
+c     = -2*log(1-alpha);
+N     = 100; 
+theta = (0:N) * (2*pi) ./ N ;
+Y     = sqrt(c)*[cos(theta);sin(theta)];
+Fm1   = sqrtm(R);
+X     = diag(X0)*ones(2,N+1)+Fm1*Y;
+plot(X(1,:),X(2,:),'linew',2,'color',col);
 grid on
 valp   = eig(R);
 area   = sqrt(prod(valp))*c*pi;
