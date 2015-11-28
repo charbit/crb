@@ -7,25 +7,27 @@
 \headcommand {\beamer@subsectionentry {0}{1}{1}{2}{Features for a station design}}\headcommand {\beamer@subsectionpages {2}{1}}
 \headcommand {\slideentry {1}{1}{1}{2/2}{Features for a station design}{0}}
 \headcommand {\beamer@framepages {2}{2}}
-\headcommand {\beamer@subsectionentry {0}{1}{2}{3}{An index of accuracy, the Cramer Rao Bound (CRB)}}\headcommand {\beamer@subsectionpages {2}{2}}
-\headcommand {\slideentry {1}{2}{1}{3/3}{An index of accuracy, the Cramer Rao Bound (CRB)}{0}}
+\headcommand {\slideentry {1}{1}{2}{3/3}{Features for a station design}{0}}
 \headcommand {\beamer@framepages {3}{3}}
-\headcommand {\beamer@subsectionentry {0}{1}{3}{4}{Loss of coherence}}\headcommand {\beamer@subsectionpages {3}{3}}
-\headcommand {\slideentry {1}{3}{1}{4/4}{Loss of coherence}{0}}
+\headcommand {\beamer@subsectionentry {0}{1}{2}{4}{An index of accuracy, the Cramer Rao Bound (CRB)}}\headcommand {\beamer@subsectionpages {2}{3}}
+\headcommand {\slideentry {1}{2}{1}{4/4}{An index of accuracy, the Cramer Rao Bound (CRB)}{0}}
 \headcommand {\beamer@framepages {4}{4}}
-\headcommand {\sectionentry {2}{Numerical results}{5}{Numerical results}{0}}
-\headcommand {\beamer@sectionpages {2}{4}}
-\headcommand {\beamer@subsectionpages {4}{4}}
-\headcommand {\beamer@subsectionentry {0}{2}{1}{5}{Loss of coherence}}\headcommand {\beamer@subsectionpages {5}{4}}
-\headcommand {\slideentry {2}{1}{1}{5/5}{Loss of coherence}{0}}
+\headcommand {\beamer@subsectionentry {0}{1}{3}{5}{Loss of coherence (LOC)}}\headcommand {\beamer@subsectionpages {4}{4}}
+\headcommand {\slideentry {1}{3}{1}{5/5}{Loss of coherence (LOC)}{0}}
 \headcommand {\beamer@framepages {5}{5}}
-\headcommand {\slideentry {2}{1}{2}{6/6}{Loss of coherence}{0}}
+\headcommand {\sectionentry {2}{Numerical results}{6}{Numerical results}{0}}
+\headcommand {\beamer@sectionpages {2}{5}}
+\headcommand {\beamer@subsectionpages {5}{5}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{6}{LOC}}\headcommand {\beamer@subsectionpages {6}{5}}
+\headcommand {\slideentry {2}{1}{1}{6/6}{LOC}{0}}
 \headcommand {\beamer@framepages {6}{6}}
-\headcommand {\beamer@subsectionentry {0}{2}{2}{7}{CRB}}\headcommand {\beamer@subsectionpages {5}{6}}
-\headcommand {\slideentry {2}{2}{1}{7/7}{CRB}{0}}
+\headcommand {\slideentry {2}{1}{2}{7/7}{LOC}{0}}
 \headcommand {\beamer@framepages {7}{7}}
-\headcommand {\beamer@partpages {1}{7}}
-\headcommand {\beamer@subsectionpages {7}{7}}
-\headcommand {\beamer@sectionpages {5}{7}}
-\headcommand {\beamer@documentpages {7}}
-\headcommand {\def \inserttotalframenumber {7}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{8}{CRB}}\headcommand {\beamer@subsectionpages {6}{7}}
+\headcommand {\slideentry {2}{2}{1}{8/8}{CRB}{0}}
+\headcommand {\beamer@framepages {8}{8}}
+\headcommand {\beamer@partpages {1}{8}}
+\headcommand {\beamer@subsectionpages {8}{8}}
+\headcommand {\beamer@sectionpages {6}{8}}
+\headcommand {\beamer@documentpages {8}}
+\headcommand {\def \inserttotalframenumber {8}}

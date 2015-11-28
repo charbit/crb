@@ -17,7 +17,7 @@ theta = (0:N) * (2*pi) ./ N ;
 Y     = sqrt(c)*[cos(theta);sin(theta)];
 Fm1   = sqrtm(R);
 X     = diag(X0)*ones(2,N+1)+Fm1*Y;
-plot(X(1,:),X(2,:),'linew',2,'color',col);
+plot(X(1,:),X(2,:),'linew',1,'color',col);
 grid on
 valp   = eig(R);
 area   = sqrt(prod(valp))*c*pi;

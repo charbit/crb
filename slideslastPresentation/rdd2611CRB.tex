@@ -327,23 +327,34 @@
 \begin{frame}
  \frametitle{Features for a station design}
 
-\figscale{stationexample.pdf}{$45$ sensors pairs}{fig:station example}{0.45}
-
-In a station design the two following elements could be of interest:
+\begin{tabular}{l||r}
+\hspace{-1cm}
+\begin{minipage}{8cm}
+\figsstit{stationexample.pdf}{0.62}
+\end{minipage}
+&
+\begin{minipage}{4cm}
+Elements of interest:
 \begin{itemize}
  \item
 the aperture% which is the radius of the smallest circle containing the station,
  \item
 the relative locations of the sensors% which is more difficult to characterize by only one number.  Two properties are of interest:
 \begin{itemize}
- \item
-the uniformity of the inter-distances %which could be useful in the case of loss of coherence. 
- \item
-the isotropy w.r.t. the DOA accuracy% is almost independent of the direction of arrival of a planar wave.
+ \item[$\rightarrow$]
+uniformity %which could be useful in the case of loss of coherence. 
+ \item[$\rightarrow$]
+accuracy isotropy % is almost independent of the direction of arrival of a planar wave.
 \end{itemize}
 \end{itemize}
- \end{frame}
+\end{minipage}
+\end{tabular}
 
+ \end{frame}
+\begin{frame}
+\frametitle{By moving the 2 extra sensors}
+\figsstit{stationexampleT.pdf}{0.62}
+\end{frame}
 %=======================================================
 %=======================================================
 \subsection{An index of accuracy, the Cramer Rao Bound (CRB)}
@@ -382,7 +393,7 @@ the isotropy w.r.t. the DOA accuracy% is almost independent of the direction of 
 
 %=======================================================
 %=======================================================
-\subsection{Loss of coherence}
+\subsection{Loss of coherence (LOC)}
 %=======================================================
 \begin{frame}
  \frametitle{Loss of coherence}
@@ -412,7 +423,7 @@ This simple model does not take into account the orientation of the sensor axis 
 \section{Numerical results}
 %=======================================================
 %=======================================================
-\subsection{Loss of coherence}
+\subsection{LOC}
 %=======================================================
 \begin{frame}
  \frametitle{IS37, with 10 sensors then 45 interdistances}
@@ -442,4 +453,55 @@ we average on the full duration.
 In presence of LOC, we see that the precision passes by a optimum for $R=1000$.
 \end{frame}
 \end{document}
+%=======================================================
+\begin{frame}
+$\theta$ denotes the slowness vector of dimension 2. The minimum covariance estimate 
+\begin{eqnarray*}
+\cov{\hat\theta}&\propto&HH^{T}
+\end{eqnarray*}
+where $H$ is a matrix $M\times 2$ of the $M$ sensor locations. Also we have the one-to-one mapping
+\begin{eqnarray*}
+\theta=\left\{
+\begin{array}{rcll}
+ \theta_{1}&=&v^{-1}\cos(\alpha)
+ \\
+ \theta_{2}&=&v^{-1}\sin(\alpha)
+\end{array}\right.
+&\Leftrightarrow&
+\mu=
+\left\{
+\begin{array}{rcll}
+ \alpha&=&\arg(\theta_{1}+j\theta_{2})&\in(0,2\pi)
+ \\
+v&=&1/|\theta_{1}+j\theta_{2}|&\in \mathds{R}^{+}
+\end{array}\right.
+\end{eqnarray*}
+therefore  we have
+\begin{eqnarray*}
+\cov{\hat\mu}&\propto&\partial_{\theta} \mu\cov{\hat\theta}\partial_{\theta}^{T} \mu
+\end{eqnarray*}
+where 
+\begin{eqnarray*}
+\partial_{\theta} \mu=\begin{bmatrix}
+\partial_{\theta_{1}}\alpha&\partial_{\theta_{2}}\alpha
+\\
+\partial_{\theta_{1}}v&\partial_{\theta_{2}}v
+\end{bmatrix}
+&=&\partial_{\mu}^{-1} \theta=
+\begin{bmatrix}
+\partial_{\alpha}\theta_{1}&\partial_{v}\theta_{1}
+\\
+\partial_{\alpha}\theta_{2}&\partial_{v}\theta_{2}
+\end{bmatrix}^{-1}
+\\
+&=&
+\begin{bmatrix}
+-v^{-1}\sin(\alpha)&-v^{-2}\cos(\alpha)
+\\
+v^{-1}\cos(\alpha)&-v^{-2}\sin(\alpha)
+\end{bmatrix}^{-1}
+\end{eqnarray*}
+
+\end{frame}
+
 

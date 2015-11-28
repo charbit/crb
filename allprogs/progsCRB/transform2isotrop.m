@@ -1,4 +1,4 @@
-function newX = transform2isotrop(oldX)
+function [newX,idkeep] = transform2isotrop(oldX)
 %==============================================
 % to transform any array into an isotrope array
 % synopsis
@@ -9,15 +9,19 @@ function newX = transform2isotrop(oldX)
 %==============================================
 %
 [M,d]   = size(oldX);
+indperm = randperm(M);
+distorig = sum(oldX .^2,2);
+[ss,idkeep]  = sort(distorig);
+oldX    = oldX(idkeep(1:M-d),:);
 XXT     = oldX'*oldX;
 [UU,DD] = eig(XXT);
 DD      = diag(DD);
 % any number greater than max(DD)
 % provides a solution
-MMM     = max(DD)*1.1;
+MMM     = max(DD)*1.2;
 xMp     = zeros(d,d);
 for id=1:d
-    xMp(:,id) = sqrt(MMM-DD(id))*UU(:,id);
+    xMp(:,id) = -sqrt(MMM-DD(id))*UU(:,id);
 end
 newX = [oldX ; xMp'];
 %==============================================

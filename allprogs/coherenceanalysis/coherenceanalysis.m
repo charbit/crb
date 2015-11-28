@@ -15,7 +15,6 @@ allcolors = ['b.';'r.';'m.';'c.';'g.';'k.'; ...
 
 switch computer
     case 'GLNXA64'
-        
         addpath /dvlscratch/SHI/users/charbit/ProjectIMS2015b/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/
     otherwise
         addpath ../../../1taskcalibration/fullprocess/ZZtoolbox/

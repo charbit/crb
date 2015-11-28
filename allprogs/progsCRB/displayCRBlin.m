@@ -86,8 +86,7 @@ H3H3t = (H3'*H3);
 
 for iaz=1:Laz
     aec.a_deg = listaz(iaz);
-    
-    
+
     cosa = cos(aec.a_deg*pi/180);
     sina = sin(aec.a_deg*pi/180);
     cose = cos(aec.e_deg*pi/180);
@@ -111,7 +110,7 @@ for iaz=1:Laz
     
     figure(1)
     subplot(222)
-    ellipse(zeros(2,1),CRB.linav(1:2,1:2),0.95);
+    ellipse(zeros(2,1),CRB.linav(1:2,1:2),0.95,'r');
     hold on
 
     stdaz(iaz)   = sqrt(CRB.linav(1,1))*180/pi;

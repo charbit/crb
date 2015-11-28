@@ -44,23 +44,21 @@ if UU
     
 else
     subplot(221)
-    
     plot(x(:,1,indmm),x(:,2,indmm),'o')
     grid on
     set(gca,'xlim',[-1 1])
     set(gca,'ylim',[-1 1])
     axis('square')
     title(sprintf('dmin = %5.2f',mm))
-    
     subplot(222)
     plot(sort(d(:,indmm)),'.')
     grid on
 end
 %%
 
-newX = anyarray2isotrop(squeeze(x(:,:,indmm))');
+newX = transform2isotrop(squeeze(x(:,:,indmm))');
 
-XXTnew = newX*newX'
+XXTnew = newX*newX';
 
 %%
 HorizontalSize = 16;
