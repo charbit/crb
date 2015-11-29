@@ -21,13 +21,9 @@ switch computer
 end
 addpath ../progsCRB/
 %=================================================================
-
-%=================================================================
 stationnumber         = '37';
-
 %=================================================================
 
-%=================================================================
 directorydatafromIDC  = sprintf('../../../../AAdataI%scrb/',stationnumber);
 
 filenames              = dir(sprintf('%s*.mat',directorydatafromIDC));
@@ -44,7 +40,8 @@ overlappingFFTrate     = 0.5;
 
 for ifile = 8
     filename1_ii = filenames(ifile).name;filename1_ii
-    cdload       = sprintf('load(''%s%s'');',directorydatafromIDC,filename1_ii);
+    cdload       = sprintf('load(''%s%s'');',...
+        directorydatafromIDC,filename1_ii);
     eval(cdload)
     
     xsensors_m   = observations.xsensors_m.coordinates;
@@ -70,12 +67,14 @@ for ifile = 8
     for i1=1:Msensors-1
         for i2=i1+1:Msensors
             cp=cp+1;
-            orientations(cp) = atan2(xsensors_m(i1,2),xsensors_m(i2,2))*180/pi;
+            orientations(cp) = ...
+                atan(...
+                (xsensors_m(i1,2)-xsensors_m(i2,2))/...
+                (xsensors_m(i1,1)-xsensors_m(i2,1)))*180/pi;
         end
     end
     sortorientations = orientations(indsortdistance);
-    
-    
+
     LSIG = size(observations.data,1);
     SIG  = zeros(LSIG,Msensors);
     for im=1:Msensors
@@ -99,7 +98,7 @@ for ifile = 8
         signal1_centered = SIGcentered(:,im1);
         for im2 = im1+1:Msensors
             cpphase = cpphase+1;
-            if 1 %and(orientations(cpphase)>-30,orientations(cpphase)<30)
+            if 1%and(1,orientations(cpphase)>45)
                 cpMSC = cpMSC+1;
                 signal2_centered = SIGcentered(:,im2);
                 Tfft_sec     = timeofanalysis_sec/ratioDFT2SCP4average;
@@ -151,9 +150,9 @@ for ifile = 8
         set(gca,'fontnam','times','fontsize',10)
         xlabel('times - [H]')
         ylabel('freq. - [Hz]')
-        title(sprintf('Spectral analysis in %i second time window',timeofanalysis_sec))
-        
-        
+        title(sprintf('Spectral analysis in %i second time window',...
+            timeofanalysis_sec))
+       
         HorizontalSize = 10;
         VerticalSize   = 8;
         set(gcf,'units','centimeters');
@@ -278,9 +277,9 @@ for ifile = 8
                     aux(ip,indselect) = allMSCsort{ip}(listindfreq(ifq),indselect);
                 end
                 logaux(:,:,ifq) = log(aux);
-                meanlogaux =  nanmean(logaux(:,:,ifq),2);
-                stdlogaux =  nanstd(logaux(:,:,ifq),[],2);
-                meanlogauxsave = [meanlogauxsave;meanlogaux];
+                meanlogaux      = nanmean(logaux(:,:,ifq),2);
+                stdlogaux       = nanstd(logaux(:,:,ifq),[],2);
+                meanlogauxsave  = [meanlogauxsave;meanlogaux];
                 
                 %=======
                 figure(ifig)
@@ -291,14 +290,15 @@ for ifile = 8
                     'color',allcolors(ifqcolor,1))
                 %=======
                 
-                explicativevar_Hz2km2     = frq_ifq_Hz2*(sortdistassoc(:,1) .^2)/1e6;
+                explicativevar_Hz2km2     = ...
+                    frq_ifq_Hz2*(sortdistassoc(:,1) .^2)/1e6;
                 explicativevarsave_Hz2km2 = [explicativevarsave_Hz2km2;...
                     explicativevar_Hz2km2];
                 %=======
                 
                 subplot(122)
-                semilogy(explicativevar_Hz2km2((1:2:end)), ...
-                    exp(meanlogaux((1:2:end))),'.-','color',allcolors(ifqcolor,1))
+                semilogy(explicativevar_Hz2km2((1:1:end)), ...
+                    exp(meanlogaux((1:1:end))),'.-','color',allcolors(ifqcolor,1))
                 hold on
                 %                         semilogy(explicativevar_Hz2km2, exp(logaux(:,:,ifq)),'--','color',0.7*[1 1 1])
                 %             semilogy(explicativevar_Hz2km2, exp(meanlogaux+stdlogaux),'--','color',0.3*[1 1 1])
@@ -348,7 +348,7 @@ for ifile = 8
         
         grid on
         %      set(gca,'xlim',[0 0.4]);%maxvarexplic_Hz2km2])
-        set(gca,'ylim',[5e-2 1])
+%         set(gca,'ylim',[5e-1 1])
         set(gca,'fontname','times','fontsize',10)
         xlabel(sprintf('F%s x d%s - [Hz%s x km%s]',exp2,exp2,exp2,exp2),'fontname','times','fontsize',10)
         ylabel('MSC','fontname','times','fontsize',10)
