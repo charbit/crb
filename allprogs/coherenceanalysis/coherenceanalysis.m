@@ -34,11 +34,14 @@ BWFilter4anal_Hz       = [0.01 4];
 [forward,  reverse]    = butter(2,2*BWFilter4anal_Hz/Fs_Hz);
 usefilterflag          = 1;
 %========= MSC analysis
-timeofanalysis_sec     = 500;
+timeofanalysis_sec     = 1000;
 ratioDFT2SCP4average   = 5;
 overlappingFFTrate     = 0.5;
+Tfft_sec     = timeofanalysis_sec/ratioDFT2SCP4average;
+Lfft         = fix(Tfft_sec*Fs_Hz);
+GREF         = ones(Lfft,1);
 
-for ifile = 8
+for ifile = 8%fix(nbfiles*rand)+1;
     filename1_ii = filenames(ifile).name;filename1_ii
     cdload       = sprintf('load(''%s%s'');',...
         directorydatafromIDC,filename1_ii);
@@ -101,9 +104,6 @@ for ifile = 8
             if 1%and(1,orientations(cpphase)>45)
                 cpMSC = cpMSC+1;
                 signal2_centered = SIGcentered(:,im2);
-                Tfft_sec     = timeofanalysis_sec/ratioDFT2SCP4average;
-                Lfft         = fix(Tfft_sec*Fs_Hz);
-                GREF         = ones(Lfft,1);
                 [allSDs, time_sec, frqsFFT_Hz] = ...
                     estimSCP(signal1_centered,signal2_centered,GREF, ...
                     overlappingFFTrate, ...
@@ -234,7 +234,7 @@ for ifile = 8
             nameprint = sprintf('../../figures/coherence2nearestI%s%sHIGH.eps',stationnumber,filename1_ii(1:8));
         else
             ifig = 23;
-            bandwidthMSC_Hz   = [0.03 0.1];
+            bandwidthMSC_Hz   = [0.02 0.2];
             maxvarexplic_Hz2km2 = 0.02;
             nameprint = sprintf('../../figures/coherence2nearestI%s%sLOW.eps',stationnumber,filename1_ii(1:8));
         end
@@ -245,7 +245,7 @@ for ifile = 8
         frqsselected_Hz    = frqsFFT_Hz(idf1:idf2);
         nbfreq4MSC         = length(listindfreq);
         
-        MSCtheresholdseed  = 0.9;
+        MSCtheresholdseed  = 0.7;
         
         %===================================================================
         figure(ifig)
@@ -347,8 +347,8 @@ for ifile = 8
         subplot(122)
         
         grid on
-        %      set(gca,'xlim',[0 0.4]);%maxvarexplic_Hz2km2])
-%         set(gca,'ylim',[5e-1 1])
+             set(gca,'xlim',[0 0.04]);%maxvarexplic_Hz2km2])
+        set(gca,'ylim',[5e-2 1])
         set(gca,'fontname','times','fontsize',10)
         xlabel(sprintf('F%s x d%s - [Hz%s x km%s]',exp2,exp2,exp2,exp2),'fontname','times','fontsize',10)
         ylabel('MSC','fontname','times','fontsize',10)
