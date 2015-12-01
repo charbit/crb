@@ -29,7 +29,7 @@ switch computer
     case 'GLNXA64'
         addpath /dvlscratch/SHI/users/charbit/ProjectIMS2015b/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/00pierrick/
     otherwise
-        addpath /Users/maurice/etudes/ctbto/allJOBs2015/myjob/1TaskOnSensors/textes/6distConjointHMSC/fullprocess/ZZtoolbox/00pierrick/
+        addpath ../../../1taskcalibration/fullprocess/ZZtoolbox/00pierrick/
 end
 %========== matlab format files are saved into the following directory
 directorydatafromIDC  = sprintf('../../../../AAdataI%s/',stationnumber);
