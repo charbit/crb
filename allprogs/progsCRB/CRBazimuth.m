@@ -12,7 +12,7 @@ xsensors_m   = observations.xsensors_m.coordinates;
 xsensors_m   = xsensors_m(:,1:2);
 [M,d]        = size(xsensors_m);
 xsensors_m   = xsensors_m-ones(M,1)*mean(xsensors_m,1);
-[xsensorsN_m,idkeep]   = transform2isotrop(xsensors_m);
+[xsensorsN_m,idkeep]   = transform2isotrop(xsensors_m,1.2);
 
 combi        = M*(M-1)/2;
 distances    = zeros(combi,1);

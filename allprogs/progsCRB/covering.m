@@ -56,9 +56,9 @@ else
 end
 %%
 
-newX = transform2isotrop(squeeze(x(:,:,indmm))');
+newX = transform2isotrop(squeeze(x(:,:,indmm)),1.2);
 
-XXTnew = newX*newX';
+XXTnew = newX'*newX;
 
 %%
 HorizontalSize = 16;
