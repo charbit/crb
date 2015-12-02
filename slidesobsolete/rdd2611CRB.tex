@@ -78,7 +78,7 @@
 
 \usefonttheme[onlymath]{serif}
 %=======================================
-\setbeamerfont{page number in head/foot}{size=\large}
+\setbeamerfont{page number in head/foot}{size=\tiny}
  \setbeamercolor{background canvas}{bg=LightYellow} 
  \setbeamertemplate{footline}[frame number]
  
@@ -308,8 +308,6 @@
 %
 % \bibliographystyle{plain} 
 
-
-\setcounter{tocdepth}{2} 
 \begin{document}
  \sloppy
 %=======================================================
@@ -319,222 +317,87 @@
 
 \end{frame}
 %=======================================================
-\section{A few theoretical aspects}
-%=======================================================
-%=======================================================
-\subsection{Features for a station design}
+\section{Station parameters}
 %=======================================================
 \begin{frame}
- \frametitle{Features for a station design}
+ \frametitle{Station design}
 
-\begin{tabular}{l||r}
-\hspace{-1cm}
-\begin{minipage}{8cm}
-\figsstit{stationexample.pdf}{0.62}
-\end{minipage}
-&
-\begin{minipage}{4cm}
-Elements of interest:
+\figscale{stationexample.pdf}{$45$ sensors pairs}{}{0.45}
+
+In a station design the two following elements could be of interest:
 \begin{itemize}
  \item
 the aperture% which is the radius of the smallest circle containing the station,
  \item
 the relative locations of the sensors% which is more difficult to characterize by only one number.  Two properties are of interest:
 \begin{itemize}
- \item[$\rightarrow$]
-uniformity of  $\ldots$%which could be useful in the case of loss of coherence. 
- \item[$\rightarrow$]
-accuracy isotropy % is almost independent of the direction of arrival of a planar wave.
+ \item
+the uniformity of the inter-distances %which could be useful in the case of loss of coherence. 
+ \item
+the isotropy w.r.t. the DOA accuracy% is almost independent of the direction of arrival of a planar wave.
 \end{itemize}
 \end{itemize}
-\end{minipage}
-\end{tabular}
  \end{frame}
 %=======================================================
-\begin{frame}
-\frametitle{By moving the 2 most distant sensors}
-\figsstit{stationexampleT.pdf}{0.62}
-\end{frame}
 %=======================================================
-%=======================================================
-\subsection{Cramer Rao Bound (CRB) is an index of accuracy}
+\section{Coherence model}
 %=======================================================
 \begin{frame}
- \frametitle{CRB as an index of accuracy}
-% Consider that we want to estimate the horizontal velocity and the azimuth. 
- 
- 
- \begin{tabular}{l||r}
-\hspace{-1cm}
-\begin{minipage}{5cm}
-\figsstit{crbexample.pdf}{0.5}
-\end{minipage}
-&
-\begin{minipage}{6.5cm}
-\begin{itemize}
- \item
- Depending on the noise we observe different couples of values (grey points).
- \item
-A good estimator has to provide a set of values located around the true value with a dispersion as low as possible.
- \item
- The CRB provides a lower bound for the dispersion. 
- \item
-A good estimator converges asymptotically to the CRB.
-\end{itemize}
-\end{minipage}
-\end{tabular}
- \begin{itemize}
-% \item
-% the grey points are the estimated pairs of values during many outcomes,
- \item
- the CRB is used to determine the confidence region (ellipse)
-  \item
- it is worth to notice that the CRB does depend on the true values of the parameters that are unknown. Usually we replace by the estimated value.
-  \end{itemize}
-  \end{frame}
-
- 
-% \begin{tabular}{rl}
-% \begin{minipage}{4cm}
-% \figsstit{crbexample.pdf}{0.55} 
-% \end{minipage}
-% &
-% \begin{minipage}{6cm}
-% \end{minipage} 
-% \end{tabular}
-%
-
-
-% %\begin{itemize}
-% \item
-%Cramer-Rao bound (CRB) provides a lower bound to the variance we can expect in the estimation of a parameter of interest (POI). 
-% \item
-%If the two POIs are the azimuth and the horizontal velocity, the CRB is a 2 by 2 positive matrix. 
-%\item
-%CRB is a function of the true azimuth and the true horizontal velocity, the LOC parameter $\beta$, the SNR, the geometry of the station.
-%\end{itemize}
-
-%=======================================================
-%=======================================================
-\subsection{Loss of coherence (LOC)}
-%=======================================================
-\begin{frame}
- \frametitle{Loss of coherence}
- 
-
-\figsstit{astation.pdf}{0.5}
-
-\begin{itemize}
-\item
-usually the sensors of the same station are very far from the source of interest, several hundreds of km compared to 1 km.
-\item
-however the signals arriving on the two sensors are not fully coherent. But in the absence of clear explanations a ``black box'' model is considered:
+ \frametitle{Coherence}
+We consider a plane wave "not fully spatially coherent" and we assume that the loss of coherence (LOC) is given by
 \begin{eqnarray*}
  \log \MSC(f) \approx -\beta f^2 \times d^2
 \end{eqnarray*}
-where $d$ is the distance between deux points of observation, $f$  the frequency and $\beta$ a LOC decay factor. 
-
-This simple model does not take into account the orientation of the sensor axis w.r.t. the direction of arrivals.
-
-\end{itemize}
-
+where $d$ is the distance between 2 points of observation, $f$  the frequency 	and $\beta$ a LOC decay factor. 
 \end{frame}
-
 %=======================================================
 %=======================================================
-%=======================================================
-\section{Numerical results}
-%=======================================================
-%=======================================================
-\subsection{LOC}
+\section{CRB}
 %=======================================================
 \begin{frame}
- \frametitle{Protocol}
+ \frametitle{CRB}
 \begin{itemize}
  \item
-For a given frequency in the selected bandwidth of interest $B$ and for a given time window $T$, we perform the MSCs for each pairs of sensors. If the two closest sensors have an MSC over 0.8 in a certain T/F cell, we keep this T/F cell for all combinations of interdistances.
+
+Cramer-Rao bound (CRB) provides a lower bound to the variance we can expect in the estimation of a parameter of interest (POI). 
+
  \item
-We average on the duration of the file.
-\end{itemize}
-\noindent\rule{\textwidth}{0.4pt}
-\begin{itemize}
+If the two POIs are the azimuth and the horizontal velocity, the CRB is a 2 by 2 positive matrix. 
+
+
+
 \item
-Bandwidth $\begin{bmatrix}0.05&0.11\end{bmatrix}$ Hz,
-\item
-Time window duration $T=500$ seconds,
-\item
-Time duration about $20$ hours, i.e. about $144$ windows. 
-\item
-In the selected bandwidth the acceptance rate is ..
+CRB is a function of the true azimuth and the true horizontal velocity, the LOC parameter $\beta$, the SNR, the geometry of the station.
+
 \end{itemize}
 \end{frame}
+
+%=======================================================
+%=======================================================
 %=======================================================
 \begin{frame}
  \frametitle{IS37, with 10 sensors then 45 interdistances}
 
-\figsstit{../figures/coherence2nearestI3720140904LOW.pdf}{0.5}
+\figscale{../figures/coherence2nearestI3720140904LOW.pdf}{Top: signals on about 20 hours. Middle: the 11 selected frequencies. A dot means that the MSC on the 3 nearest sensors if over 0.8 for the time window. Bottom: the 11 curves of the MSCs as a function of the interdistances.}{}{0.43}
+
+\begin{itemize}
+ \item
+for a given frequency in the selected band of interest, if the MSCs on the 3 nearest sensors are over 0.8, we keep this time slot for all combinations of interdistances.
+ \item
+we average on the full duration.
+
+\end{itemize}
 \end{frame}
+
 %=======================================================
 %=======================================================
-\subsection{CRB}
 %=======================================================
 \begin{frame}
 
-\figsstit{../figures/CRBI037.pdf}{0.35}
+\figsstit{../figures/CRBI037.pdf}{0.4}
  \vspace{-1cm}
-\figscale{../figures/CRBI37.pdf}{500, 1000, 5000 are the aperture multiplicative factor of the I37 template reported on the RHS of the figure. LOC factor is $\beta=0$ and $\beta=1.9e^{-4}$. Maximal frequency $0.18$ Hz. }{}{0.4}
+\figscale{../figures/CRBI37.pdf}{500, 1000, 5000 are the aperture multiplicative factor of the I37 template reported on the RHS of the figure. LOC factor is $\beta=0$ and $\beta=1.9e^{-4}$. Maximal frequency $0.18$ Hz. }{}{0.34}
 In presence of LOC, we see that the precision passes by a optimum for $R=1000$.
 \end{frame}
 \end{document}
-%=======================================================
-\begin{frame}
-$\theta$ denotes the slowness vector of dimension 2. The minimum covariance estimate 
-\begin{eqnarray*}
-\cov{\hat\theta}&\propto&HH^{T}
-\end{eqnarray*}
-where $H$ is a matrix $M\times 2$ of the $M$ sensor locations. Also we have the one-to-one mapping
-\begin{eqnarray*}
-\theta=\left\{
-\begin{array}{rcll}
- \theta_{1}&=&v^{-1}\cos(\alpha)
- \\
- \theta_{2}&=&v^{-1}\sin(\alpha)
-\end{array}\right.
-&\Leftrightarrow&
-\mu=
-\left\{
-\begin{array}{rcll}
- \alpha&=&\arg(\theta_{1}+j\theta_{2})&\in(0,2\pi)
- \\
-v&=&1/|\theta_{1}+j\theta_{2}|&\in \mathds{R}^{+}
-\end{array}\right.
-\end{eqnarray*}
-therefore  we have
-\begin{eqnarray*}
-\cov{\hat\mu}&\propto&\partial_{\theta} \mu\cov{\hat\theta}\partial_{\theta}^{T} \mu
-\end{eqnarray*}
-where 
-\begin{eqnarray*}
-\partial_{\theta} \mu=\begin{bmatrix}
-\partial_{\theta_{1}}\alpha&\partial_{\theta_{2}}\alpha
-\\
-\partial_{\theta_{1}}v&\partial_{\theta_{2}}v
-\end{bmatrix}
-&=&\partial_{\mu}^{-1} \theta=
-\begin{bmatrix}
-\partial_{\alpha}\theta_{1}&\partial_{v}\theta_{1}
-\\
-\partial_{\alpha}\theta_{2}&\partial_{v}\theta_{2}
-\end{bmatrix}^{-1}
-\\
-&=&
-\begin{bmatrix}
--v^{-1}\sin(\alpha)&-v^{-2}\cos(\alpha)
-\\
-v^{-1}\cos(\alpha)&-v^{-2}\sin(\alpha)
-\end{bmatrix}^{-1}
-\end{eqnarray*}
-
-\end{frame}
-
 
