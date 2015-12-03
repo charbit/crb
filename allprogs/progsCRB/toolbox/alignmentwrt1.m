@@ -1,5 +1,6 @@
 function [xalign, tkl_pts, signal_notalign, cormax] = ...
-    alignmentwrt1(signal, startindex, windowlength_samples, rate, frequencyrange_bins)
+    alignmentwrt1(signal, startindex, windowlength_samples, ...
+    rate, frequencyrange_bins)
 %===================================================================
 % we align signals wrt to sensor 1
 % with structured delays wrt the sensor locations
@@ -7,7 +8,8 @@ function [xalign, tkl_pts, signal_notalign, cormax] = ...
 % with all combinations of sensors
 %===================================================================
 % [xalign, tkl_pts] = 
-%    alignmentwrt1(signal,startindex,windowlength_samples)
+%    alignmentwrt1(signal,startindex,windowlength_samples, ...
+%      rate, frequencyrange_bins)
 %===================================================================
 % Inputs:
 %   - signal: array size (N,M)
@@ -15,6 +17,8 @@ function [xalign, tkl_pts, signal_notalign, cormax] = ...
 %             M sensor number
 %   - startindex : beginning index
 %   - windowlength_samples :
+%   - rate : oersampling rate, tyical 4
+%   - frequencyrange_bins: if absent no filtering
 %==
 % Outputs:
 %   - xalign : time-aligned signals
@@ -27,10 +31,10 @@ function [xalign, tkl_pts, signal_notalign, cormax] = ...
 %
 
 signal = signal ./ (ones(size(signal,1),1)*std(signal,[],1));
-
-[forward,  reverse]    = butter(2,2*frequencyrange_bins);
-signal    = filter(forward,reverse,signal);
-
+if nargin == 5
+    [forward,  reverse] = butter(2,2*frequencyrange_bins);
+    signal              = filter(forward,reverse,signal);
+end
 signal = signal ./ (ones(size(signal,1),1)*std(signal,[],1));
 signal_notalign = signal;
 

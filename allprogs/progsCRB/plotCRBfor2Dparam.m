@@ -1,4 +1,12 @@
+%=================== plotCRBfor2Dparam.m
+% draw figure with random 2D pseudo-estimated values
+% with ellipse of CI at alpha level derived from
+% CRB of linear model
+% the objective is for show that almost alpha
+% percent of the values are outside
+%
 clear
+addpath toolbox
 alpha = 0.9;
 N     = 1000;
 X0    = [300;20];
@@ -21,7 +29,7 @@ set(gca','fontname','times','fontsize',14)
 
 HorizontalSize = 8;
 VerticalSize   = 8;
-set(gcf,'units','centimeters');
+set(gcf,'units',' centimeters');
 set(gcf,'paperunits','centimeters');
 set(gcf,'PaperType','a3');
     set(gcf,'position',[0 5 HorizontalSize VerticalSize]);
@@ -29,7 +37,7 @@ set(gcf,'paperposition',[0 0 HorizontalSize VerticalSize]);
 set(gcf,'color', [1,1,0.92]);
 set(gcf, 'InvertHardCopy', 'off');
 
-print -depsc -loose ../../slideslastPresentation/crbexample.eps
+% print -depsc -loose ../../slideslastPresentation/crbexample.eps
 
 
 

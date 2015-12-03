@@ -1,4 +1,4 @@
-%=========== displayCRBlin.m
+%=========== CRBlinearmodel.m
 % this program computes the CRB for the linear model
 % associated to the M-1 delays w.r.t. to the sensor 1 and 
 % the difference of sensor locations.

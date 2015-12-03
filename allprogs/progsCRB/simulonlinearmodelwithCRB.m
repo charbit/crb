@@ -1,5 +1,6 @@
+%====================== simulonlinearmodelwithCRB.m
 clear
-% this program simulates signals with oure cohreence
+% this program simulates signals with full coherence thanks to
 % only pure delays. Then by sub-optimal method which consists 
 % of a time alignment followed by pseudo-inverse the sensor 
 % location matrix, we estimate the variance of the azimuth
@@ -12,6 +13,8 @@ clear
 %
 %
 %
+
+addpath toolbox
 aec.a_deg = 10;
 aec.e_deg = 30;
 aec.c_mps = 340;
@@ -28,9 +31,15 @@ slowness_spm(1) = cosa*cose/c_mps;
 slowness_spm(2) = sina*cose/c_mps;
 slowness_spm(3) = sine/c_mps;
 
-
-choix = 6;
-switch choix
+Fs_Hz           = 20;
+SNR_dB          = -5;
+T_sec           = 50;
+N               = fix(T_sec*Fs_Hz);
+K               = fix(N/2);
+sigmanoise      = 10^(-SNR_dB/20);
+%==
+stationselect = 6;
+switch stationselect
     case 5
         M               = 3;
         xsensor0        = zeros(M,3);
@@ -80,12 +89,6 @@ M               = size(xsensor0,1);
 factor          = 1000;
 xsensor         = factor * xsensor0;
 delay_s         = xsensor * slowness_spm;
-Fs_Hz           = 20;
-SNR_dB          = -5;
-T_sec           = 100;
-N               = fix(T_sec*Fs_Hz);
-K               = fix(N/2);
-sigmanoise      = 10^(-SNR_dB/20);
 
 st0             = randn(N,1);
 stdelayed       = zeros(N,M);
@@ -93,36 +96,40 @@ xt              = zeros(N,M);
 for im=1:M
     stdelayed(:,im) = delayedsignalF(st0,delay_s(im)*Fs_Hz);
 end
-
-C = zeros(K,M,M);
-for ik=1:K, 
-    C(ik,:,:) = ones(M,1)*ones(1,M);
-end
-CRB = evalCRBwithLOC(xsensor, sigmanoise^2, C , aec, Fs_Hz*(1:K)'/N);
+coherencematrix = NaN;
+CRB = evalCRBwithLOC(xsensor,sigmanoise^2,...
+    coherencematrix,aec,Fs_Hz*(1:K)'/N);
 
 %===== simulation =====
-Lruns           = 300;
+Lruns           = 500;
 azimuthhat_deg  = zeros(Lruns,1);
 velocityhat_mps = zeros(Lruns,1);
 for irun=1:Lruns
-    nt              = sigmanoise*randn(N,M);
-    xt              = stdelayed+nt;
-    
-    [xalign, tkl_pts] = alignmentwrt1(xt,1,N);
-    tkl_sec = (tkl_pts/Fs_Hz);
-    slownesshat_spm = pinv(xsensor)*tkl_sec;
-    azimuthhat_deg(irun) = ...
+    nt                    = sigmanoise*randn(N,M);
+    xt                    = stdelayed+nt;   
+    [xalign, tkl_pts]     = alignmentwrt1(xt,1,N,4);
+    tkl_sec               = (tkl_pts/Fs_Hz);
+    slownesshat_spm       = pinv(xsensor)*tkl_sec;
+    azimuthhat_deg(irun)  = ...
         atan2(slownesshat_spm(2),slownesshat_spm(1))*180/pi;
     velocityhat_mps(irun) = 1 / norm(slownesshat_spm(1:2));
-    % [azimuthhat_deg, aec.a_deg]
-    % [v_mps    velocityhat_mps]
 end
-sqrt(CRB.av(1,1))*180/pi/std(azimuthhat_deg), sqrt(CRB.av(2,2))/ std(velocityhat_mps)
+hatnoiseratio = sqrt(CRB.av(1,1))*180/pi/std(azimuthhat_deg);
+% sqrt(CRB.av(2,2))/ std(velocityhat_mps)
 
 
 %%
-figure(2)
+figure(4)
 plot(azimuthhat_deg,velocityhat_mps,'.')
-set(gca,'xlim',aec.a_deg+1*[-1,1])
-set(gca,'ylim',v_mps+1*[-1,1])
-
+set(gca,'xlim',aec.a_deg+0.3*[-1,1])
+set(gca,'ylim',v_mps+2*[-1,1])
+hold on
+X0 = [aec.a_deg; v_mps];
+R = CRB.av;
+R(1,1) = CRB.av(1,1)*180*180/pi/pi;
+R(1,2) = CRB.av(1,2)*180/pi;
+R(2,1) = R(1,2);
+R(2,2) = CRB.av(2,2);
+alphapercent = 0.95;
+ellipse(X0, R/hatnoiseratio/hatnoiseratio, alphapercent, 'r');
+hold off

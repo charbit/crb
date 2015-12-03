@@ -1,10 +1,8 @@
-function [CRB, Jacobav_k] = evalCRBwithLOC(xsensors_m, sigma2noise, C, polparam, fK_Hz)
+function [CRB, Jacobav_k] = ...
+    evalCRBwithLOC(xsensors_m, sigma2noise, C, polparam, fK_Hz)
 
 [M,D]    = size(xsensors_m);
 slowness_spm    = zeros(D,1);
-
-
-
 switch D
     case 2
         cosa  = cos(polparam.a_deg*pi/180);
@@ -30,16 +28,19 @@ IM       = eye(M);
 DK       = exp(-2j*pi*fK_Hz*delay_s');
 K        = length(fK_Hz);
 FIM_ik   = zeros(K,D,D);
+oneone   = ones(M,1)*ones(1,M);
 
 for ik=1:K
     D_ik        = squeeze(DK(ik,:)) .';
     diagD_ik    = diag(D_ik);
-    C_ik        = squeeze(C(ik,:,:));
+    if not(isnan(C))
+        C_ik    = squeeze(C(ik,:,:));
+    else
+        C_ik    = oneone;
+    end
     Gamma_ik    = diagD_ik*C_ik*diagD_ik'+sigma2noise*IM;
     rep3D_ik    = repmat(D_ik,1,D);
     d_ik        = (-2j*pi*fK_Hz(ik)*xsensors_m) .* rep3D_ik;
-%     PiAortho = IM-D_ik*D_ik'/M;
-%     totot = 2*real(d_ik'*PiAortho*d_ik)*real(D_ik'*(Gamma_ik\D_ik))/sigma2noise;
     for ell=1:D
         diagell = diag(d_ik(:,ell));
         dGamma_ik_ellplus = diagell *C_ik*diagD_ik';
@@ -56,10 +57,8 @@ for ik=1:K
         end
     end
 end
-% factor 2 because we only add on K=N/2 frequencies dots
 FIMslowness    = squeeze(sum(FIM_ik,1));
 CRB.slowness   = pinv(FIMslowness);
-
 % in 3D
 % slowness_spm(1) = cosa*cose/c;
 % slowness_spm(2) = sina*cose/c;
@@ -69,7 +68,7 @@ switch D
         Jacobav_k = ([...
             -sina/v_mps  -cosa/v_mps/v_mps; ...
             cosa/v_mps  -sina/v_mps/v_mps]);
-        CRB.av =     (Jacobav_k\CRB.slowness)/Jacobav_k';
+        CRB.av = (Jacobav_k\CRB.slowness)/Jacobav_k';
     case 3
         Jacobaec_k = ([...
             -sina*cose/c_mps -cosa*sine/c_mps -cosa*cose/c_mps/c_mps; ...
