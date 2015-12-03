@@ -1,0 +1,10 @@
+\beamer@endinputifotherversion {3.06pt}
+\select@language {english}
+\beamer@sectionintoc {1}{A few theoretical aspects}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{Features for a station design}{2}{0}{1}
+\beamer@subsectionintoc {1}{2}{Cramer Rao Bound (CRB) is an index of accuracy}{4}{0}{1}
+\beamer@subsectionintoc {1}{3}{Loss of coherence (LOC)}{5}{0}{1}
+\beamer@sectionintoc {2}{Numerical results}{6}{0}{2}
+\beamer@subsectionintoc {2}{1}{LOC}{6}{0}{2}
+\beamer@subsectionintoc {2}{2}{CRB}{8}{0}{2}
+\beamer@sectionintoc {3}{A few conclusions}{11}{0}{3}

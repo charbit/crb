@@ -340,16 +340,13 @@ Elements of interest:
 the scale factor (aperture)% which is the radius of the smallest circle containing the station,
  \item
 the relative locations of the sensors% which is more difficult to characterize by only one number.  Two properties are of interest:
-
-\end{itemize}
-
 \begin{itemize}
  \item[$\rightarrow$]
 uniformity of  $\ldots$%which could be useful in the case of loss of coherence. 
  \item[$\rightarrow$]
 accuracy isotropy % is almost independent of the direction of arrival of a planar wave.
 \end{itemize}
-
+\end{itemize}
 \end{minipage}
 \end{tabular}
  \end{frame}
