@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.7.25)  3 DEC 2015 11:15
+=======
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2015.10.19)  3 DEC 2015 12:30
+>>>>>>> 441fe143cecd6ae0bcc4d0ed6d5522c7491e0410
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1108,6 +1112,7 @@ Overfull \vbox (37.5394pt too high) detected at line 479
 [7
 
  <../figures/coherence2nearestI3720140906LOW.pdf>]
+<<<<<<< HEAD
 <fig1CRBmodif0LOCfact0.pdf, id=186, 682.55pt x 227.85126pt>
 File: fig1CRBmodif0LOCfact0.pdf Graphic file (type pdf)
 
@@ -1123,11 +1128,33 @@ Package pdftex.def Info: fig2CRBmodif0LOCfact0.pdf used on input line 493.
 (pdftex.def)             Requested size: 284.56242pt x 142.03026pt.
 
 Overfull \vbox (22.96536pt too high) detected at line 493
+=======
+<../figures/coherence2nearestI3720140907LOW.pdf, id=189, 569.12625pt x 455.7025
+pt>
+File: ../figures/coherence2nearestI3720140907LOW.pdf Graphic file (type pdf)
+ <use ../figures/coherence2nearestI3720140907LOW.pdf>
+Overfull \vbox (35.97876pt too high) detected at line 485
  []
 
 [8
 
+ <../figures/coherence2nearestI3720140907LOW.pdf>]
+<fig1CRBmodif0LOCfact0.pdf, id=205, 682.55pt x 227.85126pt>
+File: fig1CRBmodif0LOCfact0.pdf Graphic file (type pdf)
+
+<use fig1CRBmodif0LOCfact0.pdf>
+<fig2CRBmodif0LOCfact0.pdf, id=206, 569.12625pt x 284.06125pt>
+File: fig2CRBmodif0LOCfact0.pdf Graphic file (type pdf)
+
+<use fig2CRBmodif0LOCfact0.pdf>
+Overfull \vbox (21.40472pt too high) detected at line 499
+>>>>>>> 441fe143cecd6ae0bcc4d0ed6d5522c7491e0410
+ []
+
+[9
+
  <./fig1CRBmodif0LOCfact0.pdf> <./fig2CRBmodif0LOCfact0.pdf>]
+<<<<<<< HEAD
 <fig1CRBmodif0LOCfact1BIS.pdf, id=206, 682.55pt x 227.85126pt>
 File: fig1CRBmodif0LOCfact1BIS.pdf Graphic file (type pdf)
 
@@ -1143,11 +1170,23 @@ Package pdftex.def Info: fig2CRBmodif0LOCfact1BIS.pdf used on input line 504.
 (pdftex.def)             Requested size: 284.56242pt x 142.03026pt.
 
 Overfull \vbox (22.96536pt too high) detected at line 504
+=======
+<fig1CRBmodif0LOCfact1BIS.pdf, id=227, 682.55pt x 227.85126pt>
+File: fig1CRBmodif0LOCfact1BIS.pdf Graphic file (type pdf)
+
+<use fig1CRBmodif0LOCfact1BIS.pdf>
+<fig2CRBmodif0LOCfact1BIS.pdf, id=228, 569.12625pt x 284.06125pt>
+File: fig2CRBmodif0LOCfact1BIS.pdf Graphic file (type pdf)
+
+<use fig2CRBmodif0LOCfact1BIS.pdf>
+Overfull \vbox (21.40472pt too high) detected at line 510
+>>>>>>> 441fe143cecd6ae0bcc4d0ed6d5522c7491e0410
  []
 
-[9
+[10
 
  <./fig1CRBmodif0LOCfact1BIS.pdf> <./fig2CRBmodif0LOCfact1BIS.pdf>]
+<<<<<<< HEAD
 <fig1CRBmodif0LOCfact1.pdf, id=230, 682.55pt x 227.85126pt>
 File: fig1CRBmodif0LOCfact1.pdf Graphic file (type pdf)
 
@@ -1163,11 +1202,22 @@ Package pdftex.def Info: fig2CRBmodif0LOCfact1.pdf used on input line 515.
 (pdftex.def)             Requested size: 284.56242pt x 142.03026pt.
 
 Overfull \vbox (22.96536pt too high) detected at line 515
+=======
+<fig1CRBmodif0LOCfact1.pdf, id=252, 682.55pt x 227.85126pt>
+File: fig1CRBmodif0LOCfact1.pdf Graphic file (type pdf)
+
+<use fig1CRBmodif0LOCfact1.pdf>
+<fig2CRBmodif0LOCfact1.pdf, id=253, 569.12625pt x 284.06125pt>
+File: fig2CRBmodif0LOCfact1.pdf Graphic file (type pdf)
+
+<use fig2CRBmodif0LOCfact1.pdf>
+Overfull \vbox (21.40472pt too high) detected at line 521
+>>>>>>> 441fe143cecd6ae0bcc4d0ed6d5522c7491e0410
  []
 
-[10
+[11
 
- <./fig1CRBmodif0LOCfact1.pdf> <./fig2CRBmodif0LOCfact1.pdf>] [11
+ <./fig1CRBmodif0LOCfact1.pdf> <./fig2CRBmodif0LOCfact1.pdf>] [12
 
 ]
 \tf@nav=\write6
@@ -1195,6 +1245,7 @@ LaTeX Font Warning: Size substitutions with differences
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 535.
  ) 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD
  20590 strings out of 493089
  403041 string characters out of 6134842
  478504 words of memory out of 5000000
@@ -1223,4 +1274,31 @@ PDF statistics:
  249 compressed objects within 3 object streams
  31 named destinations out of 1000 (max. 500000)
  134 words of extra memory for PDF output out of 10000 (max. 10000000)
+=======
+ 10939 strings out of 256216
+ 192983 string characters out of 1917071
+ 285714 words of memory out of 1500000
+ 13799 multiletter control sequences out of 10000+200000
+ 15411 words of font info for 48 fonts, out of 1200000 for 2000
+ 645 hyphenation exceptions out of 8191
+ 41i,19n,63p,318b,667s stack positions out of 5000i,500n,6000p,200000b,15000s
+ </home/consult/charbit/.texlive2007/texmf-var/fonts/pk/ljfour/jknappen/ec/ec
+ss0800.600pk> </home/consult/charbit/.texlive2007/texmf-var/fonts/pk/ljfour/jkn
+appen/ec/ecss1000.600pk> </home/consult/charbit/.texlive2007/texmf-var/fonts/pk
+/ljfour/jknappen/ec/ecss0900.600pk> </home/consult/charbit/.texlive2007/texmf-v
+ar/fonts/pk/ljfour/jknappen/ec/ecss0600.600pk> </home/consult/charbit/.texlive2
+007/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1095.600pk> </home/consult/charbi
+t/.texlive2007/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss0500.600pk></usr/share
+/texmf/fonts/type1/bluesky/cm/cmmi10.pfb></usr/share/texmf/fonts/type1/bluesky/
+cm/cmmi9.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr10.pfb></usr/share/tex
+mf/fonts/type1/bluesky/cm/cmr6.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr
+8.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr9.pfb></usr/share/texmf/fonts
+/type1/bluesky/cm/cmsy8.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmsy9.pfb>
+</usr/share/texmf/fonts/type1/public/cmex/fmex9.pfb>
+Output written on rdd2611CRB.pdf (12 pages, 697228 bytes).
+PDF statistics:
+ 506 PDF objects out of 1000 (max. 8388607)
+ 33 named destinations out of 1000 (max. 131072)
+ 139 words of extra memory for PDF output out of 10000 (max. 10000000)
+>>>>>>> 441fe143cecd6ae0bcc4d0ed6d5522c7491e0410
 

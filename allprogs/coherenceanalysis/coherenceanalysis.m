@@ -44,7 +44,7 @@ overlappingFFTrate     = 0.5;
 Tfft_sec               = timeofanalysis_sec/ratioDFT2SCP4average;
 Lfft                   = fix(Tfft_sec*Fs_Hz);
 
-for ifile = 8%fix(nbfiles*rand)+1;
+for ifile =  9%fix(nbfiles*rand)+1;
     filename1_ii = filenames(ifile).name;filename1_ii
     cdload       = sprintf('load(''%s%s'');',...
         directorydatafromIDC,filename1_ii);
@@ -379,7 +379,8 @@ for ifile = 8%fix(nbfiles*rand)+1;
     fileeps2pdf = sprintf('!epstopdf %s',nameprint);
     rmeps = sprintf('!rm  %s',nameprint);
     figure(ifig)
-%             eval(fileprintepscmd)
-%             eval(fileeps2pdf)
-%             eval(rmeps)
+    
+            eval(fileprintepscmd)
+            eval(fileeps2pdf)
+            eval(rmeps)
 end

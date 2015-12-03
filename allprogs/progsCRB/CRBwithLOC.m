@@ -221,7 +221,7 @@ set(gcf,'PaperType','a4');
 set(gcf,'position',[0 5 HorizontalSize VerticalSize]);
 set(gcf,'paperposition',[0 0 HorizontalSize VerticalSize]);
 
-set(gcf,'color', [1,1,0.92]);%0.7*ones(3,1))
+set(gcf,'color', [1,1,0.92]);
 set(gcf, 'InvertHardCopy', 'off');
 
 
