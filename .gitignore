@@ -1,0 +1,16 @@
+*.log
+*~
+figures/._.DS_Store
+figures/.DS_Store
+*.aux
+*.bbl
+*.log
+*.out
+*.gz
+*.toc
+textes/LOC2.aux
+textes/LOC2.log
+textes/LOC2.out
+textes/LOC2.pdf
+textes/LOC2.synctex.gz
+.DS_Store
