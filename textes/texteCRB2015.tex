@@ -508,15 +508,15 @@ To studying this LOC model we need (i) a  station with a large number of sensors
  \section{Cramer-Rao bound (CRB)}
 %=======================================================
 %=======================================================
-Let us consider a statistical model associated to an $N$ dimensional observation $X$, whose probability measure has a probability density we denote $p(x;\alpha)$ where $\alpha$ is a $L$-dimensional parameter. Then any unbiased estimator $\hat\alpha_{N}$ of $\alpha$ has a covariance matrix which verifies:
+Let us consider a statistical model associated to an $N$ dimensional observation $X$, whose log-likelihood function writes $\ell(x;\alpha)$ where $\alpha$ is a $L$-dimensional parameter. Then any unbiased estimator $\hat\alpha_{N}$ of $\alpha$ has a covariance matrix which verifies:
 \begin{eqnarray*}
  \esp{(\hat\alpha_{N}-\alpha) (\hat\alpha_{N}-\alpha)^{T}}&\leq& \mathrm{CRB}(\alpha) = F^{-1}(\alpha)
 \end{eqnarray*}
 where $F$ is called the Fisher information matrix (FIM) whose $(m,m')$ entry writes:
 \begin{eqnarray*}
- F_{m,m'}&=&\esp{\nabla_{\alpha}p(x;\alpha)\nabla_{\alpha}^{T}p(x;\alpha)}
+ F_{m,m'}&=&\esp{\nabla_{\alpha}\ell(x;\alpha)\nabla_{\alpha}^{T}\ell(x;\alpha)}
 \end{eqnarray*}
-where $\nabla_{\alpha}p(x;\alpha)$ is the gradient of $p(x;\alpha)$ w.r.t. $\alpha$. It is worth to notice that $F$ is $L$ dimensional square matrix.
+where $\nabla_{\alpha}\ell(x;\alpha)$ is the gradient of $\ell(x;\alpha)$ w.r.t. $\alpha$. It is worth to notice that $F$ is $L$ dimensional square matrix.
 
 
  \bigskip
