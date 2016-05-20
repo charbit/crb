@@ -7,7 +7,7 @@ allcolors = ['g.';'m.';'r.';'k.';'b.';'rx';...
     'yx';'mx';'rx';'kx';'c.';'k.';'r.';'c.';'m.';...
     'g.';'b.';'k.';'r.';'c.';'m.';'g.';'k.'];
 
-listaz = linspace(0,360,50)';
+listaz = 0; %linspace(0,0,1)';
 Laz = length(listaz);
 stdaz = zeros(Laz,1);
 stdel = zeros(Laz,1);
@@ -16,14 +16,14 @@ stdvel = zeros(Laz,1);
 aec.e_deg      = 20;
 aec.c_mps      = 340;
 Fs_Hz          = 20;
-SNR_dB         = 20;
+SNR_dB         = 0;
 T_cal          = 100;
 N              = fix(T_cal*Fs_Hz);
-K              = 18;%fix(N/2)-1;
+K              = fix(N/2);
 frequency_Hz   = (1:K)'*Fs_Hz/N;
 sigma2noise    = 10^(-SNR_dB/10);
 modifloc       = 0;
-alpha_coh      = 5e-5;%9e-5;%0;%1.42e-4;%0.008;
+alpha_coh      = 0;%5e-5;%9e-5;%0;%1.42e-4;%0.008;
 magnEV         = 1.2;
 Llistfactor    = 12;
 listfactor     = linspace(500,2000,Llistfactor);
@@ -31,7 +31,7 @@ numfig         = 1;
 numfig2        = 3;
 printflag      = 0;
 
-choice = 6;
+choice = 3;
 switch choice
     case 5
         M               = 8;
@@ -60,13 +60,24 @@ switch choice
         xsensors_centered_m      = xsensors_m-ones(M,1)*mean(xsensors_m,1);
         R0                       = sqrt(max(sum(xsensors_centered_m .^2,2)));
         xsensors_centered_norm_m = xsensors_centered_m/R0;
+    case 3
+        xsensors_m =  1000*[
+            [-0.05997213,  0.194591122,   0.3911];
+            [0.229169719,   0.083396195,   0.3921];
+            [0.122158887,  -0.206822564,   0.3918];
+            [-0.12375342,  -0.087843992,   0.3902];
+            [-0.026664123,   0.015567290,   0.391];
+            [0.919425013,   0.719431175,   0.3924];
+            [0.183105453,  -1.103053672,   0.3831];
+            [-1.2434694,   0.384734446,   0.3976]];
+        [M,D] = size(xsensors_m);
         %
 end
 
 if modifloc
     xsensors_new_m = transform2isotrop(xsensors_centered_norm_m,magnEV);
 else
-    xsensors_new_m = xsensors_centered_norm_m;
+    xsensors_new_m = xsensors_m ;%xsensors_centered_norm_m;
 end
 listlegs = cell(Llistfactor,1);
 meanstdaz = zeros(Llistfactor,1);
@@ -101,7 +112,7 @@ for ifactor=1:Llistfactor
                 polparameters.a_deg = aec.a_deg;
                 polparameters.v_mps = aec.c_mps;
         end
-        CRB          = evalCRBwithLOC(xsensors_fact_m, sigma2noise, C, polparameters, frequency_Hz);
+        CRB          = evalCRBwithLOC(xsensors_m, sigma2noise, C, polparameters, frequency_Hz);
         stdaz(iaz)   = sqrt(CRB.av(1,1))*180/pi;
         stdvel(iaz)  = sqrt(CRB.av(2,2));
         
